@@ -1,5 +1,10 @@
-import Image from "next/image";
+import { UploadForm } from './UploadForm'
 
 export default function Home() {
-  return <main>Hello World!</main>;
+    return (
+        <main>
+            <h1>Hello Fuckers!</h1>
+            <UploadForm />
+        </main>
+    )
 }
