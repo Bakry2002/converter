@@ -59,6 +59,7 @@ export async function POST(req: NextResponse) {
 
     const uploadResponse = await s3.upload(params).promise() // upload the file to S3 so we can access it later
     console.log(`File uploaded successfully at. ${uploadResponse.Location}`)
+
     //! save the metadata to the Postgres database
     const conversions = await prisma.conversion.create({
         data: {

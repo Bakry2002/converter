@@ -4,6 +4,7 @@ import { useState } from 'react'
 export function UploadForm() {
     const [file, setFile] = useState<File>()
     const [to, setTo] = useState('')
+    const [id, setId] = useState('')
 
     const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
@@ -19,12 +20,14 @@ export function UploadForm() {
             })
             //handle error
             if (!res.ok) throw new Error(await res.text())
+
+            setId((await res.json()).id) // set the id of the file that is coming from the server
         } catch (error: any) {
             console.error(error)
         }
     }
     return (
-        <main>
+        <>
             <form onSubmit={onSubmit}>
                 <input
                     type="file"
@@ -42,6 +45,7 @@ export function UploadForm() {
                 </div>
                 <input type="submit" value="Upload" />
             </form>
-        </main>
+            <a href={`api/download/${id}`}>Download</a>
+        </>
     )
 }
