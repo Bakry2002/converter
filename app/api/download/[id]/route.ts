@@ -6,6 +6,7 @@ import { prisma } from '@/app/lib/prisma'
 import { NextRequest, NextResponse } from 'next/server'
 import { Readable } from 'stream'
 import { ConversionStatus } from '@prisma/client'
+import { contentType } from 'mime-types'
 
 AWS.config.update({
     accessKeyId: process.env.AWS_ACCESS_KEY_ID,
@@ -43,7 +44,7 @@ export async function GET(req: NextRequest, { params }: RouteParams) {
     // params we can pass in to the upload function
     const downloadParams = {
         Bucket: bucket,
-        Key: conversions.fileLocation.replace(`s3://${bucket}/`, ''),
+        Key: conversions.s3Key,
     }
 
     // const downloadResponse = await s3.getObject(downloadParams).promise() // get the file from S3 to be able to download it
@@ -52,8 +53,10 @@ export async function GET(req: NextRequest, { params }: RouteParams) {
     ) // get the file from S3 to be able to download it, but with the Readable.toWeb() function, we can stream the file to the client instead of downloading it first
     return new NextResponse(stream as any, {
         headers: {
-            'Content-Type': `image/${conversions.to}`,
-            'Content-Disposition': `attachment; filename=download.${conversions.to}`,
+            'Content-Type': conversions.toMime,
+            'Content-Disposition': `attachment; filename=download.${contentType(
+                conversions.toMime
+            )}`,
         },
     })
 }

@@ -21,7 +21,7 @@ export async function POST(req: NextResponse) {
     //! load the file from the request
     const data = await req.formData()
     const file: File | null = data.get('file') as unknown as File
-    const from = extname(file.name).replace('.', '') // get the file extension
+    const from = file.type // get the file type
     const to = data.get('to') as string
 
     // if there is no file, return an error
@@ -45,7 +45,7 @@ export async function POST(req: NextResponse) {
     const buffer = Buffer.from(bytes) // Creates a Buffer object from file byte data
 
     //! upload the file to S3
-    const key = `${uuid()}.${from}` // generate a unique key for the file with the extension
+    const key = `${uuid()}${uuid}`.replace(/-/g, '') // create a unique key for the file, and replace all the dashes with nothing
 
     // create new s3 client
     const s3 = new AWS.S3()
@@ -63,10 +63,10 @@ export async function POST(req: NextResponse) {
     //! save the metadata to the Postgres database
     const conversions = await prisma.conversion.create({
         data: {
-            fileLocation: `s3://${bucket}/${key}`, // uploadResponse.Location,
-            from,
-            to,
-            current: from,
+            s3Key: key, // uploadResponse.Location,
+            fromMime: from,
+            toMime: to,
+            currentMime: from,
             status: ConversionStatus.PENDING,
         },
     })

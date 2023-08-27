@@ -51,12 +51,12 @@ enum ConversionStatus {
 
 model Conversion {
   id         String     @id @default(dbgenerated("concat('cnv_', replace(cast(gen_random_uuid() as text), '-', ''))")) @db.Text
-  fileLocation  String
-  from       String  // actuall file type 
-  to         String  // convereted to file type
-  current   String  // current status of the conversion
+  s3Key        String
+  fromMime       String  // actuall file type 
+  toMime         String  // convereted to file type
+  currentMime    String  // current status of the conversion
   status     ConversionStatus  // status of the conversion
-  error     String? // error message if any
+  error      String? // error message if any
 
 
   createdAt  DateTime   @default(now())

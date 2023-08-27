@@ -10,6 +10,7 @@ import { Conversion, ConversionStatus } from '@prisma/client'
 import * as AWS from 'aws-sdk'
 import { prisma } from '../app/lib/prisma'
 import { PNG_TO_JPG } from './converters/image'
+import { randomUUID } from 'crypto'
 
 AWS.config.update({
     accessKeyId: process.env.AWS_ACCESS_KEY_ID,
@@ -23,14 +24,12 @@ const convert = async (c: Conversion) => {
     const s3 = new AWS.S3()
     const downloadParams = {
         Bucket: bucket,
-        Key: c.fileLocation.replace(`s3://${bucket}/`, ''),
+        Key: c.s3Key,
     }
     console.log('Downloading file:', downloadParams)
     const res = await s3.getObject(downloadParams).promise()
     const converted = await PNG_TO_JPG(res.Body as Buffer)
-    const key = c.fileLocation
-        .replace(`s3://${bucket}/`, '')
-        .replace('.png', '.jpg')
+    const key = (randomUUID() + randomUUID()).replace(/-/g, '') //  create a new random key for the file after it has been converted
     console.log('Uploading to:', key)
     const uploadParams = {
         Bucket: bucket,
@@ -45,8 +44,8 @@ const convert = async (c: Conversion) => {
         },
         data: {
             status: ConversionStatus.DONE,
-            fileLocation: `s3://${bucket}/${key}`,
-            current: 'jpg',
+            s3Key: key,
+            currentMime: 'image/jpg',
         },
     })
 
