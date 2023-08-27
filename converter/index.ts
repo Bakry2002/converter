@@ -11,6 +11,7 @@ import * as AWS from 'aws-sdk'
 import { prisma } from '../app/lib/prisma'
 import { PNG_TO_JPG } from './converters/image'
 import { randomUUID } from 'crypto'
+import { lookup } from 'mime-types'
 
 AWS.config.update({
     accessKeyId: process.env.AWS_ACCESS_KEY_ID,
@@ -45,7 +46,7 @@ const convert = async (c: Conversion) => {
         data: {
             status: ConversionStatus.DONE,
             s3Key: key,
-            currentMime: 'image/jpg',
+            currentMime: lookup('jpg') as string,
         },
     })
 

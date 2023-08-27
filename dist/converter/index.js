@@ -34,6 +34,7 @@ const client_1 = require("@prisma/client");
 const AWS = __importStar(require("aws-sdk"));
 const prisma_1 = require("../app/lib/prisma");
 const image_1 = require("./converters/image");
+const crypto_1 = require("crypto");
 AWS.config.update({
     accessKeyId: process.env.AWS_ACCESS_KEY_ID,
     secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
@@ -45,14 +46,12 @@ const convert = async (c) => {
     const s3 = new AWS.S3();
     const downloadParams = {
         Bucket: bucket,
-        Key: c.fileLocation.replace(`s3://${bucket}/`, ''),
+        Key: c.s3Key,
     };
     console.log('Downloading file:', downloadParams);
     const res = await s3.getObject(downloadParams).promise();
     const converted = await (0, image_1.PNG_TO_JPG)(res.Body);
-    const key = c.fileLocation
-        .replace(`s3://${bucket}/`, '')
-        .replace('.png', '.jpg');
+    const key = ((0, crypto_1.randomUUID)() + (0, crypto_1.randomUUID)()).replace(/-/g, ''); //  create a new random key for the file after it has been converted
     console.log('Uploading to:', key);
     const uploadParams = {
         Bucket: bucket,
@@ -66,8 +65,8 @@ const convert = async (c) => {
         },
         data: {
             status: client_1.ConversionStatus.DONE,
-            fileLocation: `s3://${bucket}/${key}`,
-            current: 'jpg',
+            s3Key: key,
+            currentMime: 'image/jpg',
         },
     });
     //! RECAP: we have downloaded the file from s3, converted it, and uploaded it back to s3, and then update the database
