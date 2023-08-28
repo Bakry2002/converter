@@ -33,8 +33,10 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const client_1 = require("@prisma/client");
 const AWS = __importStar(require("aws-sdk"));
 const prisma_1 = require("../app/lib/prisma");
-const image_1 = require("./converters/image");
+// import { PNG_TO_JPG } from './converters/image'
 const crypto_1 = require("crypto");
+const mime_types_1 = require("mime-types");
+const graph_1 = require("./graph");
 AWS.config.update({
     accessKeyId: process.env.AWS_ACCESS_KEY_ID,
     secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
@@ -50,7 +52,27 @@ const convert = async (c) => {
     };
     console.log('Downloading file:', downloadParams);
     const res = await s3.getObject(downloadParams).promise();
-    const converted = await (0, image_1.PNG_TO_JPG)(res.Body);
+    const converters = (0, graph_1.findPath)(c.fromMime, c.toMime);
+    if (!converters) {
+        console.error(`Could not find a converters for ${c.fromMime} to ${c.toMime}`);
+        await prisma_1.prisma.conversion.update({
+            where: {
+                id: c.id,
+            },
+            data: {
+                error: `Could not convert from ${c.fromMime} to ${c.toMime}`,
+                status: client_1.ConversionStatus.ERROR,
+            },
+        });
+        return;
+    }
+    // otherwise, we will have a path of converters and we need to loop over them
+    let converted = res.Body; // this is the file we will convert
+    for (const edge of converters) {
+        converted = await edge.converter(res.Body); // convert the file
+    }
+    console.log('Convert', converters[converters.length - 1].to.type);
+    const mime = (0, mime_types_1.extension)(converters[converters.length - 1].to.type); // get the mime type of the last converter as it will be the required mime type to
     const key = ((0, crypto_1.randomUUID)() + (0, crypto_1.randomUUID)()).replace(/-/g, ''); //  create a new random key for the file after it has been converted
     console.log('Uploading to:', key);
     const uploadParams = {
@@ -66,7 +88,7 @@ const convert = async (c) => {
         data: {
             status: client_1.ConversionStatus.DONE,
             s3Key: key,
-            currentMime: 'image/jpg',
+            currentMime: mime,
         },
     });
     //! RECAP: we have downloaded the file from s3, converted it, and uploaded it back to s3, and then update the database

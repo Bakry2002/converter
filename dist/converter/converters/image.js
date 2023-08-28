@@ -1,18 +1,35 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.PNG_TO_JPG = void 0;
 const child_process_1 = require("child_process");
 const util_1 = require("util");
 const crypto_1 = require("crypto");
 const promises_1 = require("fs/promises");
+const mime_types_1 = require("mime-types");
 const exec = (0, util_1.promisify)(child_process_1.exec); // promisify exec which mean we can use await on it
-const PNG_TO_JPG = async (buf) => {
-    //! actual converter process
-    const file = (0, crypto_1.randomUUID)(); // generate a random file name
-    await (0, promises_1.writeFile)(`/tmp/${file}.png`, buf); // write the buffer to the file
-    await exec(`magick /tmp/${file}.png /tmp/${file}.jpg`); // convert the file
-    return (0, promises_1.readFile)(`/tmp/${file}.jpg`); // return the converted file
+const formats = ['png', 'jpg', 'gif', 'bmp', 'webp', 'tiff', 'heic', 'heif'];
+const buildConverter = (from, to) => {
+    const converter = async (buf) => {
+        const file = (0, crypto_1.randomUUID)(); // generate a random file name
+        await (0, promises_1.writeFile)(`/tmp/${file}.${(0, mime_types_1.extension)(from)}`, buf); // write the buffer to the file
+        await exec(`magick /tmp/${file}.${(0, mime_types_1.extension)(from)} /tmp/${file}.${(0, mime_types_1.extension)(to)}`); // convert the file
+        return (0, promises_1.readFile)(`/tmp/${file}.${(0, mime_types_1.extension)(to)}`); // return the converted file
+    };
+    converter.from = from;
+    converter.to = to;
+    return converter;
 };
-exports.PNG_TO_JPG = PNG_TO_JPG;
-exports.PNG_TO_JPG.from = 'png';
-exports.PNG_TO_JPG.to = 'jpg';
+for (const from of formats) {
+    for (const to of formats) {
+        const fromMime = (0, mime_types_1.lookup)(from);
+        const toMime = (0, mime_types_1.lookup)(to);
+        if (!fromMime || !toMime) {
+            throw new Error(`Could not find mime type for ${from} or ${to}`);
+        }
+        if (from === to) {
+            continue;
+        }
+        exports[`${from.toUpperCase()}_TO_${to.toUpperCase()}`] =
+            buildConverter(fromMime, toMime);
+        console.log(`${from.toUpperCase()}_TO_${to.toUpperCase()}`);
+    }
+}
