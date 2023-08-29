@@ -11,7 +11,7 @@ import * as AWS from 'aws-sdk'
 import { prisma } from '../app/lib/prisma'
 // import { PNG_TO_JPG } from './converters/image'
 import { randomUUID } from 'crypto'
-import { extension, lookup } from 'mime-types'
+import { extension } from 'mime-types'
 import { findPath } from './graph'
 
 AWS.config.update({

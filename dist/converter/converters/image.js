@@ -6,7 +6,17 @@ const crypto_1 = require("crypto");
 const promises_1 = require("fs/promises");
 const mime_types_1 = require("mime-types");
 const exec = (0, util_1.promisify)(child_process_1.exec); // promisify exec which mean we can use await on it
-const formats = ['png', 'jpg', 'gif', 'bmp', 'webp', 'tiff', 'heic', 'heif'];
+const formats = [
+    'png',
+    'jpg',
+    'gif',
+    'bmp',
+    'webp',
+    'tiff',
+    'heic',
+    'heif',
+    'ico',
+];
 const buildConverter = (from, to) => {
     const converter = async (buf) => {
         const file = (0, crypto_1.randomUUID)(); // generate a random file name

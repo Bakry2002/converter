@@ -6,7 +6,17 @@ import { readFile, writeFile } from 'fs/promises'
 import { extension, lookup } from 'mime-types'
 const exec = promisify(execAsync) // promisify exec which mean we can use await on it
 
-const formats = ['png', 'jpg', 'gif', 'bmp', 'webp', 'tiff', 'heic', 'heif']
+const formats = [
+    'png',
+    'jpg',
+    'gif',
+    'bmp',
+    'webp',
+    'tiff',
+    'heic',
+    'heif',
+    'ico',
+]
 
 const buildConverter = (from: string, to: string): Converter => {
     const converter: Converter = async (buf) => {
