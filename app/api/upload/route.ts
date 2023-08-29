@@ -4,7 +4,7 @@
 //* ========== End Note ===========
 
 import { ConversionStatus } from '@prisma/client'
-import { NextResponse } from 'next/server'
+import { NextRequest, NextResponse } from 'next/server'
 import { prisma } from '@/app/lib/prisma'
 import { extname } from 'path'
 import { v4 as uuid } from 'uuid'
@@ -18,7 +18,7 @@ AWS.config.update({
 })
 
 const bucket = process.env.AWS_S3_BUCKET_NAME!
-export async function POST(req: NextResponse) {
+export async function POST(req: NextRequest) {
     //! load the file from the request
     const data = await req.formData()
     const file: File | null = data.get('file') as unknown as File
