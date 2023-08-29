@@ -52,10 +52,13 @@ export default function Home() {
                 fileExtensionToMime(conversions[0].to as string) as string
             ) // to field
 
-            const res = await fetch('/api/upload', {
-                method: 'POST',
-                body: data,
-            })
+            const res = await fetch(
+                'https://converter-rho-swart.vercel.app/api/upload',
+                {
+                    method: 'POST',
+                    body: data,
+                }
+            )
             //handle error
             if (!res.ok) throw new Error(await res.text())
 
