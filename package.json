@@ -4,9 +4,11 @@
     "private": true,
     "scripts": {
         "dev": "next dev",
-        "build": "prisma generate && next build",
+        "build": "next build && next export",
         "start": "next start",
-        "lint": "next lint"
+        "lint": "next lint",
+        "compile": "npm run tsc && node dist/converter/index.js",
+        "tsc": "./node_modules/.bin/tsc --project tsconfig.converter.json.node_modules/.bin/tsc --project tsconfig.converter.json"
     },
     "dependencies": {
         "@nextui-org/react": "^2.1.7",
