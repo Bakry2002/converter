@@ -7,8 +7,7 @@
         "build": "next build",
         "start": "next start",
         "lint": "next lint",
-        "compile": "npm run tsc && node dist/converter/index.js",
-        "tsc": "./node_modules/.bin/tsc --project tsconfig.converter.json.node_modules/.bin/tsc --project tsconfig.converter.json"
+        "vercel-build": "prisma generate && prisma migrate deploy && next build"
     },
     "dependencies": {
         "@nextui-org/react": "^2.1.7",
