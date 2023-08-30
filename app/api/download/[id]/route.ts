@@ -36,7 +36,9 @@ export async function GET(req: NextRequest, { params }: RouteParams) {
 
     // check if conversion is done
     if (conversions.status !== ConversionStatus.DONE) {
-        return NextResponse.json({ status: 'Not done yet' }, { status: 400 })
+        // return the error log
+        console.log(conversions.error)
+        return NextResponse.json({ status: 'Not done yet' })
     }
 
     const s3 = new AWS.S3() // create new s3 client
