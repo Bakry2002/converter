@@ -6,7 +6,7 @@ import { Providers } from '@/app/providers/NextUIProvider'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-    title: 'Converter',
+    title: 'Reconvert - File converter',
     description: 'Convert anything to anything.',
 }
 
