@@ -18,7 +18,6 @@ type ConversionListItemProps = {
     conversion: Conversion
     onConvertTo: (format: string) => void
     onRemove: () => void
-    error: any
 }
 
 const ConversionListItem: React.FC<ConversionListItemProps> = ({

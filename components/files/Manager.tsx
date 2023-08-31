@@ -21,7 +21,9 @@ export const Manager = () => {
             // if the result is not successful and there is  a error in one of the conversions
             // loop over the issues and log them
             for (const issue of result.error.issues) {
-                updateConversion(issue.path[0], { error: issue.message }) // update the conversion at the index e.path[0] with the error message
+                updateConversion(issue.path[0] as number, {
+                    error: issue.message,
+                }) // update the conversion at the index e.path[0] with the error message
             }
             console.log('Error:', result.error.issues)
         }
