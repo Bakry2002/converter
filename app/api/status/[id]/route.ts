@@ -26,5 +26,5 @@ export async function GET(req: NextRequest, { params }: RouteParams) {
         return NextResponse.json({ status: 'Not found' }, { status: 404 })
     }
 
-    return NextResponse
+    return NextResponse.json({ status: conversions.status })
 }

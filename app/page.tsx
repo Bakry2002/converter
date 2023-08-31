@@ -1,5 +1,7 @@
 'use client'
-import { FileConversion, PageDropzone, StagedFiles } from '@/components/Upload'
+
+import { DropZone } from '@/components/DropZone'
+import { FileConversion, FileManager } from '@/components/FileManager'
 import { Button } from '@/components/ui/button'
 import { fileExtensionToMime } from '@/lib/file'
 import { useState, useCallback } from 'react'
@@ -26,20 +28,6 @@ export default function Home() {
     const onDrop = useCallback((acceptedFiles: File[]) => {
         setConversions(acceptedFiles.map((file) => ({ file }))) // set the file in the state
     }, [])
-
-    const {
-        open,
-        getRootProps,
-        getInputProps,
-        isDragActive,
-        isFocused,
-        isDragReject,
-        isDragAccept,
-    } = useDropzone({ onDrop, noClick: true })
-
-    const className = [isDragActive && 'border border-blue-500']
-        .filter(Boolean)
-        .join(' ')
 
     const onSubmit = async () => {
         if (!conversions.length) return
@@ -69,16 +57,19 @@ export default function Home() {
     }
 
     return (
-        <div {...getRootProps({ className })}>
-            <input {...getInputProps()} />
-            <main className="container mx-auto">
-                <Hero open={open} />
-                <StagedFiles
-                    conversions={conversions}
-                    setConversion={setConversions}
-                    onConvert={() => onSubmit()}
-                />
-            </main>
-        </div>
+        <DropZone onDrop={onDrop}>
+            {({ open }) => (
+                <main className="container mx-auto">
+                    <Hero open={open} />
+                    {conversions.length > 0 && (
+                        <FileManager
+                            conversions={conversions}
+                            setConversion={setConversions}
+                            onConvert={() => onSubmit()}
+                        />
+                    )}
+                </main>
+            )}
+        </DropZone>
     )
 }

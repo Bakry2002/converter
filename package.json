@@ -11,6 +11,7 @@
         "build:converter": "tsc --project tsconfig.converter.json && node dist/converter/index.js"
     },
     "dependencies": {
+        "@nextui-org/link": "^2.0.16",
         "@nextui-org/react": "^2.1.7",
         "@prisma/client": "^5.2.0",
         "@radix-ui/react-dialog": "^1.0.4",
