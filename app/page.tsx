@@ -4,6 +4,7 @@ import { DropZone } from '@/components/DropZone'
 import { FileConversion, FileManager } from '@/components/FileManager'
 import { Button } from '@/components/ui/button'
 import { fileExtensionToMime } from '@/lib/file'
+import Image from 'next/image'
 import { useState, useCallback } from 'react'
 import { useDropzone } from 'react-dropzone'
 
@@ -59,16 +60,29 @@ export default function Home() {
     return (
         <DropZone onDrop={onDrop}>
             {({ open }) => (
-                <main className="container mx-auto">
-                    <Hero open={open} />
-                    {conversions.length > 0 && (
-                        <FileManager
-                            conversions={conversions}
-                            setConversion={setConversions}
-                            onConvert={() => onSubmit()}
+                <>
+                    <header className="flex items-center mx-auto container py-2">
+                        <Image
+                            src="/icon.png"
+                            alt="Reconvert Logo"
+                            width={64}
+                            height={64}
                         />
-                    )}
-                </main>
+                        <div className="text-xl font-semibold ml-4">
+                            Reconvert
+                        </div>
+                    </header>
+                    <main className="container mx-auto">
+                        <Hero open={open} />
+                        {conversions.length > 0 && (
+                            <FileManager
+                                conversions={conversions}
+                                setConversion={setConversions}
+                                onConvert={() => onSubmit()}
+                            />
+                        )}
+                    </main>
+                </>
             )}
         </DropZone>
     )
