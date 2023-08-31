@@ -79,9 +79,14 @@ export const FileManager = ({
                     </li>
                 ))}
             </ul>
-            <Button variant="default" onClick={() => onConvert(conversions[0])}>
-                Convert
-            </Button>
+            <div className="flex justify-end py-2">
+                <Button
+                    variant="default"
+                    onClick={() => onConvert(conversions[0])}
+                >
+                    Convert
+                </Button>
+            </div>
         </div>
     )
 }
