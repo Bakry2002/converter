@@ -61,7 +61,7 @@ export default function Home() {
         <DropZone onDrop={onDrop}>
             {({ open }) => (
                 <>
-                    <header className="flex items-center mx-auto container py-2">
+                    <header className="flex items-center mx-auto container p-2">
                         <Image
                             src="/icon.png"
                             alt="Reconvert Logo"
