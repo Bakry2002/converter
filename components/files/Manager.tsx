@@ -1,12 +1,14 @@
 'use client'
 
+// ================== 2:07:10 ==================
+
 import { UXConversionStatus, useConversion } from '@/context/ConversionContext'
 import { AnimatePresence, motion } from 'framer-motion'
 import ConversionListItem from './ConversionListItem'
 //import { Button } from '../ui/button'
 import { z } from 'zod'
-import axios from 'axios'
-import { Button } from '@nextui-org/react'
+import { Button } from '../ui/button'
+import { useEffect, useState } from 'react'
 
 const schema = z.array(
     z.object({
@@ -59,10 +61,7 @@ export const Manager = () => {
                                 onRemove={() => removeConversion(key)}
                                 onUpdate={(c) => updateConversion(key, c)}
                                 onConvertTo={(to) => {
-                                    updateConversion(key, {
-                                        to,
-                                        error: undefined,
-                                    })
+                                    updateConversion(key, { to })
                                 }}
                             />
                         ))}
@@ -71,8 +70,8 @@ export const Manager = () => {
                         <Button
                             color="primary"
                             className="bg-neutral-900 text-white p-2 rounded-md"
-                            onPress={() => validate()}
-                            isDisabled={conversions.some(
+                            onClick={() => validate()}
+                            disabled={conversions.some(
                                 (conversion) =>
                                     conversion.status !=
                                     UXConversionStatus.Pending // if there is a conversion that is not pending, then the button is disabled
