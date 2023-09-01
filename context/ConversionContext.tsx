@@ -5,6 +5,7 @@ import {
     SetStateAction,
     useCallback,
     useContext,
+    useEffect,
     useState,
 } from 'react'
 import { DropzoneState, useDropzone as useCreateDropzone } from 'react-dropzone'
@@ -51,6 +52,8 @@ export const useDropzone = () => useContext(ConversionContext).dropzone // this 
 
 export const ConversionProvider = ({ children }: props) => {
     const [conversions, setConversions] = useState<Conversion[]>([])
+    const [isButtonDisabled, setIsButtonDisabled] = useState(false) // Add a state for button disabled state
+
     const router = useRouter()
 
     // what this function do is that it takes the conversions and returns a new array with the conversions before the index and the conversions after the index, so it removes the conversion at the index
@@ -83,7 +86,15 @@ export const ConversionProvider = ({ children }: props) => {
         ])
     }, [])
 
-    const dropzone = useCreateDropzone({ onDrop, noClick: true })
+    useEffect(() => {
+        // Check if any conversion is not in "Pending" status
+        const isAnyConversionNotPending = conversions.some(
+            (conversion) => conversion.status !== UXConversionStatus.Pending
+        )
+        setIsButtonDisabled(isAnyConversionNotPending)
+    }, [conversions]) // Watch for changes in the conversions array
+
+    const dropzone = useCreateDropzone({ onDrop, noClick: true }) // this is the dropzone that will be used in the app
 
     const convert = async () => {
         for (let i = 0; i < conversions.length; i++) {
