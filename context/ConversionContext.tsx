@@ -1,6 +1,5 @@
 //this context will hold all the information about the current conversions that are happening, it will hold the files that are being converted, the status of the conversion, the progress of the conversion, and the result of the conversion
 
-import { ConversionStatus } from '@prisma/client'
 import {
     Dispatch,
     SetStateAction,
@@ -11,12 +10,21 @@ import {
 import { DropzoneState, useDropzone as useCreateDropzone } from 'react-dropzone'
 import { createContext } from 'react'
 import { useRouter } from 'next/navigation'
+import axios from 'axios'
+import { fileExtensionToMime } from '@/lib/file'
 
+export enum UXConversionStatus {
+    Pending,
+    Uploading,
+    Processing,
+    Completed,
+    Error,
+}
 export type Conversion = {
     id?: string
     file: File
     to?: string
-    status: ConversionStatus
+    status: UXConversionStatus
     upload?: number
     error?: any
 }
@@ -70,7 +78,7 @@ export const ConversionProvider = ({ children }: props) => {
             ...conversions,
             ...files.map((file) => ({
                 file,
-                status: ConversionStatus.PENDING,
+                status: UXConversionStatus.Pending,
             })),
         ])
     }, [])
@@ -80,20 +88,29 @@ export const ConversionProvider = ({ children }: props) => {
     const convert = async () => {
         for (let i = 0; i < conversions.length; i++) {
             const c = conversions[i] // get the conversion at the index i
-            updateConversion(i, { status: ConversionStatus.PROCESSING }) // update the conversion status to PROCESSING
+            updateConversion(i, { status: UXConversionStatus.Uploading }) // update the conversion status to PROCESSING
             try {
                 const formData = new FormData()
                 formData.set('file', c.file) // file is the name of the field in the form
-                formData.set('to', c.to || '') // to field
+                formData.set('to', fileExtensionToMime(c.to || '') as string) // to field
 
-                const res = await fetch('/api/upload', {
-                    method: 'POST',
-                    body: formData,
+                // post the form to the api using axios postForm function to track the progress capture for the request
+                const { data } = await axios.postForm('/api/upload', formData, {
+                    onUploadProgress: ({ progress }) => {
+                        updateConversion(i, { upload: progress })
+                    }, // update the conversion upload progress
                 })
-                if (!res.ok) throw new Error('Field to upload') // handle error
-                const data = await res.json() // get the file id from the response
+                const { id } = data // get the file id from the response
+                updateConversion(i, {
+                    status: UXConversionStatus.Processing,
+                    id,
+                }) // update the conversion status to PROCESSING
+                console.log('Data:', data)
             } catch (error: any) {
-                console.error(error)
+                updateConversion(i, {
+                    status: UXConversionStatus.Error,
+                    error: error,
+                }) // update the conversion status to ERROR
             }
         }
     }

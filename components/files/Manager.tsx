@@ -1,10 +1,12 @@
 'use client'
 
-import { useConversion } from '@/context/ConversionContext'
+import { UXConversionStatus, useConversion } from '@/context/ConversionContext'
 import { AnimatePresence, motion } from 'framer-motion'
 import ConversionListItem from './ConversionListItem'
-import { Button } from '../ui/button'
+//import { Button } from '../ui/button'
 import { z } from 'zod'
+import axios from 'axios'
+import { Button } from '@nextui-org/react'
 
 const schema = z.array(
     z.object({
@@ -12,7 +14,8 @@ const schema = z.array(
     })
 )
 export const Manager = () => {
-    const { conversions, updateConversion, removeConversion } = useConversion()
+    const { conversions, updateConversion, removeConversion, convert } =
+        useConversion()
 
     const validate = () => {
         const result = schema.safeParse(conversions) // safeParse is a function that takes a schema and returns a result
@@ -24,16 +27,19 @@ export const Manager = () => {
                 updateConversion(issue.path[0] as number, {
                     error: issue.message,
                 }) // update the conversion at the index e.path[0] with the error message
+                console.log('Error:', issue)
             }
-            console.log('Error:', result.error.issues)
+            return
         }
+        // after the validation being successful, we can convert the files
+        convert()
     }
     return (
         <AnimatePresence>
             {conversions.length > 0 && (
                 <motion.div
                     // there is an action of type  function called convert exported from its own file.ts
-                    className="bg-white/80 backdrop-blur-md rounded-lg p-2 m-2"
+                    className="bg-white/80 backdrop-blur-md rounded-lg p-2 m-2 container mx-auto"
                     initial={{ opacity: 0, transform: 'translateY(50px)' }}
                     animate={{
                         opacity: 1,
@@ -51,6 +57,7 @@ export const Manager = () => {
                                 key={key}
                                 conversion={conversion}
                                 onRemove={() => removeConversion(key)}
+                                onUpdate={(c) => updateConversion(key, c)}
                                 onConvertTo={(to) => {
                                     updateConversion(key, {
                                         to,
@@ -60,8 +67,17 @@ export const Manager = () => {
                             />
                         ))}
                     </ul>
-                    <div className="flex justify-center">
-                        <Button type="submit" onClick={() => validate()}>
+                    <div className="flex justify-center py-4">
+                        <Button
+                            color="primary"
+                            className="bg-neutral-900 text-white p-2 rounded-md"
+                            onPress={() => validate()}
+                            isDisabled={conversions.some(
+                                (conversion) =>
+                                    conversion.status !=
+                                    UXConversionStatus.Pending // if there is a conversion that is not pending, then the button is disabled
+                            )}
+                        >
                             Convert
                         </Button>
                     </div>
