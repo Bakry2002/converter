@@ -116,7 +116,21 @@ export const ConversionProvider = ({ children }: props) => {
                     status: UXConversionStatus.Processing,
                     id,
                 }) // update the conversion status to PROCESSING
-                console.log('Data:', data)
+
+                // now, if more than one file is uploaded, we need to make this processing in sequence, so we need to wait for the first file to be processed before processing the next one
+                // we are going to use do while loop to wait for the file to be processed, then we will update the conversion status to COMPLETED, and then we will process the next file
+                let done = false
+                do {
+                    const { data } = await axios.get(`/api/status/${id}`) // get the status of the file
+                    done = data.status === 'DONE' // if the status of the file is DONE, then we are done, otherwise we are still processing
+                    updateConversion(i, {
+                        status:
+                            data.status === 'DONE'
+                                ? UXConversionStatus.Completed
+                                : UXConversionStatus.Processing,
+                    }) // if the status of the file is DONE, then we are done, otherwise we are still processing
+                    await new Promise((resolve) => setTimeout(resolve, 1000)) // wait for 1 second to check the status again
+                } while (!done) // if we are not done, then we will do the loop again, and if we are done, then we will exit the loop
             } catch (error: any) {
                 updateConversion(i, {
                     status: UXConversionStatus.Error,
