@@ -16,6 +16,7 @@ import { Combobox } from '../combobox'
 import { ConversionStatus } from '@prisma/client'
 import { DownloadButton } from '../DownloadButton'
 import Badge from '../Badge'
+import { Selector } from './Selector'
 
 const fetcher = (...args: Parameters<typeof fetch>) =>
     fetch(...args).then((res) => res.json()) // fetcher is a function that takes the arguments of the fetch function and returns a promise that resolves to the json of the response
@@ -53,7 +54,7 @@ const ConversionListItem: React.FC<ConversionListItemProps> = ({
     const { file, to } = conversion
 
     return (
-        <li className="grid md:grid-cols-[48px_1fr_80px_100px_100px] grid-cols-[48px_1fr_80px_100px_100px_50px] gap-4">
+        <li className="grid md:grid-cols-[48px_1fr_80px_100px_50px] grid-cols-[48px_1fr_80px_100px_50px] gap-4">
             <div className="px-2">
                 <Image src={png} width={32} height={32} alt="PNG" />
             </div>
@@ -98,37 +99,37 @@ const ConversionListItem: React.FC<ConversionListItemProps> = ({
                 <>
                     <div className="hidden md:flex justify-center">
                         <>
-                            {/* <Popover>
-                        <PopoverTrigger asChild>
-                            <Button
-                                disabled={
-                                    conversion.status !==
-                                    UXConversionStatus.Pending
-                                }
-                                className="px-2"
-                                variant={
-                                    conversion.error
-                                        ? 'destructive'
-                                        : 'secondary'
-                                }
-                            >
-                                {conversion.to || 'Convert To'}
-                            </Button>
-                        </PopoverTrigger>
-                        <PopoverContent>
-                            <Selector
-                            value={conversion.to || ''}
-                            setValue={onConvertTo}
-                        />
-                        </PopoverContent>
-                    </Popover> */}
-                            <Combobox
+                            <Popover>
+                                <PopoverTrigger asChild>
+                                    <Button
+                                        disabled={
+                                            conversion.status !==
+                                            UXConversionStatus.Pending
+                                        }
+                                        className="px-2 w-full"
+                                        variant={
+                                            conversion.error
+                                                ? 'destructive'
+                                                : 'secondary'
+                                        }
+                                    >
+                                        {conversion.to || 'Convert To'}
+                                    </Button>
+                                </PopoverTrigger>
+                                <PopoverContent>
+                                    <Selector
+                                        value={conversion.to || ''}
+                                        setValue={onConvertTo}
+                                    />
+                                </PopoverContent>
+                            </Popover>
+                            {/* <Combobox
                                 value={conversion.to || ''}
                                 setValue={(v) => {
                                     onConvertTo(v)
                                     setOpen(false)
                                 }}
-                            />
+                            /> */}
                         </>
                     </div>
 
@@ -143,13 +144,13 @@ const ConversionListItem: React.FC<ConversionListItemProps> = ({
                                 <div className="font-semibold text-lg">
                                     Convert to which format?
                                 </div>
-                                {/* <Selector
-                            value={conversion.to || ''}
-                            setValue={(v) => {
-                                onConvertTo(v)
-                                setOpen(false)
-                            }}
-                        /> */}
+                                <Selector
+                                    value={conversion.to || ''}
+                                    setValue={(v) => {
+                                        onConvertTo(v)
+                                        setOpen(false)
+                                    }}
+                                />
                             </DialogContent>
                         </Dialog>
                     </div>
