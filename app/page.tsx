@@ -41,7 +41,7 @@ const Hero = ({}: HeroProps) => (
     </section>
 )
 
-export const About = () => (
+const About = () => (
     <section className="container mx-auto flex flex-col gap-52">
         <p>
             Lorem ipsum, dolor sit amet consectetur adipisicing elit. Nisi
