@@ -10,6 +10,7 @@ import { extname } from 'path'
 import { v4 as uuid } from 'uuid'
 import * as AWS from 'aws-sdk'
 import { randomUUID } from 'crypto'
+import { fileExtensionToMime } from '@/lib/file'
 
 AWS.config.update({
     accessKeyId: process.env.AWS_ACCESS_KEY_ID,
@@ -22,7 +23,7 @@ export async function POST(req: NextRequest) {
     //! load the file from the request
     const data = await req.formData()
     const file: File | null = data.get('file') as unknown as File
-    const from = file.type // get the file type
+    const from = fileExtensionToMime(file.name) // get the mime type of the file
     const to = data.get('to') as string
 
     // if there is no file, return an error

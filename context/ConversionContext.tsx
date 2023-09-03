@@ -13,6 +13,7 @@ import { createContext } from 'react'
 import { useRouter } from 'next/navigation'
 import axios from 'axios'
 import { fileExtensionToMime } from '@/lib/file'
+import { Format } from '@/lib/types'
 
 export enum UXConversionStatus {
     Pending,
@@ -24,7 +25,7 @@ export enum UXConversionStatus {
 export type Conversion = {
     id?: string
     file: File
-    to?: string
+    to?: Format
     status: UXConversionStatus
     upload?: number
     error?: any
@@ -103,8 +104,9 @@ export const ConversionProvider = ({ children }: props) => {
             try {
                 const formData = new FormData()
                 formData.set('file', c.file) // file is the name of the field in the form
-                formData.set('to', fileExtensionToMime(c.to || '') as string) // to field
-
+                formData.set('to', c.to?.mime || '') // to field
+                console.log('file:', c.file)
+                console.log('to:', c.to?.mime || '')
                 // post the form to the api using axios postForm function to track the progress capture for the request
                 const { data } = await axios.postForm('/api/upload', formData, {
                     onUploadProgress: ({ progress }) => {

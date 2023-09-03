@@ -8,9 +8,13 @@ import { z } from 'zod'
 import { Button } from '../ui/button'
 import { useEffect, useState } from 'react'
 
+// the schema is a zod schema that takes an array of objects that have a property to that is an object that has a property mime that is a string and a property ext that is a string
 const schema = z.array(
     z.object({
-        to: z.string(),
+        to: z.object({
+            mime: z.string(),
+            ext: z.string(),
+        }),
     })
 )
 export const Manager = () => {

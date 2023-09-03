@@ -17,13 +17,14 @@ import { ConversionStatus } from '@prisma/client'
 import { DownloadButton } from '../DownloadButton'
 import Badge from '../Badge'
 import { Selector } from './Selector'
+import { Format } from '@/lib/types'
 
 const fetcher = (...args: Parameters<typeof fetch>) =>
     fetch(...args).then((res) => res.json()) // fetcher is a function that takes the arguments of the fetch function and returns a promise that resolves to the json of the response
 
 type ConversionListItemProps = {
     conversion: Conversion
-    onConvertTo: (format: string) => void
+    onConvertTo: (format: Format) => void
     onRemove: () => void
     onUpdate: (conversion: Partial<Conversion>) => void
 }
@@ -113,12 +114,12 @@ const ConversionListItem: React.FC<ConversionListItemProps> = ({
                                                 : 'secondary'
                                         }
                                     >
-                                        {conversion.to || 'Convert To'}
+                                        {conversion.to?.ext || 'Convert To'}
                                     </Button>
                                 </PopoverTrigger>
                                 <PopoverContent>
                                     <Selector
-                                        value={conversion.to || ''}
+                                        value={conversion.to?.mime || ''}
                                         setValue={onConvertTo}
                                     />
                                 </PopoverContent>
@@ -137,7 +138,7 @@ const ConversionListItem: React.FC<ConversionListItemProps> = ({
                         <Dialog open={open} onOpenChange={setOpen}>
                             <DialogTrigger asChild>
                                 <Button className="px-2" variant="secondary">
-                                    {conversion.to || 'Format'}
+                                    {conversion.to?.ext || 'Convert To'}
                                 </Button>
                             </DialogTrigger>
                             <DialogContent className="w-[calc(100%-2rem)]">
@@ -145,7 +146,7 @@ const ConversionListItem: React.FC<ConversionListItemProps> = ({
                                     Convert to which format?
                                 </div>
                                 <Selector
-                                    value={conversion.to || ''}
+                                    value={conversion.to?.mime || ''}
                                     setValue={(v) => {
                                         onConvertTo(v)
                                         setOpen(false)
