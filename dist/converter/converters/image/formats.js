@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.formats = void 0;
 exports.formats = [
     { mime: 'image/png', ext: 'png', params: undefined },
-    { mime: 'image/jpeg', ext: 'jpg', params: undefined },
+    { mime: 'image/jpeg', ext: 'jpeg', params: undefined },
     { mime: 'image/gif', ext: 'gif', params: undefined },
     { mime: 'image/bmp', ext: 'bmp', params: undefined },
     { mime: 'image/webp', ext: 'webp', params: undefined },
