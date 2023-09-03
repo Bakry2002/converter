@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button'
 import { useConversion } from '@/context/ConversionContext'
 import { fileExtensionToMime } from '@/lib/file'
 import Image from 'next/image'
+import Link from 'next/link'
 import { useState, useCallback } from 'react'
 import { useDropzone } from 'react-dropzone'
 
@@ -122,13 +123,18 @@ export default function Home() {
             <DropZone>
                 <>
                     <header className="flex items-center mx-auto container py-2">
-                        <Image
-                            src="/icon.png"
-                            alt="Reconvert Logo"
-                            width={64}
-                            height={64}
-                        />
-                        <div className="text-xl">Reconvert</div>
+                        <Link
+                            href="/"
+                            className=" flex flex-row items-center gap-1"
+                        >
+                            <Image
+                                src="/icon.png"
+                                alt="Reconvert Logo"
+                                width={64}
+                                height={64}
+                            />
+                            <div className="text-xl">Reconvert</div>
+                        </Link>
                     </header>
                     <main>
                         <Hero />

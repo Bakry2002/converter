@@ -48,10 +48,10 @@ export const Manager = () => {
                     }}
                     exit={{ opacity: 0, transform: 'translateY(50px)' }}
                 >
-                    <h2 className="text-lg font-medium text-neutral-900">
+                    <h2 className="mb-8 text-lg font-medium text-neutral-900">
                         Files to convert
                     </h2>
-                    <ul className="bg-white/80 backdrop-blur-lg">
+                    <ul className="bg-white/80 backdrop-blur-lg flex flex-col justify-center gap-y-6">
                         {conversions.map((conversion, key) => (
                             <ConversionListItem
                                 key={key}

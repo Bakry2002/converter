@@ -10,7 +10,7 @@ export const OpenButton: React.FC<OpenButtonProps> = ({}) => {
 
     return (
         <Button variant="default" onClick={open}>
-            Click to Upload
+            Upload a file to convert
         </Button>
     )
 }
