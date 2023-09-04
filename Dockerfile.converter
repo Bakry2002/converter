@@ -4,10 +4,10 @@ FROM node:18
 # Set the working directory in the container
 WORKDIR /usr/src/app
 
-RUN apt update 
-RUN apt install -y build-essential libpng-dev libjpeg-dev libtiff-dev
-RUN apt install -y imagemagick
 
+# Install required packages including ImageMagick
+RUN apt update && \
+    apt install -y build-essential libpng-dev libjpeg-dev libtiff-dev imagemagick=7.1.1-15+deb11u6
 
 # Copy package.json and package-lock.json to the container
 COPY package*.json ./
