@@ -38,7 +38,7 @@ const buildConverter = (
         const file = randomUUID() // generate a random file name
         await writeFile(`/tmp/${file}.${extension(from)}`, buf) // write the buffer to the file
         await exec(
-            `magick /tmp/${file}.${extension(from)} ${
+            `convert /tmp/${file}.${extension(from)} ${
                 params ?? ''
             } /tmp/${file}.${extension(to)}`
         ) // convert the file
