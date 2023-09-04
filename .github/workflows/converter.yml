@@ -5,7 +5,7 @@ on:
       - 'master'
 env: 
   REGISTRY: ghcr.io
-  IMAGE_NAME: prod-converter
+  IMAGE_NAME: prodconverter/conveter
 
 jobs: 
   build-and-push-image: 
