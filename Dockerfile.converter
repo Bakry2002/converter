@@ -7,7 +7,7 @@ WORKDIR /usr/src/app
 
 # Install required packages including ImageMagick
 RUN apt update && \
-    apt install -y build-essential libpng-dev libjpeg-dev libtiff-dev imagemagick=7.1.1-15
+    apt install -y build-essential libpng-dev libjpeg-dev libtiff-dev imagemagick 
 
 # Copy package.json and package-lock.json to the container
 COPY package*.json ./
