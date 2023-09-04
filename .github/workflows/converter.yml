@@ -17,20 +17,20 @@ jobs:
       - name: Checkout repository 
         uses: actions/checkout@v3
       - name: Log in to the Container registry 
-        uses: docker/login-action@latest
+        uses: docker/login-action@v3
         with: 
           registry: ${{ env.REGISTRY }} 
           username: ${{ github.actor }} 
           password: ${{ secrets.GITHUB_TOKEN }} 
       - name: Extract metadata (tags, labels) for Docker
         id: meta
-        uses: docker/metadata-action@latest
+        uses: docker/metadata-action@v3
         with: 
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }} 
           flavor: |
             prefix=converter-
       - name: Build and push Docker image
-        uses: docker/build-push-action@latest
+        uses: docker/build-push-action@v3
         with: 
           context: .
           file: Dockerfile.converter
