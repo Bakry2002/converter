@@ -1,22 +1,49 @@
 import { readdir } from 'fs/promises'
 import dynamic from 'next/dynamic'
+import Image from 'next/image'
 import { join } from 'path'
 
+type Meta = {
+    title: string
+    date: string
+    excerpt: string
+    author: {
+        name: string
+        image: string
+    }
+}
 type Props = {
     params: { slug: string }
 }
 
 // eslint-disable-next-line import/no-anonymous-default-export
 export default async function ({ params }: Props) {
+    // get the MDX content
     const Content = dynamic(() => import(`../../../blog/${params.slug}.mdx`))
 
-    console.log('Content:', Content)
+    // get the metadata from the MDX file
+    const { meta }: { meta: Meta } = require(`../../../blog/${params.slug}.mdx`)
 
     return (
-        <main>
-            Blog slug page
-            <Content />
-        </main>
+        <>
+            <article className="prose lg:prose-xl mx-auto">
+                <h1 className="text-center">{meta.title}</h1>
+                <div className="text-center">{meta.date}</div>
+                <div className="flex items-center justify-center">
+                    <Image
+                        src={meta.author.image}
+                        alt={meta.author.name}
+                        width={50}
+                        height={50}
+                        className="rounded-full"
+                    />
+                    <div className="ml-2 font-semibold text-neutral-800">
+                        <div>{meta.author.name}</div>
+                    </div>
+                </div>
+                <Content />
+            </article>
+        </>
     )
 }
 
