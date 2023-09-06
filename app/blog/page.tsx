@@ -11,7 +11,6 @@ export default async function () {
         .map((blog) => {
             // extract the metadata from the MDX file
             const { meta }: { meta: Meta } = require(`../../blog/${blog}`)
-            console.log('Meta', meta)
             return {
                 ...meta,
                 date: new Date(meta.date),
@@ -41,11 +40,11 @@ export default async function () {
                     {blogs.map((blog) => (
                         <li key={blog.title} className="py-4">
                             <Link href={`/blog/${blog.href}`}>
-                                <div>
-                                    <div className="text-lg font-semibold">
+                                <div className="space-y-2">
+                                    <div className="text-4xl font-semibold">
                                         {blog.title}
                                     </div>
-                                    <div>
+                                    <div className="text-sm text-neutral-600">
                                         <span className="font-semibold">
                                             {blog.author.name}
                                         </span>
@@ -58,6 +57,9 @@ export default async function () {
                                                 day: 'numeric',
                                             }
                                         )}
+                                    </div>
+                                    <div className="text-neutral-700">
+                                        {blog.excerpt}
                                     </div>
                                 </div>
                             </Link>

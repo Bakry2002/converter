@@ -3,6 +3,7 @@ import { readdir } from 'fs/promises'
 import dynamic from 'next/dynamic'
 import Image from 'next/image'
 import { join } from 'path'
+import { Suspense } from 'react'
 
 type Props = {
     params: { slug: string }
@@ -28,13 +29,15 @@ export default async function ({ params }: Props) {
                     })}
                 </div>
                 <div className="flex items-center justify-center">
-                    <Image
-                        src={meta.author.image}
-                        alt={meta.author.name}
-                        width={50}
-                        height={50}
-                        className="rounded-full"
-                    />
+                    <Suspense fallback={<p>Loading...</p>}>
+                        <Image
+                            src={meta.author.image}
+                            alt={meta.author.name}
+                            width={50}
+                            height={50}
+                            className="rounded-full"
+                        />
+                    </Suspense>
                     <div className="ml-2 font-semibold text-neutral-800">
                         <div>{meta.author.name}</div>
                     </div>
