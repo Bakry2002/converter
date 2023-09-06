@@ -9,7 +9,7 @@
         "lint": "next lint",
         "vercel-build": "prisma generate && prisma migrate deploy && next build",
         "build:converter": "tsc --project tsconfig.converter.json && node dist/converter/index.js",
-        "export:env": "export POSTGRES_PRISMA_URL='postgresql://postgres@localhost:5432/converter?schema=public' && export AWS_S3_BUCKET_NAME=dev-converter-bakry-saas && export AWS_ACCESS_KEY_ID=AKIARQZU6JQXGSYJXKY5 && export AWS_SECRET_ACCESS_KEY=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 && export AWS_DEFAULT_REGION=eu-north-1"
+        "export:env": "export POSTGRES_PRISMA_URL='postgresql://postgres@localhost:5432/converter?schema=public' && export AWS_S3_BUCKET_NAME=dev-converter-bakry-saas && export AWS_ACCESS_KEY_ID=AKIARQZU6JQXGSYJXKY5 && export AWS_SECRET_ACCESS_KEY=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 && export AWS_DEFAULT_REGION=eu-north-1 && export DATABASE_URL='postgresql://postgres@127.0.0.1:5432/converter?PgBouncer=true' && export DIRECT_URL='postgresql://postgres@127.0.0.1:5432/converter'"
     },
     "dependencies": {
         "@nextui-org/link": "^2.0.16",
