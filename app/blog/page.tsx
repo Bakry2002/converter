@@ -3,6 +3,7 @@ import { join } from 'path/posix'
 import { Meta } from '@/app/lib/blog'
 import Link from 'next/link'
 import Image from 'next/image'
+import { Header } from '@/components/Header'
 
 // eslint-disable-next-line import/no-anonymous-default-export
 export default async function () {
@@ -19,23 +20,12 @@ export default async function () {
         })
         .sort((a, b) => b.date.getTime() - a.date.getTime()) // sort by date descending
 
-    console.log(blogs)
     return (
         <>
-            <header className="flex items-center mx-auto container py-2">
-                <Link href="/" className=" flex flex-row items-center gap-1">
-                    <Image
-                        src="/icon.png"
-                        alt="Reconvert Logo"
-                        width={64}
-                        height={64}
-                    />
-                    <div className="text-xl">Reconvert</div>
-                </Link>
-            </header>
+            <Header />
 
-            <main className="container max-auto mt-8">
-                <h1 className="text-center text-2xl font-bold">Blog</h1>
+            <main className="container max-auto">
+                <h1 className="text-center text-2xl font-bold py-8">Blog</h1>
                 <ul>
                     {blogs.map((blog) => (
                         <li key={blog.title} className="py-4">

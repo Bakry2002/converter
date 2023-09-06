@@ -1,4 +1,5 @@
 import { DropZone } from '@/components/DropZone'
+import { Header } from '@/components/Header'
 
 import { OpenButton } from '@/components/OpenButton'
 import { Manager } from '@/components/files/Manager'
@@ -44,20 +45,7 @@ export default function Home() {
     return (
         <DropZone>
             <>
-                <header className="flex items-center mx-auto container py-2">
-                    <Link
-                        href="/"
-                        className=" flex flex-row items-center gap-1"
-                    >
-                        <Image
-                            src="/icon.png"
-                            alt="Reconvert Logo"
-                            width={64}
-                            height={64}
-                        />
-                        <div className="text-xl">Reconvert</div>
-                    </Link>
-                </header>
+                <Header />
                 <main>
                     <Hero />
                     <Manager />

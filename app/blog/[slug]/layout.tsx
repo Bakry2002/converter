@@ -1,3 +1,4 @@
+import { Header } from '@/components/Header'
 import Image from 'next/image'
 import Link from 'next/link'
 
@@ -8,17 +9,7 @@ export default function BlogLayout({
 }) {
     return (
         <>
-            <header className="flex items-center mx-auto container py-2">
-                <Link href="/" className=" flex flex-row items-center gap-1">
-                    <Image
-                        src="/icon.png"
-                        alt="Reconvert Logo"
-                        width={64}
-                        height={64}
-                    />
-                    <div className="text-xl">Reconvert</div>
-                </Link>
-            </header>
+            <Header />
             <div className="container mx-auto py-2 mt-10">
                 <Link
                     href="/blog"
