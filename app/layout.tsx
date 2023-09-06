@@ -3,6 +3,7 @@ import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import { Providers } from '@/app/providers/NextUIProvider'
 import PingdomRUM from '@/PingdomRUM'
+import SimpleAnalytic from '@/SimpleAnalytic'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -24,6 +25,7 @@ export default function RootLayout({
             <body className={inter.className}>
                 <Providers>{children}</Providers>
             </body>
+            <SimpleAnalytic />
         </html>
     )
 }
