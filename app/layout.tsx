@@ -19,13 +19,10 @@ export default function RootLayout({
 }) {
     return (
         <html lang="en">
-            <head>
-                <PingdomRUM />
-            </head>
             <body className={inter.className}>
                 <Providers>{children}</Providers>
             </body>
-            <SimpleAnalytic />
+            {process.env.NODE_ENV === 'production' && <SimpleAnalytic />}
         </html>
     )
 }
