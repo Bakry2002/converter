@@ -1,17 +1,9 @@
+import { Meta } from '@/app/lib/blog'
 import { readdir } from 'fs/promises'
 import dynamic from 'next/dynamic'
 import Image from 'next/image'
 import { join } from 'path'
 
-type Meta = {
-    title: string
-    date: string
-    excerpt: string
-    author: {
-        name: string
-        image: string
-    }
-}
 type Props = {
     params: { slug: string }
 }
@@ -28,7 +20,13 @@ export default async function ({ params }: Props) {
         <>
             <article className="prose lg:prose-xl mx-auto">
                 <h1 className="text-center">{meta.title}</h1>
-                <div className="text-center">{meta.date}</div>
+                <div className="text-center">
+                    {new Date(meta.date).toLocaleDateString(undefined, {
+                        year: 'numeric',
+                        month: 'short',
+                        day: 'numeric',
+                    })}
+                </div>
                 <div className="flex items-center justify-center">
                     <Image
                         src={meta.author.image}
