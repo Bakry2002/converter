@@ -60,9 +60,9 @@ const ConversionListItem: React.FC<ConversionListItemProps> = ({
                 <Image src={png} width={32} height={32} alt="PNG" />
             </div>
             <div className="md:col-span-1 col-span-1 flex flex-col">
-                <span className="">{file.name}</span>
+                <span className="">{file?.name}</span>
                 <span className="text-xs text-neutral-500">
-                    {byteToSize(file.size || 0)}
+                    {byteToSize(file?.size || 0)}
                 </span>
             </div>
             {conversion.status === UXConversionStatus.Pending && (

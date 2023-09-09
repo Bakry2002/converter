@@ -33,6 +33,16 @@ module.exports = {
                 'accordion-down': 'accordion-down 0.2s ease-out',
                 'accordion-up': 'accordion-up 0.2s ease-out',
             },
+            backgroundImage: {
+                'hero-gradient-text':
+                    'linear-gradient( 120deg, #F11A7B 10%, #feff9c  )',
+                'hero-gradient-bg':
+                    'linear-gradient( -45deg, rgba(241, 26, 123, .33) 50%, rgba(254, 255, 172, .33) 50% )',
+            },
+            colors: {
+                primary: '#F11A7B',
+                secondary: '#feff9c ',
+            },
         },
     },
     plugins: [

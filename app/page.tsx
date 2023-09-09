@@ -11,11 +11,14 @@ const Hero = () => (
     <section className="py-32 flex items-center flex-col gap-16">
         <h1 className="text-7xl font-bold text-center [text-wrap:balance]">
             Convert any file to any{' '}
-            <span className="text-transparent bg-clip-text bg-gradient-to-br from-green-500 to-blue-500">
+            <span className="text-transparent bg-clip-text bg-hero-gradient-text">
                 format
             </span>
+            {/* <span className="text-transparent bg-clip-text bg-gradient-to-br from-green-500 to-blue-500">
+                format
+            </span> */}
             , keep the quality{' '}
-            <span className="text-transparent bg-clip-text bg-gradient-to-br from-green-500 to-blue-500">
+            <span className="text-transparent bg-clip-text bg-hero-gradient-text">
                 untouched.
             </span>
             {/* Toggle between formats, keep the quality untouched. */}

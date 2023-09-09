@@ -8,8 +8,8 @@ import SimpleAnalytic from '@/SimpleAnalytic'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-    title: 'Reconvert - File converter',
-    description: 'Convert anything to anything.',
+    title: 'Convert it - File converter',
+    description: 'Convert between formats, keep teh quality untouched',
 }
 
 export default function RootLayout({
