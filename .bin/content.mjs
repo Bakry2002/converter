@@ -77,6 +77,8 @@ const date = new Date().toISOString().split('T')[0] // get the current date in t
 await writeFile(path.join('blog', `${slug}.mdx`), content, 'utf8') // write the file to the blog folder
 
 await cd('blog') // change directory to the blog folder
+await $`git config user.name Abdullah M. Bakry"` // set the git user name
+await $`git config user.email "abdaullah62@gmail.com" ` // set the git user email
 await $`git checkout -b create-blog-post-${date}` // create a new branch with the current date
 await $`git add ${slug}.mdx` // add the file to git
 await $`git commit -m "Add blog post: ${title}"` // commit the file
