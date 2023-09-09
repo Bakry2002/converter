@@ -11,7 +11,7 @@ import { Dialog } from './ui/dialog'
 import { DialogContent, DialogTrigger } from './ui/dialog'
 import { Button } from './ui/button'
 import { MenuIcon } from 'lucide-react'
-import shape from '@/app/logo-removebg-preview.png'
+
 const links = [
     {
         label: 'Blog',
@@ -36,7 +36,7 @@ export const Header = () => {
             <nav className="container mx-auto flex items-center w-full">
                 <Link href="/" className=" flex flex-row items-center gap-1">
                     <Image
-                        src={shape}
+                        src="/icon.png"
                         alt="Reconvert Logo"
                         width={45}
                         height={50}
