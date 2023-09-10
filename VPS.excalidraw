@@ -77,8 +77,8 @@
     },
     {
       "type": "rectangle",
-      "version": 374,
-      "versionNonce": 72836520,
+      "version": 376,
+      "versionNonce": 680561624,
       "isDeleted": false,
       "id": "pfraH8hSeUOsnuRfLGTnP",
       "fillStyle": "hachure",
@@ -108,7 +108,7 @@
           "type": "arrow"
         }
       ],
-      "updated": 1694362418779,
+      "updated": 1694371842171,
       "link": null,
       "locked": false
     },
@@ -149,8 +149,8 @@
     },
     {
       "type": "rectangle",
-      "version": 432,
-      "versionNonce": 2116219608,
+      "version": 601,
+      "versionNonce": 162570152,
       "isDeleted": false,
       "id": "WmP612HJwoHGos1EpBk_I",
       "fillStyle": "hachure",
@@ -159,12 +159,12 @@
       "roughness": 1,
       "opacity": 100,
       "angle": 0,
-      "x": 371.79998779296875,
-      "y": 247.79998779296875,
+      "x": 358.20001220703125,
+      "y": 137.80001831054688,
       "strokeColor": "#000000",
       "backgroundColor": "transparent",
       "width": 194,
-      "height": 66,
+      "height": 364,
       "seed": 696116136,
       "groupIds": [],
       "roundness": {
@@ -182,16 +182,24 @@
         {
           "id": "sI5B_Ay50V-fxMMqZnmF7",
           "type": "arrow"
+        },
+        {
+          "id": "XSrOFEegC27Y7s2y76E4x",
+          "type": "arrow"
+        },
+        {
+          "id": "S51OBDCd_vf5-3ZOqzmqt",
+          "type": "arrow"
         }
       ],
-      "updated": 1694362416588,
+      "updated": 1694371772309,
       "link": null,
       "locked": false
     },
     {
       "type": "text",
-      "version": 481,
-      "versionNonce": 1180640728,
+      "version": 660,
+      "versionNonce": 1873489832,
       "isDeleted": false,
       "id": "RIyIUdUODgv4Pe9cX1hUo",
       "fillStyle": "hachure",
@@ -200,36 +208,36 @@
       "roughness": 1,
       "opacity": 100,
       "angle": 0,
-      "x": 398.48748779296875,
-      "y": 256.79998779296875,
+      "x": 384.88751220703125,
+      "y": 223.80001831054688,
       "strokeColor": "#000000",
       "backgroundColor": "transparent",
       "width": 140.625,
-      "height": 48,
+      "height": 192,
       "seed": 1776717480,
       "groupIds": [],
       "roundness": null,
       "boundElements": [],
-      "updated": 1694361584440,
+      "updated": 1694371810004,
       "link": null,
       "locked": false,
       "fontSize": 20,
       "fontFamily": 3,
-      "text": "DogitalOcean\nVPS",
+      "text": "\n\n\n\n\n\nDogitalOcean\nVPS",
       "textAlign": "center",
       "verticalAlign": "middle",
       "containerId": "WmP612HJwoHGos1EpBk_I",
-      "originalText": "DogitalOcean\nVPS",
+      "originalText": "\n\n\n\n\n\nDogitalOcean\nVPS",
       "lineHeight": 1.2,
-      "baseline": 43
+      "baseline": 187
     },
     {
       "id": "BAuPiJZx8EXCzfsDK1JDH",
       "type": "arrow",
-      "x": 180.8000030517578,
-      "y": 398.3999938964844,
-      "width": 189.59999084472656,
-      "height": 100,
+      "x": 181.79400958436906,
+      "y": 402.0198035837228,
+      "width": 170.01811680649269,
+      "height": 62.18195227370791,
       "angle": 0,
       "strokeColor": "#000000",
       "backgroundColor": "transparent",
@@ -243,8 +251,8 @@
         "type": 2
       },
       "seed": 1094108120,
-      "version": 70,
-      "versionNonce": 2015886552,
+      "version": 506,
+      "versionNonce": 417317288,
       "isDeleted": false,
       "boundElements": [
         {
@@ -252,7 +260,7 @@
           "id": "eGlOhyRBtkJtT6SSA-BGi"
         }
       ],
-      "updated": 1694361593344,
+      "updated": 1694371820074,
       "link": null,
       "locked": false,
       "points": [
@@ -261,20 +269,20 @@
           0
         ],
         [
-          189.59999084472656,
-          -100
+          170.01811680649269,
+          -62.18195227370791
         ]
       ],
       "lastCommittedPoint": null,
       "startBinding": {
         "elementId": "yYRUcHl8JhHVhFNeslPv3",
-        "focus": 0.45806553932423805,
-        "gap": 4
+        "focus": 0.4287021589953809,
+        "gap": 4.994006532611252
       },
       "endBinding": {
         "elementId": "WmP612HJwoHGos1EpBk_I",
-        "focus": 0.4075402660108824,
-        "gap": 1.399993896484375
+        "focus": 0.08173280087037994,
+        "gap": 6.387885816169501
       },
       "startArrowhead": null,
       "endArrowhead": "arrow"
@@ -317,10 +325,10 @@
     {
       "id": "aP1zOa6vcIaxXXBuDyvla",
       "type": "text",
-      "x": 109.00006103515625,
-      "y": 512.1999816894531,
+      "x": -12.59991455078125,
+      "y": 641.0000457763672,
       "width": 1769.53125,
-      "height": 264,
+      "height": 576,
       "angle": 0,
       "strokeColor": "#000000",
       "backgroundColor": "transparent",
@@ -332,30 +340,30 @@
       "groupIds": [],
       "roundness": null,
       "seed": 106362328,
-      "version": 819,
-      "versionNonce": 1986502568,
+      "version": 1784,
+      "versionNonce": 586207448,
       "isDeleted": false,
       "boundElements": null,
-      "updated": 1694362679046,
+      "updated": 1694371874786,
       "link": null,
       "locked": false,
-      "text": "- i have my local  computer which i'm doing the devlopment on. \n\n- Create DigitalOcean virtual private server which is Ubuntu computer that is living somewhere in the cloud, we set the location to be in New York, US.\n\nNow, we pushed our local code to GitHub, so we are goign to connect with our VPS through a ssh (Secure shell). \nthat means that we can basically connect to the VPS terminal and run commands on it. \nOne of that commands will be pulling the code from GitHub.\nThen we can run our Dockerfile so that we can start up the server. \n\nssh-keygen -t rsa -b 8192: to generate an ssh key.\n         ",
+      "text": "- i have my local  computer which i'm doing the devlopment on. \n\n- Create DigitalOcean virtual private server which is Ubuntu computer that is living somewhere in the cloud, we set the location to be in New York, US.\n\nNow, we pushed our local code to GitHub, so we are goign to connect with our VPS through a ssh (Secure shell). \nthat means that we can basically connect to the VPS terminal and run commands on it. \nOne of that commands will be pulling the code from GitHub.\nThen we can run our Dockerfile so that we can start up the server. \n\nssh-keygen -t rsa -b 8192: to generate an ssh key.\n\nwhat we need to do is to copy the public key to GitHub to be able to  clone the repo of the application.  \nAfter cloning the github repo inside the VPS and installing the docker and docker compose with this command \ndocker-compose up --build -d . \nNow we have docker running inside our VPS. \nThe docker container is going to follow the commands in the dockerfile and run nextjs application in the port we choose for it. \n\nSo this docker container is mini virtual machine that lives within our VPS. \n\n\n\n         \n\n",
       "fontSize": 20,
       "fontFamily": 3,
       "textAlign": "left",
       "verticalAlign": "top",
-      "baseline": 259,
+      "baseline": 571,
       "containerId": null,
-      "originalText": "- i have my local  computer which i'm doing the devlopment on. \n\n- Create DigitalOcean virtual private server which is Ubuntu computer that is living somewhere in the cloud, we set the location to be in New York, US.\n\nNow, we pushed our local code to GitHub, so we are goign to connect with our VPS through a ssh (Secure shell). \nthat means that we can basically connect to the VPS terminal and run commands on it. \nOne of that commands will be pulling the code from GitHub.\nThen we can run our Dockerfile so that we can start up the server. \n\nssh-keygen -t rsa -b 8192: to generate an ssh key.\n         ",
+      "originalText": "- i have my local  computer which i'm doing the devlopment on. \n\n- Create DigitalOcean virtual private server which is Ubuntu computer that is living somewhere in the cloud, we set the location to be in New York, US.\n\nNow, we pushed our local code to GitHub, so we are goign to connect with our VPS through a ssh (Secure shell). \nthat means that we can basically connect to the VPS terminal and run commands on it. \nOne of that commands will be pulling the code from GitHub.\nThen we can run our Dockerfile so that we can start up the server. \n\nssh-keygen -t rsa -b 8192: to generate an ssh key.\n\nwhat we need to do is to copy the public key to GitHub to be able to  clone the repo of the application.  \nAfter cloning the github repo inside the VPS and installing the docker and docker compose with this command \ndocker-compose up --build -d . \nNow we have docker running inside our VPS. \nThe docker container is going to follow the commands in the dockerfile and run nextjs application in the port we choose for it. \n\nSo this docker container is mini virtual machine that lives within our VPS. \n\n\n\n         \n\n",
       "lineHeight": 1.2
     },
     {
       "id": "sI5B_Ay50V-fxMMqZnmF7",
       "type": "arrow",
-      "x": 168.80001831054688,
-      "y": 184.63903150172064,
-      "width": 201.99996948242188,
-      "height": 73.05047747566863,
+      "x": 167.648530439897,
+      "y": 176.22169006979053,
+      "width": 184.50298471161818,
+      "height": 71.77050999099069,
       "angle": 0,
       "strokeColor": "#000000",
       "backgroundColor": "transparent",
@@ -369,8 +377,8 @@
         "type": 2
       },
       "seed": 1410758104,
-      "version": 150,
-      "versionNonce": 34733272,
+      "version": 600,
+      "versionNonce": 1290965464,
       "isDeleted": false,
       "boundElements": [
         {
@@ -378,7 +386,7 @@
           "id": "NvMchFI9Sq0rDd6VTTwff"
         }
       ],
-      "updated": 1694362419715,
+      "updated": 1694371816408,
       "link": null,
       "locked": false,
       "points": [
@@ -387,20 +395,20 @@
           0
         ],
         [
-          201.99996948242188,
-          73.05047747566863
+          184.50298471161818,
+          71.77050999099069
         ]
       ],
       "lastCommittedPoint": null,
       "startBinding": {
         "elementId": "pfraH8hSeUOsnuRfLGTnP",
-        "focus": -0.39914408824430025,
-        "gap": 7.6000213623046875
+        "focus": -0.5518776754918047,
+        "gap": 6.448533491654814
       },
       "endBinding": {
         "elementId": "WmP612HJwoHGos1EpBk_I",
-        "focus": -0.18111181923298902,
-        "gap": 1
+        "focus": 0.1443692260669484,
+        "gap": 6.048497055516066
       },
       "startArrowhead": null,
       "endArrowhead": "arrow"
@@ -408,8 +416,8 @@
     {
       "id": "NvMchFI9Sq0rDd6VTTwff",
       "type": "text",
-      "x": 246.3625030517578,
-      "y": 209.16427023955495,
+      "x": 231.16249084472656,
+      "y": 181.16430075713308,
       "width": 46.875,
       "height": 24,
       "angle": 0,
@@ -423,11 +431,11 @@
       "groupIds": [],
       "roundness": null,
       "seed": 197349800,
-      "version": 7,
-      "versionNonce": 2010725800,
+      "version": 44,
+      "versionNonce": 1926667480,
       "isDeleted": false,
       "boundElements": null,
-      "updated": 1694362422592,
+      "updated": 1694371814471,
       "link": null,
       "locked": false,
       "text": "Pull",
@@ -443,8 +451,8 @@
     {
       "id": "YrtpwIsRYrgFtvIjyBQjY",
       "type": "text",
-      "x": 410.5999984741211,
-      "y": 220.5999755859375,
+      "x": 608.2000198364258,
+      "y": 247,
       "width": 117.1875,
       "height": 24,
       "angle": 0,
@@ -458,11 +466,20 @@
       "groupIds": [],
       "roundness": null,
       "seed": 1283513816,
-      "version": 72,
-      "versionNonce": 1422759592,
+      "version": 589,
+      "versionNonce": 1619522776,
       "isDeleted": false,
-      "boundElements": null,
-      "updated": 1694362739650,
+      "boundElements": [
+        {
+          "id": "IWig1V7K6dw_-GjZW_0T-",
+          "type": "arrow"
+        },
+        {
+          "id": "XSrOFEegC27Y7s2y76E4x",
+          "type": "arrow"
+        }
+      ],
+      "updated": 1694371474684,
       "link": null,
       "locked": false,
       "text": "id_rsa.pub",
@@ -477,8 +494,8 @@
     },
     {
       "type": "text",
-      "version": 121,
-      "versionNonce": 1534097112,
+      "version": 321,
+      "versionNonce": 1525661656,
       "isDeleted": false,
       "id": "G0b70o8GGsqpCVJ1r0Yq6",
       "fillStyle": "hachure",
@@ -487,8 +504,8 @@
       "roughness": 1,
       "opacity": 100,
       "angle": 0,
-      "x": 411.0064010620117,
-      "y": 323.79998779296875,
+      "x": 624.6064529418945,
+      "y": 396.59991455078125,
       "strokeColor": "#000000",
       "backgroundColor": "transparent",
       "width": 70.3125,
@@ -496,8 +513,13 @@
       "seed": 1283513816,
       "groupIds": [],
       "roundness": null,
-      "boundElements": [],
-      "updated": 1694362741917,
+      "boundElements": [
+        {
+          "id": "S51OBDCd_vf5-3ZOqzmqt",
+          "type": "arrow"
+        }
+      ],
+      "updated": 1694371471120,
       "link": null,
       "locked": false,
       "fontSize": 20,
@@ -509,6 +531,514 @@
       "originalText": "id_rsa",
       "lineHeight": 1.2,
       "baseline": 19
+    },
+    {
+      "id": "IWig1V7K6dw_-GjZW_0T-",
+      "type": "arrow",
+      "x": 646.3689851758437,
+      "y": 241.59999084472656,
+      "width": 457.5688066480117,
+      "height": 200.27201478730365,
+      "angle": 0,
+      "strokeColor": "#000000",
+      "backgroundColor": "transparent",
+      "fillStyle": "hachure",
+      "strokeWidth": 1,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100,
+      "groupIds": [],
+      "roundness": {
+        "type": 2
+      },
+      "seed": 1089463720,
+      "version": 940,
+      "versionNonce": 730560984,
+      "isDeleted": false,
+      "boundElements": [
+        {
+          "type": "text",
+          "id": "OwnS04rTOH_0aaDZ4NsEp"
+        }
+      ],
+      "updated": 1694371862354,
+      "link": null,
+      "locked": false,
+      "points": [
+        [
+          0,
+          0
+        ],
+        [
+          -78.3688859937148,
+          -166.39999389648438
+        ],
+        [
+          -457.5688066480117,
+          -200.27201478730365
+        ]
+      ],
+      "lastCommittedPoint": null,
+      "startBinding": {
+        "elementId": "YrtpwIsRYrgFtvIjyBQjY",
+        "focus": -0.1903632892517682,
+        "gap": 5.4000091552734375
+      },
+      "endBinding": {
+        "elementId": "R7EEzcXZklNUVcmHUm1Hv",
+        "focus": -0.15190914873337918,
+        "gap": 6.000152587890625
+      },
+      "startArrowhead": null,
+      "endArrowhead": "arrow"
+    },
+    {
+      "id": "OwnS04rTOH_0aaDZ4NsEp",
+      "type": "text",
+      "x": 515.2657241821289,
+      "y": 63.19999694824219,
+      "width": 105.46875,
+      "height": 24,
+      "angle": 0,
+      "strokeColor": "#000000",
+      "backgroundColor": "transparent",
+      "fillStyle": "hachure",
+      "strokeWidth": 1,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100,
+      "groupIds": [],
+      "roundness": null,
+      "seed": 2007061464,
+      "version": 38,
+      "versionNonce": 1387227304,
+      "isDeleted": false,
+      "boundElements": null,
+      "updated": 1694371840546,
+      "link": null,
+      "locked": false,
+      "text": "Copied to",
+      "fontSize": 20,
+      "fontFamily": 3,
+      "textAlign": "center",
+      "verticalAlign": "middle",
+      "baseline": 19,
+      "containerId": "IWig1V7K6dw_-GjZW_0T-",
+      "originalText": "Copied to",
+      "lineHeight": 1.2
+    },
+    {
+      "id": "XSrOFEegC27Y7s2y76E4x",
+      "type": "arrow",
+      "x": 558.4669092351742,
+      "y": 319.58895281076104,
+      "width": 61.84701067735898,
+      "height": 37.32133361568464,
+      "angle": 0,
+      "strokeColor": "#000000",
+      "backgroundColor": "transparent",
+      "fillStyle": "hachure",
+      "strokeWidth": 1,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100,
+      "groupIds": [],
+      "roundness": {
+        "type": 2
+      },
+      "seed": 1583934120,
+      "version": 633,
+      "versionNonce": 631572184,
+      "isDeleted": false,
+      "boundElements": [],
+      "updated": 1694371797728,
+      "link": null,
+      "locked": false,
+      "points": [
+        [
+          0,
+          0
+        ],
+        [
+          61.84701067735898,
+          -37.32133361568464
+        ]
+      ],
+      "lastCommittedPoint": null,
+      "startBinding": {
+        "elementId": "WmP612HJwoHGos1EpBk_I",
+        "focus": 0.2581957887269394,
+        "gap": 6.266897028142921
+      },
+      "endBinding": {
+        "elementId": "YrtpwIsRYrgFtvIjyBQjY",
+        "focus": 0.10094272017830191,
+        "gap": 11.267619195076406
+      },
+      "startArrowhead": null,
+      "endArrowhead": "arrow"
+    },
+    {
+      "type": "arrow",
+      "version": 747,
+      "versionNonce": 638479320,
+      "isDeleted": false,
+      "id": "S51OBDCd_vf5-3ZOqzmqt",
+      "fillStyle": "hachure",
+      "strokeWidth": 1,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100,
+      "angle": 0,
+      "x": 553.2000122070312,
+      "y": 393.6238403559864,
+      "strokeColor": "#000000",
+      "backgroundColor": "transparent",
+      "width": 62.670067272082974,
+      "height": 6.850541769002234,
+      "seed": 1583934120,
+      "groupIds": [],
+      "roundness": {
+        "type": 2
+      },
+      "boundElements": [],
+      "updated": 1694371797728,
+      "link": null,
+      "locked": false,
+      "startBinding": {
+        "elementId": "WmP612HJwoHGos1EpBk_I",
+        "gap": 1,
+        "focus": 0.32769517947199894
+      },
+      "endBinding": {
+        "elementId": "G0b70o8GGsqpCVJ1r0Yq6",
+        "gap": 8.736373462780307,
+        "focus": 0.21003482639156262
+      },
+      "lastCommittedPoint": null,
+      "startArrowhead": null,
+      "endArrowhead": "arrow",
+      "points": [
+        [
+          0,
+          0
+        ],
+        [
+          62.670067272082974,
+          6.850541769002234
+        ]
+      ]
+    },
+    {
+      "id": "Flv3bUxZdmeAk09X4-tql",
+      "type": "rectangle",
+      "x": 380.00011444091797,
+      "y": 157.39999389648438,
+      "width": 89,
+      "height": 43,
+      "angle": 0,
+      "strokeColor": "#000000",
+      "backgroundColor": "transparent",
+      "fillStyle": "hachure",
+      "strokeWidth": 1,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100,
+      "groupIds": [],
+      "roundness": {
+        "type": 3
+      },
+      "seed": 1839224488,
+      "version": 457,
+      "versionNonce": 136489640,
+      "isDeleted": false,
+      "boundElements": [
+        {
+          "type": "text",
+          "id": "NzjrwwciOE0MuUKxhEzG9"
+        },
+        {
+          "id": "PnSNF_PWDSPwqfupaKMch",
+          "type": "arrow"
+        }
+      ],
+      "updated": 1694371781772,
+      "link": null,
+      "locked": false
+    },
+    {
+      "id": "NzjrwwciOE0MuUKxhEzG9",
+      "type": "text",
+      "x": 389.34386444091797,
+      "y": 166.89999389648438,
+      "width": 70.3125,
+      "height": 24,
+      "angle": 0,
+      "strokeColor": "#000000",
+      "backgroundColor": "transparent",
+      "fillStyle": "hachure",
+      "strokeWidth": 1,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100,
+      "groupIds": [],
+      "roundness": null,
+      "seed": 696524968,
+      "version": 429,
+      "versionNonce": 11580376,
+      "isDeleted": false,
+      "boundElements": null,
+      "updated": 1694371781772,
+      "link": null,
+      "locked": false,
+      "text": "docker",
+      "fontSize": 20,
+      "fontFamily": 3,
+      "textAlign": "center",
+      "verticalAlign": "middle",
+      "baseline": 19,
+      "containerId": "Flv3bUxZdmeAk09X4-tql",
+      "originalText": "docker",
+      "lineHeight": 1.2
+    },
+    {
+      "id": "PnSNF_PWDSPwqfupaKMch",
+      "type": "arrow",
+      "x": 428.8459362857758,
+      "y": 201.70218985652383,
+      "width": 32.21602658397228,
+      "height": 47.53385822909951,
+      "angle": 0,
+      "strokeColor": "#000000",
+      "backgroundColor": "transparent",
+      "fillStyle": "hachure",
+      "strokeWidth": 1,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100,
+      "groupIds": [],
+      "roundness": {
+        "type": 2
+      },
+      "seed": 1328805544,
+      "version": 676,
+      "versionNonce": 591132632,
+      "isDeleted": false,
+      "boundElements": [
+        {
+          "type": "text",
+          "id": "oZc9tLNaaYQlul3jDJCM9"
+        }
+      ],
+      "updated": 1694371893998,
+      "link": null,
+      "locked": false,
+      "points": [
+        [
+          0,
+          0
+        ],
+        [
+          32.21602658397228,
+          47.53385822909951
+        ]
+      ],
+      "lastCommittedPoint": null,
+      "startBinding": {
+        "elementId": "Flv3bUxZdmeAk09X4-tql",
+        "gap": 1.3021959600394026,
+        "focus": 0.18915363473269367
+      },
+      "endBinding": {
+        "elementId": "85kIu4XyvSrZUTQpDK5J2",
+        "gap": 1.663930552071982,
+        "focus": 0.24726996387631398
+      },
+      "startArrowhead": null,
+      "endArrowhead": "arrow"
+    },
+    {
+      "id": "oZc9tLNaaYQlul3jDJCM9",
+      "type": "text",
+      "x": 420.36787413944467,
+      "y": 213.3999786376953,
+      "width": 46.875,
+      "height": 24,
+      "angle": 0,
+      "strokeColor": "#000000",
+      "backgroundColor": "transparent",
+      "fillStyle": "hachure",
+      "strokeWidth": 1,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100,
+      "groupIds": [],
+      "roundness": null,
+      "seed": 1174112424,
+      "version": 7,
+      "versionNonce": 79557800,
+      "isDeleted": false,
+      "boundElements": null,
+      "updated": 1694371788909,
+      "link": null,
+      "locked": false,
+      "text": "runs",
+      "fontSize": 20,
+      "fontFamily": 3,
+      "textAlign": "center",
+      "verticalAlign": "middle",
+      "baseline": 19,
+      "containerId": "PnSNF_PWDSPwqfupaKMch",
+      "originalText": "runs",
+      "lineHeight": 1.2
+    },
+    {
+      "type": "rectangle",
+      "version": 676,
+      "versionNonce": 948048296,
+      "isDeleted": false,
+      "id": "85kIu4XyvSrZUTQpDK5J2",
+      "fillStyle": "hachure",
+      "strokeWidth": 1,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100,
+      "angle": 0,
+      "x": 368.50003814697266,
+      "y": 250.8999786376953,
+      "strokeColor": "#000000",
+      "backgroundColor": "transparent",
+      "width": 176,
+      "height": 65,
+      "seed": 1839224488,
+      "groupIds": [],
+      "roundness": {
+        "type": 3
+      },
+      "boundElements": [
+        {
+          "type": "text",
+          "id": "BdXuoAlsdjVluGbzqwlIj"
+        },
+        {
+          "id": "PnSNF_PWDSPwqfupaKMch",
+          "type": "arrow"
+        },
+        {
+          "id": "BAuPiJZx8EXCzfsDK1JDH",
+          "type": "arrow"
+        }
+      ],
+      "updated": 1694371894000,
+      "link": null,
+      "locked": false
+    },
+    {
+      "type": "text",
+      "version": 705,
+      "versionNonce": 1519896488,
+      "isDeleted": false,
+      "id": "BdXuoAlsdjVluGbzqwlIj",
+      "fillStyle": "hachure",
+      "strokeWidth": 1,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100,
+      "angle": 0,
+      "x": 386.18753814697266,
+      "y": 259.3999786376953,
+      "strokeColor": "#000000",
+      "backgroundColor": "transparent",
+      "width": 140.625,
+      "height": 48,
+      "seed": 696524968,
+      "groupIds": [],
+      "roundness": null,
+      "boundElements": [],
+      "updated": 1694371896413,
+      "link": null,
+      "locked": false,
+      "fontSize": 20,
+      "fontFamily": 3,
+      "text": "Nextjs app. \non port:3000",
+      "textAlign": "center",
+      "verticalAlign": "middle",
+      "containerId": "85kIu4XyvSrZUTQpDK5J2",
+      "originalText": "Nextjs app. \non port:3000",
+      "lineHeight": 1.2,
+      "baseline": 43
+    },
+    {
+      "id": "R7EEzcXZklNUVcmHUm1Hv",
+      "type": "rectangle",
+      "x": 52.800025939941406,
+      "y": -0.6000137329101562,
+      "width": 130,
+      "height": 86,
+      "angle": 0,
+      "strokeColor": "#000000",
+      "backgroundColor": "transparent",
+      "fillStyle": "hachure",
+      "strokeWidth": 1,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100,
+      "groupIds": [],
+      "roundness": {
+        "type": 3
+      },
+      "seed": 725700824,
+      "version": 197,
+      "versionNonce": 1764480216,
+      "isDeleted": false,
+      "boundElements": [
+        {
+          "type": "text",
+          "id": "G7PWN_AUuiYQZNLpIWG0b"
+        },
+        {
+          "id": "IWig1V7K6dw_-GjZW_0T-",
+          "type": "arrow"
+        }
+      ],
+      "updated": 1694371862353,
+      "link": null,
+      "locked": false
+    },
+    {
+      "id": "G7PWN_AUuiYQZNLpIWG0b",
+      "type": "text",
+      "x": 59.206275939941406,
+      "y": 18.399986267089844,
+      "width": 117.1875,
+      "height": 48,
+      "angle": 0,
+      "strokeColor": "#000000",
+      "backgroundColor": "transparent",
+      "fillStyle": "hachure",
+      "strokeWidth": 1,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100,
+      "groupIds": [],
+      "roundness": null,
+      "seed": 1576572072,
+      "version": 148,
+      "versionNonce": 2064558296,
+      "isDeleted": false,
+      "boundElements": null,
+      "updated": 1694371866448,
+      "link": null,
+      "locked": false,
+      "text": "GitHub SSH\nkey",
+      "fontSize": 20,
+      "fontFamily": 3,
+      "textAlign": "center",
+      "verticalAlign": "middle",
+      "baseline": 43,
+      "containerId": "R7EEzcXZklNUVcmHUm1Hv",
+      "originalText": "GitHub SSH key",
+      "lineHeight": 1.2
     }
   ],
   "appState": {
