@@ -1,0 +1,49 @@
+export const meta = {
+    title: 'How to convert PNG to JPEG using ImageMagick',
+    date: '2023-09-06T12:00:00.000Z',
+    excerpt: 'Convert files directly from the command line using ImageMagick.',
+    author: {
+        name: 'Abdullah Bakry',
+        image: 'https://lh3.googleusercontent.com/a/AAcHTtdpj4B5OHRAFfv3ICXxNh51IK_5pTZhhx2CJSKCZOGmFA=s96-c',
+    },
+    image: 'https://plus.unsplash.com/premium_photo-1676009619407-18a5121f9687?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80',
+}
+
+### Follow these steps to convert PNG to JPEG using ImageMagick:
+
+1. **Install ImageMagick**:
+   If you haven't already, you can install ImageMagick by following the instructions for your specific operating system. You can download it from the [official website](https://imagemagick.org/script/download.php).
+
+2. **Open Terminal or Command Prompt:**
+   Once ImageMagick is installed, open your terminal or command prompt.
+
+3. **Navigate to the Directory with PNG Files:**
+   Use the `cd` command to navigate to the directory where your PNG files are located. For example:
+    ```bash
+    cd /path/to/your/png/files
+    ```
+4. **Convert PNG to JPEG:**
+   Use the `convert` command provided by ImageMagick to convert the PNG files to JPEG. Here's the basic syntax:
+    ```bash
+    convert input.png output.jpg
+    ```
+    Replace `input.png` with the name of your PNG file and `output.jpg` with the desired name for the converted JPEG file. For example:
+    ```bash
+    convert myimage.png myimage.jpg
+    ```
+5. **Adjust Quality (Optional):**
+   You can also specify the quality of the JPEG image using the `-quality` flag. The value can range from 0 to 100, with 100 being the highest quality. For example:
+    ```bash
+    convert input.png -quality 90 output.jpg
+    ```
+6. **Batch Conversion (Optional):**
+   If you have multiple PNG files to convert, you can use wildcard characters to convert them all at once. For example, to convert all PNG files in the current directory:
+
+    ```bash
+        convert \*.png -quality 90 -set filename:basename "%[basename]" "%[filename:basename].jpg"
+    ```
+
+7. **Check the Converted Files:**
+   After running the conversion command, check the directory to ensure that the PNG files have been successfully converted to JPEG.
+
+That's it! You've successfully converted PNG files to JPEG using ImageMagick.

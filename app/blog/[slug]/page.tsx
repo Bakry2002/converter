@@ -44,6 +44,15 @@ export default async function ({ params }: Props) {
                         <div>{meta.author.name}</div>
                     </div>
                 </div>
+                <div>
+                    <Image
+                        src={meta.image}
+                        alt={meta.title}
+                        width={900}
+                        height={550}
+                        className="rounded-lg w-full h-full"
+                    />
+                </div>
                 <Content />
             </article>
         </>
