@@ -28,14 +28,11 @@ const exec = (0, util_1.promisify)(child_process_1.exec); // promisify exec whic
 //     converter.to = to
 //     return converter
 // }
-// ${
-//                 process.env.NODE_ENV === 'production' ? 'convert' : 'magick'
-//             }
 const buildConverter = (from, to, params) => {
     const converter = async (buf) => {
         const file = (0, crypto_1.randomUUID)(); // generate a random file name
         await (0, promises_1.writeFile)(`/tmp/${file}.${(0, mime_types_1.extension)(from)}`, buf); // write the buffer to the file
-        await exec(`convert /tmp/${file}.${(0, mime_types_1.extension)(from)} ${params !== null && params !== void 0 ? params : ''} /tmp/${file}.${(0, mime_types_1.extension)(to)}`); // convert the file
+        await exec(`${process.env.NODE_ENV === 'production' ? 'convert' : 'magick'} /tmp/${file}.${(0, mime_types_1.extension)(from)} ${params !== null && params !== void 0 ? params : ''} /tmp/${file}.${(0, mime_types_1.extension)(to)}`); // convert the file
         return (0, promises_1.readFile)(`/tmp/${file}.${(0, mime_types_1.extension)(to)}`); // return the converted file
     };
     converter.from = from;

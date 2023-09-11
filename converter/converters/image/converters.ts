@@ -29,9 +29,6 @@ const exec = promisify(execAsync) // promisify exec which mean we can use await 
 //     return converter
 // }
 
-// ${
-//                 process.env.NODE_ENV === 'production' ? 'convert' : 'magick'
-//             }
 const buildConverter = (
     from: string,
     to: string,
@@ -41,7 +38,9 @@ const buildConverter = (
         const file = randomUUID() // generate a random file name
         await writeFile(`/tmp/${file}.${extension(from)}`, buf) // write the buffer to the file
         await exec(
-            `convert /tmp/${file}.${extension(from)} ${
+            `${
+                process.env.NODE_ENV === 'production' ? 'convert' : 'magick'
+            } /tmp/${file}.${extension(from)} ${
                 params ?? ''
             } /tmp/${file}.${extension(to)}`
         ) // convert the file
