@@ -22,6 +22,7 @@ AWS.config.update({
 const bucket = process.env.AWS_S3_BUCKET_NAME!
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 <<<<<<< Updated upstream
 //! Convert function: all the work will be done here
 const convert = async (c: Conversion) => {
@@ -40,6 +41,10 @@ const convert = async (c: ConversionWithStagesWithArtifacts) => {
 //! Convert function: all the work will be done here
 const convert = async (c: Conversion) => {
 >>>>>>> parent of 685184b (new data model with stages and artifacts)
+=======
+//! Convert function: all the work will be done here
+const convert = async (c: Conversion) => {
+>>>>>>> parent of 685184b (new data model with stages and artifacts)
     try {
         const s3 = new AWS.S3()
         const downloadParams = {
@@ -49,6 +54,7 @@ const convert = async (c: Conversion) => {
         console.log('Downloading file:', downloadParams)
         const res = await s3.getObject(downloadParams).promise()
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< Updated upstream
         const converters = findPath(c.fromMime, c.toMime)
@@ -65,6 +71,9 @@ const convert = async (c: Conversion) => {
 
         const converters = findPath(current.mime, next.mime) // find the path of converters from the current mime to the next mime
 >>>>>>> Stashed changes
+=======
+        const converters = findPath(c.fromMime, c.toMime)
+>>>>>>> parent of 685184b (new data model with stages and artifacts)
 =======
         const converters = findPath(c.fromMime, c.toMime)
 >>>>>>> parent of 685184b (new data model with stages and artifacts)

@@ -46,11 +46,14 @@ const bucket = process.env.AWS_S3_BUCKET_NAME;
 //! Convert function: all the work will be done here
 const convert = async (c) => {
 <<<<<<< HEAD
+<<<<<<< HEAD
 <<<<<<< Updated upstream
 =======
     var _a;
     console.log('Starting conversion: ', c.id);
 >>>>>>> Stashed changes
+=======
+>>>>>>> parent of 685184b (new data model with stages and artifacts)
 =======
 >>>>>>> parent of 685184b (new data model with stages and artifacts)
     try {
@@ -59,6 +62,7 @@ const convert = async (c) => {
             Bucket: bucket,
             Key: c.s3Key,
         };
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< Updated upstream
         console.log('Downloading file:', downloadParams);
@@ -74,6 +78,11 @@ const convert = async (c) => {
         console.log(`Starting conversion: ${current.mime} => ${next.mime}`);
         const converters = (0, graph_1.findPath)(current.mime, next.mime); // find the path of converters from the current mime to the next mime
 >>>>>>> Stashed changes
+=======
+        console.log('Downloading file:', downloadParams);
+        const res = await s3.getObject(downloadParams).promise();
+        const converters = (0, graph_1.findPath)(c.fromMime, c.toMime);
+>>>>>>> parent of 685184b (new data model with stages and artifacts)
 =======
         console.log('Downloading file:', downloadParams);
         const res = await s3.getObject(downloadParams).promise();
