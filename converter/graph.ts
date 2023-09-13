@@ -35,6 +35,9 @@ converters.forEach((converter) => {
     })
 })
 
+// !FOR DEBUGGING
+console.log(`Graph: ${nodes}`)
+
 export { nodes }
 
 export type Path = Edge[] | null

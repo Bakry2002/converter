@@ -21,6 +21,8 @@ converters.forEach((converter) => {
         to: nodes[converter.to],
     });
 });
+// !FOR DEBUGGING
+console.log(`Graph: ${nodes}`);
 //this search is breadth-first, which means it will find the shortest path
 function findPath(start, end) {
     const visited = {}; // this is a set of nodes we have visited'
