@@ -35,12 +35,15 @@ converters.forEach((converter) => {
     })
 })
 
+<<<<<<< HEAD
 <<<<<<< Updated upstream
 =======
 // !FOR DEBUGGING
 console.log('Graph: ', nodes)
 
 >>>>>>> Stashed changes
+=======
+>>>>>>> parent of 685184b (new data model with stages and artifacts)
 export { nodes }
 
 export type Path = Edge[] | null
