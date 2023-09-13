@@ -6,74 +6,90 @@
 //      1. Compile the typescript code to javascript.
 //      2. turn it to an executable with docker.
 //* ========== End Note ===========
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 const client_1 = require("@prisma/client");
+const AWS = __importStar(require("aws-sdk"));
 const prisma_1 = require("../app/lib/prisma");
+// import { PNG_TO_JPG } from './converters/image'
+const crypto_1 = require("crypto");
+const mime_types_1 = require("mime-types");
 const graph_1 = require("./graph");
-const s3_1 = require("../lib/s3");
+AWS.config.update({
+    accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+    region: process.env.AWS_DEFAULT_REGION,
+});
 const bucket = process.env.AWS_S3_BUCKET_NAME;
-// Convert function: all the work will be done here
+//! Convert function: all the work will be done here
 const convert = async (c) => {
-    var _a;
-    console.log('Starting conversion', c.id);
     try {
+        const s3 = new AWS.S3();
         const downloadParams = {
             Bucket: bucket,
-            Key: (0, s3_1.key)(c, 0, c.stages[0].artifacts[0]),
+            Key: c.s3Key,
         };
-        const [current, next] = c.stages; // get the current stage and the next stage, take the first and the second stages
-        // !FOR DEBUGGING
-        console.log(`Downloading file: ${downloadParams.Key}`);
-        const res = await s3_1.s3.getObject(downloadParams); // download the file from s3
-        // !FOR DEBUGGING
-        console.log(`Starting conversion: ${current.mime} => ${next.mime}`);
-        const converters = (0, graph_1.findPath)(current.mime, next.mime); // find the path of converters from the current mime to the next mime
+        console.log('Downloading file:', downloadParams);
+        const res = await s3.getObject(downloadParams).promise();
+        const converters = (0, graph_1.findPath)(c.fromMime, c.toMime);
         if (!converters) {
-            // !FOR DEBUGGING
-            console.error(`Could not find a converters for ${current.mime} to ${next.mime}`);
+            console.error(`Could not find a converters for ${c.fromMime} to ${c.toMime}`);
             await prisma_1.prisma.conversion.update({
                 where: {
                     id: c.id,
                 },
                 data: {
-                    error: `Could not find a converters for ${current.mime} to ${next.mime}`,
+                    error: `Could not convert from ${c.fromMime} to ${c.toMime}`,
                     status: client_1.ConversionStatus.ERROR,
                 },
             });
             return;
         }
         // otherwise, we will have a path of converters and we need to loop over them
-        // convert the body to a buffer (it is a buffer already but we need to make typescript happy
-        const converted = await ((_a = res.Body) === null || _a === void 0 ? void 0 : _a.transformToByteArray());
-        if (!converted) {
-            throw new Error('Could not download the file');
-        }
-        let output = []; // create an array of output
+        let converted = res.Body; // this is the file we will convert
         for (const edge of converters) {
-            console.log(`Converting to: ${edge.to.type}`);
-            output = await edge.converter([Buffer.from(converted)]); // convert the file
+            converted = await edge.converter(res.Body); // convert the file
         }
-        // after the file is converted, we will create a new artifact in the next stage
-        const artifact = await prisma_1.prisma.artifact.create({
-            data: {
-                order: 0,
-                stageId: next.id, // set the stage id to the next stage id
-            },
-        });
-        // !FOR DEBUGGING
-        console.log('Uploading to:', artifact.id);
+        console.log('Convert', converters[converters.length - 1].to.type);
+        const mime = (0, mime_types_1.extension)(converters[converters.length - 1].to.type); // get the mime type of the last converter as it will be the required mime type to
+        const key = ((0, crypto_1.randomUUID)() + (0, crypto_1.randomUUID)()).replace(/-/g, ''); //  create a new random key for the file after it has been converted
+        console.log('Uploading to:', key);
         const uploadParams = {
             Bucket: bucket,
-            Key: (0, s3_1.key)(c, 1, artifact),
-            Body: output[0],
+            Key: key,
+            Body: converted,
         };
-        await s3_1.s3.putObject(uploadParams); // upload the file to s3
+        await s3.putObject(uploadParams).promise();
         await prisma_1.prisma.conversion.update({
             where: {
                 id: c.id,
             },
             data: {
                 status: client_1.ConversionStatus.DONE,
+                s3Key: key,
+                currentMime: mime,
             },
         });
         //! RECAP: we have downloaded the file from s3, converted it, and uploaded it back to s3, and then update the database
@@ -95,13 +111,6 @@ const main = async () => {
     const conversions = await prisma_1.prisma.conversion.findMany({
         where: {
             status: client_1.ConversionStatus.PENDING,
-        },
-        include: {
-            stages: {
-                include: {
-                    artifacts: true, // include the artifacts to get the id of the artifact
-                },
-            },
         },
     });
     console.log(`Found ${conversions.length} conversions`);
