@@ -8,7 +8,7 @@ import SimpleAnalytic from '@/SimpleAnalytic'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-    title: 'Convert it - Convert between any formats',
+    title: 'Convert it  —  Convert between any formats',
     description: 'Convert between any formats, keep teh quality untouched',
 }
 

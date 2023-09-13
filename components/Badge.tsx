@@ -11,7 +11,7 @@ const Badge = forwardRef<HTMLDivElement, BadgeProps>((props, forwardedRef) => {
         <div
             ref={forwardedRef}
             className={cn(
-                'py-1 px-2 border rounded text-xs flex items-center justify-center',
+                'py-1 px-2 border rounded text-sm italic w-full h-full flex items-center justify-center',
                 className
             )}
             {...rest}

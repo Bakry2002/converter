@@ -55,14 +55,14 @@ const ConversionListItem: React.FC<ConversionListItemProps> = ({
     const { file, to } = conversion
     //grid md:grid-cols-[48px_1fr_80px_120px_50px] grid-cols-[48px_1fr_80px_120px_50px] gap-4
     return (
-        <li className="grid md:grid-cols-[48px_1fr_80px_120px_50px] md:grid-rows-1 grid-rows-2 md:gap-8 gap-2 last-of-type:border-none border-b border-b-neutral-200 md:pb-4 md:gap-y-0 gap-y-6">
+        <li className="grid md:grid-cols-[40px_1fr_80px_120px_48px] md:grid-rows-1 grid-rows-2 md:gap-8 gap-2 last-of-type:border-none border-b border-b-neutral-200 md:pb-4 md:gap-y-0 gap-y-6">
             {/* File Icon */}
-            <div className="px-2">
+            <div className="flex items-center justify-center">
                 <Image src={png} width={32} height={32} alt="PNG" />
             </div>
 
             {/* File Name */}
-            <div className="flex flex-col md:col-span-1 col-span-3">
+            <div className="flex flex-col md:col-span-1 col-span-3 md:-ml-6">
                 <span className="">{file?.name}</span>
                 <span className="text-xs text-neutral-500">
                     {byteToSize(file?.size || 0)}
@@ -70,7 +70,7 @@ const ConversionListItem: React.FC<ConversionListItemProps> = ({
             </div>
 
             {/* File Status */}
-            <div className="md:col-start-3 md:row-start-1 md:col-span-1 col-span-2 col-start-1 row-start-2">
+            <div className="md:col-start-3 md:row-start-1 md:col-span-1 col-span-2 col-start-1 row-start-2 flex items-center justify-center w-full h-full">
                 {conversion.status === UXConversionStatus.Pending && (
                     <div className="self-center">
                         <Badge className="text-gray-500">Pending</Badge>
@@ -79,7 +79,7 @@ const ConversionListItem: React.FC<ConversionListItemProps> = ({
                 {conversion.status === UXConversionStatus.Uploading && (
                     <div className="self-center">
                         <Badge className="text-sky-500 border-sky-500">
-                            Uploading: {(conversion.upload || 0) * 100}%
+                            {((conversion.upload || 0) * 100).toFixed(0)}%
                         </Badge>
                     </div>
                 )}
@@ -142,10 +142,7 @@ const ConversionListItem: React.FC<ConversionListItemProps> = ({
                     <div className="md:hidden">
                         <Dialog open={open} onOpenChange={setOpen}>
                             <DialogTrigger asChild>
-                                <Button
-                                    className="px-2 flex items-center gap-2 flex-row"
-                                    variant="secondary"
-                                >
+                                <Button className="" variant="secondary">
                                     {conversion.to?.ext || 'Convert To'}
                                 </Button>
                             </DialogTrigger>
@@ -167,11 +164,11 @@ const ConversionListItem: React.FC<ConversionListItemProps> = ({
             )}
 
             {/* Cancel & Download Button */}
-            <div className="flex justify-end col-start-5 md:row-start-1">
+            <div className="col-start-5 md:row-start-1">
                 {
                     // if the conversion status is pending or uploading or processing, then show the remove button
                     conversion.status !== UXConversionStatus.Completed ? (
-                        <Button variant="default" onClick={onRemove}>
+                        <Button variant="destructive" onClick={onRemove}>
                             <XIcon className="w-4 h-4" />
                         </Button>
                     ) : (
