@@ -11,6 +11,7 @@ import { Dialog } from './ui/dialog'
 import { DialogContent, DialogTrigger } from './ui/dialog'
 import { Button } from './ui/button'
 import { MenuIcon } from 'lucide-react'
+import { Logo } from './Logo'
 
 const links = [
     {
@@ -34,17 +35,7 @@ export const Header = () => {
             )}
         >
             <nav className="container mx-auto flex items-center w-full">
-                <Link href="/" className=" flex flex-row items-center gap-1">
-                    <Image
-                        src="/icon.png"
-                        alt="Reconvert Logo"
-                        width={45}
-                        height={50}
-                    />
-                    <div className="md:text-[2rem] text-3xl font-black text-transparent bg-hero-gradient-text bg-clip-text">
-                        Convert it
-                    </div>
-                </Link>
+                <Logo />
                 <span className="flex-grow"></span>
                 <Menu />
                 <Mobile />
@@ -61,7 +52,7 @@ function Menu() {
                     <Link
                         href={link.href}
                         key={link.label}
-                        className="text-lg font-semibold text-neutral-800 hover:text-[#3b82f6] transition"
+                        className="text-lg font-semibold text-neutral-800 hover:text-primary transition"
                     >
                         {link.label}
                     </Link>

@@ -126,7 +126,9 @@ const ConversionListItem: React.FC<ConversionListItemProps> = ({
                                         }
                                     >
                                         {conversion.to?.ext || 'Convert To'}
-                                        <ChevronDown className="w-4 h-4" />
+                                        {!conversion.to?.ext && (
+                                            <ChevronDown className="w-4 h-4" />
+                                        )}
                                     </Button>
                                 </PopoverTrigger>
                                 <PopoverContent>

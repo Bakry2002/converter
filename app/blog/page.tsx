@@ -85,10 +85,6 @@ export default async function () {
                         <BlogCard key={post.title} post={post} />
                     ))}
                 </ul>
-                <div className="h-24"></div>
-                <div className="h-24"></div>
-                <div className="h-24"></div>
-                <div className="h-24"></div>
             </main>
             <Footer />
         </>
