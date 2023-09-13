@@ -55,7 +55,7 @@ export const Manager = () => {
                     <h2 className="mb-8 text-lg font-medium text-neutral-900">
                         Files to convert
                     </h2>
-                    <ul className="bg-white/80 backdrop-blur-lg flex flex-col justify-center gap-y-6">
+                    <ul className="bg-white/80 backdrop-blur-lg flex flex-col justify-center gap-y-4">
                         {conversions.map((conversion, key) => (
                             <ConversionListItem
                                 key={key}

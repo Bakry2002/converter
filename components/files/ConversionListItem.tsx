@@ -1,7 +1,7 @@
 'use client'
 
 import { byteToSize } from '@/lib/file'
-import { XIcon } from 'lucide-react'
+import { ChevronDown, XIcon } from 'lucide-react'
 import Image from 'next/image'
 import { useEffect, useState } from 'react'
 import { Button } from '../ui/button'
@@ -53,51 +53,62 @@ const ConversionListItem: React.FC<ConversionListItemProps> = ({
 
     const [open, setOpen] = useState(false)
     const { file, to } = conversion
-
+    //grid md:grid-cols-[48px_1fr_80px_120px_50px] grid-cols-[48px_1fr_80px_120px_50px] gap-4
     return (
-        <li className="grid md:grid-cols-[48px_1fr_80px_100px_50px] grid-cols-[48px_1fr_80px_100px_50px] gap-4">
+        <li className="grid md:grid-cols-[48px_1fr_80px_120px_50px] md:grid-rows-1 grid-rows-2 md:gap-8 gap-2 last-of-type:border-none border-b border-b-neutral-200 md:pb-4 md:gap-y-0 gap-y-6">
+            {/* File Icon */}
             <div className="px-2">
                 <Image src={png} width={32} height={32} alt="PNG" />
             </div>
-            <div className="md:col-span-1 col-span-1 flex flex-col">
+
+            {/* File Name */}
+            <div className="flex flex-col md:col-span-1 col-span-3">
                 <span className="">{file?.name}</span>
                 <span className="text-xs text-neutral-500">
                     {byteToSize(file?.size || 0)}
                 </span>
             </div>
-            {conversion.status === UXConversionStatus.Pending && (
-                <div className="self-center">
-                    <Badge className="text-gray-500">Pending</Badge>
-                </div>
-            )}
-            {conversion.status === UXConversionStatus.Uploading && (
-                <div className="self-center">
-                    <Badge className="text-sky-500 border-sky-500">
-                        Uploading: {(conversion.upload || 0) * 100}%
-                    </Badge>
-                </div>
-            )}
-            {conversion.status === UXConversionStatus.Processing && (
-                <div className="self-center">
-                    <Badge className="text-sky-500 border-sky-500">
-                        Converting
-                    </Badge>
-                </div>
-            )}
-            {conversion.status === UXConversionStatus.Error && (
-                <div className="self-center">
-                    <Badge className="text-red-500 border-red-500">Error</Badge>
-                </div>
-            )}
-            {conversion.status === UXConversionStatus.Completed && (
-                <div className="self-center">
-                    <Badge className="text-green-500 border-green-500">
-                        Done
-                    </Badge>
-                </div>
-            )}
+
+            {/* File Status */}
+            <div className="md:col-start-3 md:row-start-1 md:col-span-1 col-span-2 col-start-1 row-start-2">
+                {conversion.status === UXConversionStatus.Pending && (
+                    <div className="self-center">
+                        <Badge className="text-gray-500">Pending</Badge>
+                    </div>
+                )}
+                {conversion.status === UXConversionStatus.Uploading && (
+                    <div className="self-center">
+                        <Badge className="text-sky-500 border-sky-500">
+                            Uploading: {(conversion.upload || 0) * 100}%
+                        </Badge>
+                    </div>
+                )}
+                {conversion.status === UXConversionStatus.Processing && (
+                    <div className="self-center">
+                        <Badge className="text-sky-500 border-sky-500">
+                            Converting
+                        </Badge>
+                    </div>
+                )}
+                {conversion.status === UXConversionStatus.Error && (
+                    <div className="self-center">
+                        <Badge className="text-red-500 border-red-500">
+                            Error
+                        </Badge>
+                    </div>
+                )}
+                {conversion.status === UXConversionStatus.Completed && (
+                    <div className="self-center">
+                        <Badge className="text-green-500 border-green-500">
+                            Done
+                        </Badge>
+                    </div>
+                )}
+            </div>
+
+            {/* Convert to Popover */}
             {conversion.status != UXConversionStatus.Completed && (
-                <>
+                <div className="md:col-start-4 col-start-4 md:col-span-1 col-span-2 md:row-start-1 row-start-2">
                     <div className="hidden md:flex justify-center">
                         <>
                             <Popover>
@@ -107,7 +118,7 @@ const ConversionListItem: React.FC<ConversionListItemProps> = ({
                                             conversion.status !==
                                             UXConversionStatus.Pending
                                         }
-                                        className="px-2 w-full"
+                                        className="px-2 w-full flex gap-2 items-center flex-row"
                                         variant={
                                             conversion.error
                                                 ? 'destructive'
@@ -115,6 +126,7 @@ const ConversionListItem: React.FC<ConversionListItemProps> = ({
                                         }
                                     >
                                         {conversion.to?.ext || 'Convert To'}
+                                        <ChevronDown className="w-4 h-4" />
                                     </Button>
                                 </PopoverTrigger>
                                 <PopoverContent>
@@ -124,26 +136,22 @@ const ConversionListItem: React.FC<ConversionListItemProps> = ({
                                     />
                                 </PopoverContent>
                             </Popover>
-                            {/* <Combobox
-                                value={conversion.to || ''}
-                                setValue={(v) => {
-                                    onConvertTo(v)
-                                    setOpen(false)
-                                }}
-                            /> */}
                         </>
                     </div>
 
                     <div className="md:hidden">
                         <Dialog open={open} onOpenChange={setOpen}>
                             <DialogTrigger asChild>
-                                <Button className="px-2" variant="secondary">
+                                <Button
+                                    className="px-2 flex items-center gap-2 flex-row"
+                                    variant="secondary"
+                                >
                                     {conversion.to?.ext || 'Convert To'}
                                 </Button>
                             </DialogTrigger>
                             <DialogContent className="w-[calc(100%-2rem)]">
                                 <div className="font-semibold text-lg">
-                                    Convert to which format?
+                                    Convert To
                                 </div>
                                 <Selector
                                     value={conversion.to?.mime || ''}
@@ -155,35 +163,11 @@ const ConversionListItem: React.FC<ConversionListItemProps> = ({
                             </DialogContent>
                         </Dialog>
                     </div>
-                </>
+                </div>
             )}
 
-            {/* {!conversion.resultId && (
-                <>
-                    <Combobox
-                        value={conversion.to || ''}
-                        setValue={(v) =>
-                            setConversion(
-                                [...conversions].map((c, i) =>
-                                    i === key ? { ...c, to: v } : c
-                                )
-                            )
-                        }
-                    />
-                    <Button
-                        variant="outline"
-                        onClick={() => {
-                            // remove the conversion from the list
-                            setConversion(
-                                [...conversions].filter((_, i) => i !== key)
-                            )
-                        }}
-                    >
-                        <XIcon className="w-4 h-4" />
-                    </Button>
-                </>
-            )} */}
-            <div className="flex items-center justify-end">
+            {/* Cancel & Download Button */}
+            <div className="flex justify-end col-start-5 md:row-start-1">
                 {
                     // if the conversion status is pending or uploading or processing, then show the remove button
                     conversion.status !== UXConversionStatus.Completed ? (

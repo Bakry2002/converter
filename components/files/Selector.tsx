@@ -37,7 +37,6 @@ export const Selector = ({ value, setValue }: SelectorProps) => {
                                         'bg-emerald-500': value === format.mime,
                                     })}`}
                                     size="sm"
-                                    color="secondary"
                                     onPress={() => setValue(format)}
                                 >
                                     {format.ext}
