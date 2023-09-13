@@ -21,8 +21,20 @@ AWS.config.update({
 })
 const bucket = process.env.AWS_S3_BUCKET_NAME!
 
+<<<<<<< Updated upstream
 //! Convert function: all the work will be done here
 const convert = async (c: Conversion) => {
+=======
+type ConversionWithStagesWithArtifacts = Conversion & {
+    stages: (Stage & {
+        artifacts: Artifact[]
+    })[]
+}
+
+// Convert function: all the work will be done here
+const convert = async (c: ConversionWithStagesWithArtifacts) => {
+    console.log('Starting conversion: ', c.id)
+>>>>>>> Stashed changes
     try {
         const s3 = new AWS.S3()
         const downloadParams = {
@@ -32,7 +44,21 @@ const convert = async (c: Conversion) => {
         console.log('Downloading file:', downloadParams)
         const res = await s3.getObject(downloadParams).promise()
 
+<<<<<<< Updated upstream
         const converters = findPath(c.fromMime, c.toMime)
+=======
+        const [current, next] = c.stages // get the current stage and the next stage, take the first and the second stages
+        // !FOR DEBUGGING
+        console.log(`Downloading file with key: ${downloadParams.Key}`)
+
+        const res = await s3.getObject(downloadParams) // download the file from s3
+        console.log('res', res)
+
+        // !FOR DEBUGGING
+        console.log(`Starting conversion: ${current.mime} => ${next.mime}`)
+
+        const converters = findPath(current.mime, next.mime) // find the path of converters from the current mime to the next mime
+>>>>>>> Stashed changes
 
         if (!converters) {
             console.error(

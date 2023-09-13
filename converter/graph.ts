@@ -35,6 +35,12 @@ converters.forEach((converter) => {
     })
 })
 
+<<<<<<< Updated upstream
+=======
+// !FOR DEBUGGING
+console.log('Graph: ', nodes)
+
+>>>>>>> Stashed changes
 export { nodes }
 
 export type Path = Edge[] | null
@@ -60,15 +66,14 @@ export function findPath(start: string, end: string) {
 
         // otherwise, we need to add the edges to the queue
         for (const edge of currentNode.node.edges) {
-            if (visited[edge.to.type]) {
+            if (!visited[edge.to.type]) {
                 // if we have already visited this node, skip it
-                continue
+                queue.push({
+                    node: edge.to,
+                    path: [...currentNode.path, edge],
+                }) // add a new path with the edge's destination
+                visited[edge.to.type] = true // mark the node as visited after we check it
             }
-            queue.push({
-                node: edge.to,
-                path: [...currentNode.path, edge],
-            }) // add a new path with the edge's destination
-            visited[edge.to.type] = true // mark the node as visited after we check it
         }
     }
 
