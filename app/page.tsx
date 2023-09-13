@@ -1,4 +1,5 @@
 import { DropZone } from '@/components/DropZone'
+import { Footer } from '@/components/Footer'
 import { Header } from '@/components/Header'
 
 import { OpenButton } from '@/components/OpenButton'
@@ -55,6 +56,7 @@ export default function Home() {
 
                     <About />
                 </main>
+                <Footer />
             </>
         </DropZone>
     )

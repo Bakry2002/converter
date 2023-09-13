@@ -6,6 +6,7 @@ import Image from 'next/image'
 import { Header } from '@/components/Header'
 import dynamic from 'next/dynamic'
 import { ReactNode } from 'react'
+import { Footer } from '@/components/Footer'
 
 const Title = dynamic(() => import('./Title'), {
     ssr: false,
@@ -62,15 +63,17 @@ export default async function () {
         <>
             <Header />
             <Title />
-            <p>
-                This blog is the official source for the updates from the
-                official owners. <br /> Anything important, including release
-                notes, updates, and convert information will be posted here
-                first. You can also follow the <Link href="">@convertit</Link>{' '}
-                account on Twitter, but you{' '}
-                {/*  eslint-disable-next-line react/no-unescaped-entities */}
-                won't miss anything essential if you only read this blog.
-            </p>
+            <div className="container mx-auto mb-8">
+                <p>
+                    This blog is the official source for the updates from the
+                    official owners. <br /> Anything important, including
+                    release notes, updates, and convert information will be
+                    posted here first. You can also follow the{' '}
+                    <Link href="">@convertit</Link> account on Twitter, but you{' '}
+                    {/*  eslint-disable-next-line react/no-unescaped-entities */}
+                    won't miss anything essential if you only read this blog.
+                </p>
+            </div>
             <main className="container max-auto space-y-5 px-4">
                 <ul className="grid gap-8 grid-cols-1">
                     {[header].map((post) => (
@@ -86,11 +89,8 @@ export default async function () {
                 <div className="h-24"></div>
                 <div className="h-24"></div>
                 <div className="h-24"></div>
-                <div className="h-24"></div>
-                <div className="h-24"></div>
-                <div className="h-24"></div>
-                <div className="h-24"></div>
             </main>
+            <Footer />
         </>
     )
 }
