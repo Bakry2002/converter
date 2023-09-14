@@ -13,20 +13,20 @@ const graph_1 = require("./graph");
 const s3_1 = require("../lib/s3");
 const bucket = process.env.AWS_S3_BUCKET_NAME;
 // Define the checkObjectExistence function
-async function checkObjectExistence(key, maxRetries = 100, retryInterval = 1000) {
-    for (let retry = 0; retry < maxRetries; retry++) {
+async function checkObjectExistence(key, retryInterval = 1000) {
+    while (true) {
         try {
             await s3_1.s3.headObject({ Bucket: bucket, Key: key });
             console.log('Object exists in s3 bucket');
             return true;
         }
         catch (error) {
-            console.error(`Object with key ${key} does not exist (Attempt ${retry + 1})`);
+            console.error(`file is still being uploaded to s3, retrying in ${retryInterval}ms.`);
         }
+        // for (let retry = 0; retry < maxRetries; retry++) {}
         // Wait for a while before retrying
         await new Promise((resolve) => setTimeout(resolve, retryInterval));
     }
-    return false; // Object not found after retries
 }
 // Convert function: all the work will be done here
 const convert = async (c) => {

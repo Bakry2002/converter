@@ -19,27 +19,22 @@ type ConversionWithStagesWithArtifacts = Conversion & {
 }
 
 // Define the checkObjectExistence function
-async function checkObjectExistence(
-    key: any,
-    maxRetries = 100,
-    retryInterval = 1000
-) {
-    for (let retry = 0; retry < maxRetries; retry++) {
+async function checkObjectExistence(key: any, retryInterval = 1000) {
+    while (true) {
         try {
             await s3.headObject({ Bucket: bucket, Key: key })
             console.log('Object exists in s3 bucket')
             return true
         } catch (error) {
             console.error(
-                `Object with key ${key} does not exist (Attempt ${retry + 1})`
+                `file is still being uploaded to s3, retrying in ${retryInterval}ms.`
             )
         }
+        // for (let retry = 0; retry < maxRetries; retry++) {}
 
         // Wait for a while before retrying
         await new Promise((resolve) => setTimeout(resolve, retryInterval))
     }
-
-    return false // Object not found after retries
 }
 
 // Convert function: all the work will be done here
