@@ -53,18 +53,34 @@ enum ConversionStatus {
 
 model Conversion {
   id         String     @id @default(dbgenerated("concat('cnv_', replace(cast(gen_random_uuid() as text), '-', ''))")) @db.Text
-  s3Key        String
-  fromMime       String  // actuall file type 
-  toMime         String  // convereted to file type
-  currentMime    String  // current status of the conversion
   status     ConversionStatus  // status of the conversion
+  currentStage  Int // current stage of the conversion
   error      String? // error message if any
-
-
   createdAt  DateTime   @default(now())
   updatedAt  DateTime   @updatedAt
   tenantId   String?
   tenant     Tenant?     @relation(fields: [tenantId], references: [id])
   userId     String?
   user       User?       @relation(fields:  [userId], references: [id])
+  stages    Stage[]
+}
+
+model Stage {
+  id        String     @id @default(dbgenerated("concat('stg_', replace(cast(gen_random_uuid() as text), '-', ''))")) @db.Text
+  order     Int
+  mime     String
+  createdAt  DateTime   @default(now())
+  updatedAt  DateTime   @updatedAt
+  artifacts  Artifact[]
+  conversion Conversion @relation(fields: [conversionId], references: [id])
+  conversionId String @db.Text
+}
+
+model Artifact {
+  id         String     @id @default(dbgenerated("concat('art_', replace(cast(gen_random_uuid() as text), '-', ''))")) @db.Text
+  order     Int
+  createdAt  DateTime   @default(now())
+  updatedAt  DateTime   @updatedAt
+  stage     Stage      @relation(fields: [stageId], references: [id])
+  stageId    String     @db.Text
 }
