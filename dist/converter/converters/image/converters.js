@@ -33,6 +33,8 @@ for (const from of formats_1.formats) {
             continue;
         }
         _converters.push(buildConverter(from.mime, to.mime, to.params)); // build the converter
+        // !FOR DEBUGGING
+        console.log(`${from.mime} => ${to.mime}`);
     }
 }
 exports.converters = _converters; // export the converters
