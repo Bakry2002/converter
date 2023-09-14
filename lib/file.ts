@@ -3,14 +3,15 @@ import { extension, lookup } from 'mime-types'
 // here is the translate layer that will translate any unknown mime type to a known one from our API (i.e.image/vnd.microsoft.icon to image/x-icon)
 const _mimes: Record<string, string> = {
     'image/vnd.microsoft.icon': 'image/x-icon', // ico
-    'image/jpg': 'jpg',
-    'image/gif': 'gif',
-    'image/bmp': 'bmp',
-    'image/webp': 'webp',
-    'image/tiff': 'tiff',
-    'image/heic': 'heic',
-    'image/heif': 'heif',
-    'image/x-icon': 'ico',
+    'image/jpeg': 'image/jpeg',
+    'image/gif': 'image/gif',
+    'image/bmp': 'image/bmp',
+    'image/webp': 'image/webp',
+    'image/tiff': 'image/tiff',
+    'image/heic': 'image/heic',
+    'image/heif': 'image/heif',
+    'image/x-ico': 'image/x-ico',
+    'image/png': 'image/png',
 }
 //  function that returns the file extension from a mime type
 export const mimeToFileExtension = (mime: string) => {
@@ -27,6 +28,9 @@ export const fileExtensionToMime = (ext: string) => {
     if (!mime) {
         throw new Error(`No mime type found for extension ${ext}`)
     }
+    console.log(
+        `File mime {${mime}} and file mime in the array: {${_mimes[mime]}}`
+    )
     return _mimes[mime] || mime // if the mime is not in the _mimes object, return the original mime
 }
 

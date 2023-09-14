@@ -11,4 +11,4 @@ export const s3 = new S3({
 
 // Key function: this function will generate a key for the file in s3
 export const key = (c: Conversion, n: number, a: Artifact) =>
-    `/${c.id}/${n}/${a.id}`
+    `${c.id}/${n}/${a.id}`

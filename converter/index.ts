@@ -18,6 +18,30 @@ type ConversionWithStagesWithArtifacts = Conversion & {
     })[]
 }
 
+// Define the checkObjectExistence function
+async function checkObjectExistence(
+    key: any,
+    maxRetries = 100,
+    retryInterval = 1000
+) {
+    for (let retry = 0; retry < maxRetries; retry++) {
+        try {
+            await s3.headObject({ Bucket: bucket, Key: key })
+            console.log('Object exists in s3 bucket')
+            return true
+        } catch (error) {
+            console.error(
+                `Object with key ${key} does not exist (Attempt ${retry + 1})`
+            )
+        }
+
+        // Wait for a while before retrying
+        await new Promise((resolve) => setTimeout(resolve, retryInterval))
+    }
+
+    return false // Object not found after retries
+}
+
 // Convert function: all the work will be done here
 const convert = async (c: ConversionWithStagesWithArtifacts) => {
     console.log(`Starting conversion: ${c.id}`)
@@ -28,14 +52,32 @@ const convert = async (c: ConversionWithStagesWithArtifacts) => {
         }
 
         const [current, next] = c.stages // get the current stage and the next stage, take the first and the second stages
-
+        console.log('Type: ', c.stages[0].mime)
         // !FOR DEBUGGING
-        console.log(`Downloading file: ${downloadParams.Key}`)
+        console.log(`Generated key: ${downloadParams.Key}`)
+
+        // Check if the object exists in s3 using the retry mechanism
+        const objectExists = await checkObjectExistence(downloadParams.Key)
+        if (!objectExists) {
+            // Handle the error or return as needed
+            // For example, set the conversion status to ERROR and return
+            await prisma.conversion.update({
+                where: {
+                    id: c.id,
+                },
+                data: {
+                    error: `Object with key ${downloadParams.Key} does not exist`,
+                    status: ConversionStatus.ERROR,
+                },
+            })
+            return
+        }
 
         // get the file from s3 to convert it
         const res = await s3.getObject(downloadParams)
 
         // !FOR DEBUGGING
+
         console.log(`Starting conversion: ${current.mime} => ${next.mime}`)
 
         const converters = findPath(current.mime, next.mime) // find the path of converters from the current mime to the next mime

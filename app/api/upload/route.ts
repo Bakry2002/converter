@@ -8,15 +8,16 @@ import { NextRequest, NextResponse } from 'next/server'
 import { prisma } from '@/lib/prisma'
 import { fileExtensionToMime } from '@/lib/file'
 import { key, s3 } from '@/lib/s3'
+import { lookup } from 'mime-types'
 const bucket = process.env.AWS_S3_BUCKET_NAME!
 
 export async function POST(req: NextRequest) {
     // load the file from the request
     const data = await req.formData()
     const file: File | null = data.get('file') as unknown as File
-    const from = fileExtensionToMime(file.name) // get the mime type of the file
+    // get the mime type of the file
+    const from = fileExtensionToMime(file.name)
     const to = data.get('to') as string
-
     // if there is no file, return an error
     if (!file) {
         return new NextResponse(JSON.stringify({ error: 'No file found!' }), {
