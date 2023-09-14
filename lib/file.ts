@@ -28,9 +28,6 @@ export const fileExtensionToMime = (ext: string) => {
     if (!mime) {
         throw new Error(`No mime type found for extension ${ext}`)
     }
-    console.log(
-        `File mime {${mime}} and file mime in the array: {${_mimes[mime]}}`
-    )
     return _mimes[mime] || mime // if the mime is not in the _mimes object, return the original mime
 }
 

@@ -53,6 +53,7 @@ const convert = async (c: ConversionWithStagesWithArtifacts) => {
 
         const [current, next] = c.stages // get the current stage and the next stage, take the first and the second stages
         console.log('Type: ', c.stages[0].mime)
+
         // !FOR DEBUGGING
         console.log(`Generated key: ${downloadParams.Key}`)
 
