@@ -8,7 +8,7 @@
 
 import { Conversion, ConversionStatus } from '@prisma/client'
 import * as AWS from 'aws-sdk'
-import { prisma } from '../app/lib/prisma'
+import { prisma } from '../lib/prisma'
 // import { PNG_TO_JPG } from './converters/image'
 import { randomUUID } from 'crypto'
 import { extension } from 'mime-types'

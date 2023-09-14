@@ -2,7 +2,7 @@
 
 //* ========== End Note ===========
 import * as AWS from 'aws-sdk'
-import { prisma } from '@/app/lib/prisma'
+import { prisma } from '@/lib/prisma'
 import { NextRequest, NextResponse } from 'next/server'
 import { Readable } from 'stream'
 import { ConversionStatus } from '@prisma/client'

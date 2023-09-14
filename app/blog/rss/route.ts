@@ -2,7 +2,7 @@
 // we arw going to make it like an API but it will return XML
 //* ========== End Note ===========
 
-import { getBlogPosts } from '@/app/lib/blog'
+import { getBlogPosts } from '@/lib/blog'
 import { Feed } from 'feed'
 import { NextResponse } from 'next/server'
 

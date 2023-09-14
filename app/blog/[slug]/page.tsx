@@ -1,4 +1,4 @@
-import { Meta } from '@/app/lib/blog'
+import { Meta } from '@/lib/blog'
 import { readdir } from 'fs/promises'
 import dynamic from 'next/dynamic'
 import Image from 'next/image'

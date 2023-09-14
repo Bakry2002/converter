@@ -1,6 +1,6 @@
 import { readdir } from 'fs/promises'
 import { join } from 'path/posix'
-import { Meta, Post, getBlogPosts } from '@/app/lib/blog'
+import { Meta, Post, getBlogPosts } from '@/lib/blog'
 import Link from 'next/link'
 import Image from 'next/image'
 import { Header } from '@/components/Header'

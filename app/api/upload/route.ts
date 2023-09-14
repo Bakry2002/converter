@@ -5,7 +5,7 @@
 
 import { ConversionStatus } from '@prisma/client'
 import { NextRequest, NextResponse } from 'next/server'
-import { prisma } from '@/app/lib/prisma'
+import { prisma } from '@/lib/prisma'
 import { extname } from 'path'
 import { v4 as uuid } from 'uuid'
 import * as AWS from 'aws-sdk'
