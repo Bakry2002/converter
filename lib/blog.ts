@@ -21,7 +21,7 @@ export const getBlogPosts = async () => {
     const posts: Post[] = (await readdir(join(process.cwd() + '/blog')))
         .map((postFile) => {
             // extract the metadata from the MDX file
-            const { meta }: { meta: Meta } = require(`../../blog/${postFile}`)
+            const { meta }: { meta: Meta } = require(`../blog/${postFile}`)
             return {
                 ...meta,
                 date: new Date(meta.date),
