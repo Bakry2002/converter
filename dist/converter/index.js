@@ -85,8 +85,8 @@ const convert = async (c) => {
         let output = [];
         for (const edge of converters) {
             // !FOR DEBUGGING
-            console.log(`Converting to: ${edge.to.type}`);
-            output = await edge.converter([Buffer.from(converted)]); // convert the file using the converter function
+            console.log(`Converting to: ${edge.to.mime}`);
+            output = await edge.converter.convert([Buffer.from(converted)]); // convert the file using the converter function
         }
         // after the file is converted, we will create a new artifact in the next stage
         const artifact = await prisma_1.prisma.artifact.create({

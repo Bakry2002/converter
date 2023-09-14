@@ -1,6 +1,6 @@
 'use client'
 
-import { byteToSize } from '@/lib/file'
+import { byteToSize, mimeToFileExtension } from '@/lib/file'
 import { ChevronDown, XIcon } from 'lucide-react'
 import Image from 'next/image'
 import { useEffect, useState } from 'react'
@@ -24,7 +24,7 @@ const fetcher = (...args: Parameters<typeof fetch>) =>
 
 type ConversionListItemProps = {
     conversion: Conversion
-    onConvertTo: (format: Format) => void
+    onConvertTo: (format: { mime: string }) => void // TODO: update here in minute 10:00
     onRemove: () => void
     onUpdate: (conversion: Partial<Conversion>) => void
 }
@@ -125,8 +125,12 @@ const ConversionListItem: React.FC<ConversionListItemProps> = ({
                                                 : 'secondary'
                                         }
                                     >
-                                        {conversion.to?.ext || 'Convert To'}
-                                        {!conversion.to?.ext && (
+                                        {conversion.to?.mime
+                                            ? mimeToFileExtension(
+                                                  conversion.to.mime
+                                              )
+                                            : 'Convert To'}
+                                        {!conversion.to?.mime && (
                                             <ChevronDown className="w-4 h-4" />
                                         )}
                                     </Button>
@@ -145,7 +149,11 @@ const ConversionListItem: React.FC<ConversionListItemProps> = ({
                         <Dialog open={open} onOpenChange={setOpen}>
                             <DialogTrigger asChild>
                                 <Button className="" variant="secondary">
-                                    {conversion.to?.ext || 'Convert To'}
+                                    {conversion.to?.mime
+                                        ? mimeToFileExtension(
+                                              conversion.to.mime
+                                          )
+                                        : 'Convert To'}
                                 </Button>
                             </DialogTrigger>
                             <DialogContent className="w-[calc(100%-2rem)]">

@@ -109,9 +109,9 @@ const convert = async (c: ConversionWithStagesWithArtifacts) => {
         let output: Buffer[] = []
         for (const edge of converters) {
             // !FOR DEBUGGING
-            console.log(`Converting to: ${edge.to.type}`)
+            console.log(`Converting to: ${edge.to.mime}`)
 
-            output = await edge.converter([Buffer.from(converted)]) // convert the file using the converter function
+            output = await edge.converter.convert([Buffer.from(converted)]) // convert the file using the converter function
         }
 
         // after the file is converted, we will create a new artifact in the next stage
