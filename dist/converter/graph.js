@@ -21,17 +21,8 @@ converters.forEach((converter) => {
         to: nodes[converter.to],
     });
 });
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< Updated upstream
-=======
 // !FOR DEBUGGING
 console.log('Graph: ', nodes);
->>>>>>> Stashed changes
-=======
->>>>>>> parent of 685184b (new data model with stages and artifacts)
-=======
->>>>>>> parent of 685184b (new data model with stages and artifacts)
 //this search is breadth-first, which means it will find the shortest path
 function findPath(start, end) {
     const visited = {}; // this is a set of nodes we have visited'
