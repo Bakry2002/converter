@@ -6,27 +6,12 @@
 //      2. turn it to an executable with docker.
 //* ========== End Note ===========
 
-import { Conversion, ConversionStatus } from '@prisma/client'
-import * as AWS from 'aws-sdk'
+import { Artifact, Stage, Conversion, ConversionStatus } from '@prisma/client'
 import { prisma } from '../lib/prisma'
-// import { PNG_TO_JPG } from './converters/image'
-import { randomUUID } from 'crypto'
-import { extension } from 'mime-types'
 import { findPath } from './graph'
-
-AWS.config.update({
-    accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
-    region: process.env.AWS_DEFAULT_REGION,
-})
+import { s3, key } from '../lib/s3'
 const bucket = process.env.AWS_S3_BUCKET_NAME!
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< Updated upstream
-//! Convert function: all the work will be done here
-const convert = async (c: Conversion) => {
-=======
 type ConversionWithStagesWithArtifacts = Conversion & {
     stages: (Stage & {
         artifacts: Artifact[]
@@ -35,59 +20,37 @@ type ConversionWithStagesWithArtifacts = Conversion & {
 
 // Convert function: all the work will be done here
 const convert = async (c: ConversionWithStagesWithArtifacts) => {
-    console.log('Starting conversion: ', c.id)
->>>>>>> Stashed changes
-=======
-//! Convert function: all the work will be done here
-const convert = async (c: Conversion) => {
->>>>>>> parent of 685184b (new data model with stages and artifacts)
-=======
-//! Convert function: all the work will be done here
-const convert = async (c: Conversion) => {
->>>>>>> parent of 685184b (new data model with stages and artifacts)
+    console.log(`Starting conversion: ${c.id}`)
     try {
-        const s3 = new AWS.S3()
         const downloadParams = {
             Bucket: bucket,
-            Key: c.s3Key,
+            Key: key(c, 0, c.stages[0].artifacts[0]), // get the key of the first artifact of the first stage
         }
-        console.log('Downloading file:', downloadParams)
-        const res = await s3.getObject(downloadParams).promise()
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< Updated upstream
-        const converters = findPath(c.fromMime, c.toMime)
-=======
         const [current, next] = c.stages // get the current stage and the next stage, take the first and the second stages
-        // !FOR DEBUGGING
-        console.log(`Downloading file with key: ${downloadParams.Key}`)
 
-        const res = await s3.getObject(downloadParams) // download the file from s3
-        console.log('res', res)
+        // !FOR DEBUGGING
+        console.log(`Downloading file: ${downloadParams.Key}`)
+
+        // get the file from s3 to convert it
+        const res = await s3.getObject(downloadParams)
 
         // !FOR DEBUGGING
         console.log(`Starting conversion: ${current.mime} => ${next.mime}`)
 
         const converters = findPath(current.mime, next.mime) // find the path of converters from the current mime to the next mime
->>>>>>> Stashed changes
-=======
-        const converters = findPath(c.fromMime, c.toMime)
->>>>>>> parent of 685184b (new data model with stages and artifacts)
-=======
-        const converters = findPath(c.fromMime, c.toMime)
->>>>>>> parent of 685184b (new data model with stages and artifacts)
 
+        // if we don't have a path of converters, we will throw an error
         if (!converters) {
             console.error(
-                `Could not find a converters for ${c.fromMime} to ${c.toMime}`
+                `Could not find a converters for ${current.mime} to ${next.mime}`
             )
             await prisma.conversion.update({
                 where: {
                     id: c.id,
                 },
                 data: {
-                    error: `Could not convert from ${c.fromMime} to ${c.toMime}`,
+                    error: `Could not find a converters for ${current.mime} to ${next.mime}`,
                     status: ConversionStatus.ERROR,
                 },
             })
@@ -95,24 +58,42 @@ const convert = async (c: Conversion) => {
         }
 
         // otherwise, we will have a path of converters and we need to loop over them
-        let converted = res.Body as Buffer // this is the file we will convert
-        for (const edge of converters) {
-            converted = await edge.converter(res.Body as Buffer) // convert the file
+
+        const converted = await res.Body?.transformToByteArray() // convert the file to a byte array to be able to convert it
+
+        // if there is no converted file, we will throw an error
+        if (!converted) {
+            throw new Error(
+                'Download file error: Could not convert file to byte array'
+            )
         }
 
-        console.log('Convert', converters[converters.length - 1].to.type)
-        const mime = extension(
-            converters[converters.length - 1].to.type
-        ) as string // get the mime type of the last converter as it will be the required mime type to
+        let output: Buffer[] = []
+        for (const edge of converters) {
+            // !FOR DEBUGGING
+            console.log(`Converting to: ${edge.to.type}`)
 
-        const key = (randomUUID() + randomUUID()).replace(/-/g, '') //  create a new random key for the file after it has been converted
-        console.log('Uploading to:', key)
+            output = await edge.converter([Buffer.from(converted)]) // convert the file using the converter function
+        }
+
+        // after the file is converted, we will create a new artifact in the next stage
+        const artifact = await prisma.artifact.create({
+            data: {
+                order: 0,
+                stageId: next.id, // set the stage id to the next stage id
+            },
+        })
+
+        // !FOR DEBUGGING
+        console.log('Uploading to:', artifact.id)
+
         const uploadParams = {
             Bucket: bucket,
-            Key: key,
-            Body: converted,
+            Key: key(c, 1, artifact), // set the key to the second stage
+            Body: output[0],
         }
-        await s3.putObject(uploadParams).promise()
+
+        await s3.putObject(uploadParams) // upload the file to s3 after converting it
 
         await prisma.conversion.update({
             where: {
@@ -120,10 +101,9 @@ const convert = async (c: Conversion) => {
             },
             data: {
                 status: ConversionStatus.DONE,
-                s3Key: key,
-                currentMime: mime,
             },
         })
+
         //! RECAP: we have downloaded the file from s3, converted it, and uploaded it back to s3, and then update the database
     } catch (error: any) {
         await prisma.conversion.update({
@@ -144,9 +124,18 @@ const main = async () => {
         where: {
             status: ConversionStatus.PENDING,
         },
+        include: {
+            stages: {
+                include: {
+                    artifacts: true,
+                },
+            },
+        },
     })
 
+    // !FOR DEBUGGING
     console.log(`Found ${conversions.length} conversions`)
+
     // map over the conversions
     for (const conversion of conversions) {
         await convert(conversion)
