@@ -30,11 +30,11 @@ export const Header = () => {
     return (
         <header
             className={cn(
-                'transition sticky top-0  backdrop-blur-md z-50 border-b duration-300 flex items-center px-6 py-2',
+                'transition sticky top-0 backdrop-blur-md z-50 border-b duration-300 flex items-center px-6 py-2',
                 border
             )}
         >
-            <nav className="container mx-auto flex items-center w-full">
+            <nav className="flex items-center w-full">
                 <Logo />
                 <span className="flex-grow"></span>
                 <Menu />

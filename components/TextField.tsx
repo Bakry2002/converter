@@ -12,7 +12,7 @@ const TextField: React.FC<TextFieldProps> = ({
     placeholder,
     ...inputProps
 }) => {
-    return <Input {...inputProps} placeholder={placeholder} className="" />
+    return <Input {...inputProps} placeholder={placeholder} />
 }
 
 export default TextField

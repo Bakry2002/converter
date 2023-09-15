@@ -21,9 +21,10 @@ export const Selector = ({ value, setValue }: SelectorProps) => {
                 placeholder="Search"
                 value={search}
                 onChange={(e: any) => setSearch(e.target.value)}
+                className="border-b pb-1"
             />
             <div className="py-2">
-                <ul className="grid gap-2 grid-cols-3">
+                <ul className="grid gap-2 grid-cols-3 place-items-center">
                     {formats
                         .filter(
                             (format) =>
@@ -33,9 +34,12 @@ export const Selector = ({ value, setValue }: SelectorProps) => {
                         .map((format) => (
                             <li key={format.mime}>
                                 <Button
-                                    className={`rounded-3xl w-14 h-10 ${cn({
-                                        'bg-emerald-500': value === format.mime,
-                                    })}`}
+                                    className={`rounded-3xl w-14 h-10 uppercase ${cn(
+                                        {
+                                            'bg-emerald-500':
+                                                value === format.mime,
+                                        }
+                                    )}`}
                                     size="sm"
                                     onPress={() => setValue(format)}
                                 >

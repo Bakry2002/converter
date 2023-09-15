@@ -7,7 +7,6 @@ type InputProps = InputHTMLAttributes<HTMLInputElement>
 const variants = cva([
     'box-content',
     'w-full',
-    'border-none',
     'bg-transparent',
     'p-0',
     'font-medium',

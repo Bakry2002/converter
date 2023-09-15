@@ -1,7 +1,7 @@
 'use client'
 
 import { byteToSize, mimeToFileExtension } from '@/lib/file'
-import { ChevronDown, XIcon } from 'lucide-react'
+import { ChevronDown, Trash2, XIcon } from 'lucide-react'
 import Image from 'next/image'
 import { useEffect, useState } from 'react'
 import { Button } from '../ui/button'
@@ -55,22 +55,24 @@ const ConversionListItem: React.FC<ConversionListItemProps> = ({
     const { file, to } = conversion
     //grid md:grid-cols-[48px_1fr_80px_120px_50px] grid-cols-[48px_1fr_80px_120px_50px] gap-4
     return (
-        <li className="grid md:grid-cols-[40px_1fr_80px_120px_48px] md:grid-rows-1 grid-rows-2 md:gap-8 gap-2 last-of-type:border-none border-b border-b-neutral-200 md:pb-4 md:gap-y-0 gap-y-6">
+        <li className="grid md:grid-cols-[40px_1fr_80px_120px_48px] grid-cols-[40px_1fr_100px_120px_48px] md:grid-rows-1 grid-rows-[1fr_0.5fr] md:gap-8 gap-2 last-of-type:border-none border-b border-b-neutral-200 pb-4 md:gap-y-0 gap-y-6">
             {/* File Icon */}
-            <div className="flex items-center justify-center">
+            <div className="flex items-center md:justify-center justify-normal">
                 <Image src={png} width={32} height={32} alt="PNG" />
             </div>
 
             {/* File Name */}
             <div className="flex flex-col md:col-span-1 col-span-3 md:-ml-6">
-                <span className="">{file?.name}</span>
+                <span className="overflow-hidden text-ellipsis whitespace-nowrap">
+                    {file?.name}
+                </span>
                 <span className="text-xs text-neutral-500">
                     {byteToSize(file?.size || 0)}
                 </span>
             </div>
 
             {/* File Status */}
-            <div className="md:col-start-3 md:row-start-1 md:col-span-1 col-span-2 col-start-1 row-start-2 flex items-center justify-center w-full h-full">
+            <div className="md:col-start-3 md:row-start-1 md:col-span-1 col-span-2 col-start-1 row-start-2 flex items-center md:justify-center justify-normal w-full h-full">
                 {conversion.status === UXConversionStatus.Pending && (
                     <div className="self-center">
                         <Badge className="text-gray-500">Pending</Badge>
@@ -108,7 +110,7 @@ const ConversionListItem: React.FC<ConversionListItemProps> = ({
 
             {/* Convert to Popover */}
             {conversion.status != UXConversionStatus.Completed && (
-                <div className="md:col-start-4 col-start-4 md:col-span-1 col-span-2 md:row-start-1 row-start-2">
+                <div className="md:col-start-4 col-start-4 md:col-span-1 col-span-2 md:row-start-1 row-start-2 justify-self-end md:justify-normal md:w-full">
                     <div className="hidden md:flex justify-center">
                         <>
                             <Popover>
@@ -118,18 +120,22 @@ const ConversionListItem: React.FC<ConversionListItemProps> = ({
                                             conversion.status !==
                                             UXConversionStatus.Pending
                                         }
-                                        className="px-2 w-full flex gap-2 items-center flex-row"
+                                        className="px-2 w-full flex gap-2 items-center flex-row uppercase"
                                         variant={
                                             conversion.error
                                                 ? 'destructive'
                                                 : 'secondary'
                                         }
                                     >
-                                        {conversion.to?.mime
-                                            ? mimeToFileExtension(
-                                                  conversion.to.mime
-                                              )
-                                            : 'Convert To'}
+                                        {conversion.to?.mime ? (
+                                            mimeToFileExtension(
+                                                conversion.to.mime
+                                            )
+                                        ) : (
+                                            <span className="capitalize">
+                                                Convert To
+                                            </span>
+                                        )}
                                         {!conversion.to?.mime && (
                                             <ChevronDown className="w-4 h-4" />
                                         )}
@@ -178,8 +184,13 @@ const ConversionListItem: React.FC<ConversionListItemProps> = ({
                 {
                     // if the conversion status is pending or uploading or processing, then show the remove button
                     conversion.status !== UXConversionStatus.Completed ? (
-                        <Button variant="destructive" onClick={onRemove}>
-                            <XIcon className="w-4 h-4" />
+                        <Button
+                            variant="destructive"
+                            onClick={onRemove}
+                            className="w-8 h-8 px-0 rounded-full"
+                        >
+                            {/* <XIcon className="w-4 h-4" /> */}
+                            <Trash2 className="w-4 h-4" />
                         </Button>
                     ) : (
                         <div className="flex justify-center col-span-2">

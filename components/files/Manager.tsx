@@ -42,7 +42,7 @@ export const Manager = () => {
             {conversions.length > 0 && (
                 <motion.div
                     // there is an action of type  function called convert exported from its own file.ts
-                    className="bg-white/80 backdrop-blur-md rounded-lg p-2 m-2 container mx-auto"
+                    className="bg-white/80 backdrop-blur-md rounded-lg m-2 container mx-auto"
                     initial={{ opacity: 0, transform: 'translateY(50px)' }}
                     animate={{
                         opacity: 1,
