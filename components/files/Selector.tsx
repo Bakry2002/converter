@@ -4,11 +4,14 @@ import TextField from '../TextField'
 import { Button } from '@nextui-org/react'
 import { formats } from '@/converter/converters/formats'
 import { useState } from 'react'
-import { Format } from '@/lib/types'
+
+import { mimeToFileExtension } from '@/lib/file'
+import { MimeNode } from '@/converter/types'
+import { nodes } from '@/converter/converters/image/nodes'
 
 type SelectorProps = {
     value: string
-    setValue: (format: Format) => void
+    setValue: (node: MimeNode) => void
 }
 
 // 3:30:00
@@ -25,11 +28,9 @@ export const Selector = ({ value, setValue }: SelectorProps) => {
             />
             <div className="py-2">
                 <ul className="grid gap-2 grid-cols-3 place-items-center">
-                    {formats
-                        .filter(
-                            (format) =>
-                                format.ext.includes(search) ||
-                                format.mime.includes(search)
+                    {nodes
+                        .filter((format) =>
+                            mimeToFileExtension(format.mime).includes(search)
                         )
                         .map((format) => (
                             <li key={format.mime}>
@@ -43,7 +44,7 @@ export const Selector = ({ value, setValue }: SelectorProps) => {
                                     size="sm"
                                     onPress={() => setValue(format)}
                                 >
-                                    {format.ext}
+                                    {mimeToFileExtension(format.mime)}
                                 </Button>
                             </li>
                         ))}

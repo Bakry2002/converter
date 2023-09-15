@@ -11,20 +11,19 @@ import { Conversion, UXConversionStatus } from '@/context/ConversionContext'
 import useSWr from 'swr'
 //? upcoming feature
 // import { Selector } from "./selector"
-import png from '@/images/png.png'
 import { Combobox } from '../combobox'
 import { ConversionStatus } from '@prisma/client'
 import { DownloadButton } from '../DownloadButton'
 import Badge from '../Badge'
 import { Selector } from './Selector'
-import { Format } from '@/lib/types'
+import { extension, lookup } from 'mime-types'
 
 const fetcher = (...args: Parameters<typeof fetch>) =>
     fetch(...args).then((res) => res.json()) // fetcher is a function that takes the arguments of the fetch function and returns a promise that resolves to the json of the response
 
 type ConversionListItemProps = {
     conversion: Conversion
-    onConvertTo: (format: { mime: string }) => void // TODO: update here in minute 10:00
+    onConvertTo: (format: { mime: string }) => void
     onRemove: () => void
     onUpdate: (conversion: Partial<Conversion>) => void
 }
@@ -53,12 +52,23 @@ const ConversionListItem: React.FC<ConversionListItemProps> = ({
 
     const [open, setOpen] = useState(false)
     const { file, to } = conversion
-    //grid md:grid-cols-[48px_1fr_80px_120px_50px] grid-cols-[48px_1fr_80px_120px_50px] gap-4
+    const fileMime: any = lookup(conversion.file.name)
+
     return (
-        <li className="grid md:grid-cols-[40px_1fr_80px_120px_48px] grid-cols-[40px_1fr_100px_120px_48px] md:grid-rows-1 grid-rows-[1fr_0.5fr] md:gap-8 gap-2 last-of-type:border-none border-b border-b-neutral-200 pb-4 md:gap-y-0 gap-y-6">
+        <li
+            className={`grid md:grid-cols-[40px_1fr_80px_120px_48px] grid-cols-[40px_1fr_0px_0px_100px]  md:grid-rows-1 grid-rows-[1fr_0.5fr] md:gap-8 gap-2 last-of-type:border-none border-b border-b-neutral-200 pb-4 md:gap-y-0 gap-y-6`}
+        >
             {/* File Icon */}
             <div className="flex items-center md:justify-center justify-normal">
-                <Image src={png} width={32} height={32} alt="PNG" />
+                <Image
+                    src={
+                        `/images/file_type_icons/${extension(fileMime)}.png` ||
+                        'images/file_type_icons/default.png'
+                    }
+                    width={45}
+                    height={45}
+                    alt="Icon"
+                />
             </div>
 
             {/* File Name */}
@@ -180,7 +190,13 @@ const ConversionListItem: React.FC<ConversionListItemProps> = ({
             )}
 
             {/* Cancel & Download Button */}
-            <div className="col-start-5 md:row-start-1">
+            <div
+                className={`col-start-5 md:row-start-1 ${
+                    conversion.status === UXConversionStatus.Completed
+                        ? ''
+                        : 'justify-self-end'
+                }`}
+            >
                 {
                     // if the conversion status is pending or uploading or processing, then show the remove button
                     conversion.status !== UXConversionStatus.Completed ? (

@@ -26,6 +26,11 @@ const IMAGE_ICO = {
     },
 };
 nodes.push(IMAGE_ICO);
+// WEBP
+const IMAGE_WEBP = {
+    mime: 'image/webp',
+};
+nodes.push(IMAGE_WEBP);
 // PDF
 const APPLICATION_PDF = {
     mime: 'application/pdf',

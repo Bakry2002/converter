@@ -29,6 +29,12 @@ const IMAGE_ICO: MimeNode = {
 }
 nodes.push(IMAGE_ICO)
 
+// WEBP
+const IMAGE_WEBP: MimeNode = {
+    mime: 'image/webp',
+}
+nodes.push(IMAGE_WEBP)
+
 // PDF
 const APPLICATION_PDF: MimeNode = {
     mime: 'application/pdf',
