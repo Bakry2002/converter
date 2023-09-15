@@ -9,14 +9,13 @@ import { Dialog, DialogContent, DialogTrigger } from '../ui/dialog'
 import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover'
 import { Conversion, UXConversionStatus } from '@/context/ConversionContext'
 import useSWr from 'swr'
-//? upcoming feature
-// import { Selector } from "./selector"
 import { Combobox } from '../combobox'
 import { ConversionStatus } from '@prisma/client'
 import { DownloadButton } from '../DownloadButton'
 import Badge from '../Badge'
 import { Selector } from './Selector'
 import { extension, lookup } from 'mime-types'
+import { nodes } from '@/converter/converters/image/nodes'
 
 const fetcher = (...args: Parameters<typeof fetch>) =>
     fetch(...args).then((res) => res.json()) // fetcher is a function that takes the arguments of the fetch function and returns a promise that resolves to the json of the response
@@ -43,7 +42,6 @@ const ConversionListItem: React.FC<ConversionListItemProps> = ({
         { refreshInterval: 1000 } // refreshInterval is a property that takes a number and refreshes the data every x milliseconds
     ) // useSWr is a hook that takes a function that returns a string and a function that takes the arguments of the fetch function and returns a promise that resolves to the json of the response and returns the data of the response
     // what is useful for is that it fetches the data and caches it, so if the data is already fetched it will return the cached data
-
     useEffect(() => {
         if (data?.status === ConversionStatus.DONE) {
             onUpdate({ status: UXConversionStatus.Completed })
@@ -52,7 +50,7 @@ const ConversionListItem: React.FC<ConversionListItemProps> = ({
 
     const [open, setOpen] = useState(false)
     const { file, to } = conversion
-    const fileMime: any = lookup(conversion.file.name)
+    const fileMime: any = lookup(conversion.file?.name)
 
     return (
         <li
@@ -60,15 +58,25 @@ const ConversionListItem: React.FC<ConversionListItemProps> = ({
         >
             {/* File Icon */}
             <div className="flex items-center md:justify-center justify-normal">
-                <Image
-                    src={
-                        `/images/file_type_icons/${extension(fileMime)}.png` ||
-                        'images/file_type_icons/default.png'
-                    }
-                    width={45}
-                    height={45}
-                    alt="Icon"
-                />
+                {nodes.find((node) => node.mime === fileMime) ? (
+                    <Image
+                        src={
+                            `/images/file_type_icons/${extension(
+                                fileMime
+                            )}.png` || 'images/file_type_icons/default.png'
+                        }
+                        width={45}
+                        height={45}
+                        alt="Icon"
+                    />
+                ) : (
+                    <Image
+                        src={'/images/file_type_icons/default.png'}
+                        width={45}
+                        height={45}
+                        alt="Icon"
+                    />
+                )}
             </div>
 
             {/* File Name */}
