@@ -22,6 +22,9 @@ COPY . .
 # Generate prisma client
 RUN npx prisma generate
 
+# Clear the dist/ directory (if it exists)
+RUN rm -rf dist/
+
 # Build the application
 RUN if [ "$BUILD_ENV" = "production" ]; then npx tsc --project tsconfig.converter.json; fi
 
