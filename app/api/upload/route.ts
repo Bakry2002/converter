@@ -8,7 +8,6 @@ import { NextRequest, NextResponse } from 'next/server'
 import { prisma } from '@/lib/prisma'
 import { fileExtensionToMime } from '@/lib/file'
 import { key, s3 } from '@/lib/s3'
-import { lookup } from 'mime-types'
 const bucket = process.env.AWS_S3_BUCKET_NAME!
 
 export async function POST(req: NextRequest) {
