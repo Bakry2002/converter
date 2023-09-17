@@ -96,11 +96,11 @@ export class ImageConverter extends Converter {
         console.log(
             `Executing: Magick ${this.inputOptions()} ${this.input()} ${this.outputOptions()} ${this.output()}`
         )
-
+        // ${
+        //                 process.env.NODE_ENV === 'production' ? 'convert' : 'magick'
+        //             }
         await exec(
-            `${
-                process.env.NODE_ENV === 'production' ? 'convert' : 'magick'
-            } ${this.inputOptions()} ${this.input()} ${this.outputOptions()} ${this.output()}`,
+            ` convert ${this.inputOptions()} ${this.input()} ${this.outputOptions()} ${this.output()}`,
             { cwd: this.cwd }
         )
     }
