@@ -85,7 +85,10 @@ class ImageConverter extends types_1.Converter {
     async execute() {
         // !FOR DEBUGGING
         console.log(`Executing: Magick ${this.inputOptions()} ${this.input()} ${this.outputOptions()} ${this.output()}`);
-        await exec(`${process.env.NODE_ENV === 'production' ? 'convert' : 'magick'} ${this.inputOptions()} ${this.input()} ${this.outputOptions()} ${this.output()}`, { cwd: this.cwd });
+        // ${
+        //                 process.env.NODE_ENV === 'production' ? 'convert' : 'magick'
+        //             }
+        await exec(`convert ${this.inputOptions()} ${this.input()} ${this.outputOptions()} ${this.output()}`, { cwd: this.cwd });
     }
     async postConvert() { }
     async preRead() { }
