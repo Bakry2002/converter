@@ -100,7 +100,7 @@ export class ImageConverter extends Converter {
         //                 process.env.NODE_ENV === 'production' ? 'convert' : 'magick'
         //             }
         await exec(
-            ` convert ${this.inputOptions()} ${this.input()} ${this.outputOptions()} ${this.output()}`,
+            `convert ${this.inputOptions()} ${this.input()} ${this.outputOptions()} ${this.output()}`,
             { cwd: this.cwd }
         )
     }
