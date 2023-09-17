@@ -93,9 +93,7 @@ export class ImageConverter extends Converter {
 
     async execute() {
         console.log(
-            `${
-                process.env.NODE_ENV === 'development' ? 'magick' : 'convert'
-            }${this.inputOptions()} ${this.input()} ${this.outputOptions()} ${this.output()}`
+            `${process.env.NODE_ENV === 'development' ? 'magick' : 'convert'}`
         )
 
         await exec(
