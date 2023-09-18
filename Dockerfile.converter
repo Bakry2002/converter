@@ -1,70 +1,21 @@
-# FROM node:18 as builder
-
-# # Set the build environment to production by default why? so that we can run npm install without dev dependencies
-# ARG BUILD_ENV=production 
-
-# # Set the working directory in the container
-# WORKDIR /usr/src/app
-
-# # # Install required packages including ImageMagick
-# # RUN apt-get update && apt-get install -y build-essential libjpeg-dev libpng-dev libtiff-dev imagemagick 
-# # RUN apt install -y potrace libreoffice ffmpeg pandoc --fix-missing
-
-# # Install ImageMagick and Ghostscript
-# RUN apt-get update && apt-get install -y build-essential libjpeg-dev libpng-dev libtiff-dev imagemagick ghostscript
-
-# # Add policy to allow PDF conversion
-# RUN sed -i '/rights="none" pattern="PDF"/s/none/read|write/' /etc/ImageMagick-6/policy.xml
-
-
-# # Copy package.json and package-lock.json to the container
-# COPY package*.json ./
-
-# RUN npm install
-
-# # Copy the rest of the application code to the container
-# COPY . .
-
-# # Generate prisma client
-# RUN npx prisma generate
-
-# # Clear the dist/ directory (if it exists)
-# RUN rm -rf dist/
-
-# # Build the application
-# RUN if [ "$BUILD_ENV" = "production" ]; then npx tsc --project tsconfig.converter.json; fi
-
-# # Stage 2: Set up the final image
-# FROM node:18
-
-# WORKDIR /usr/src/app
-
-# # Copy the node_modules and dist folders from the builder stage to the final image
-# COPY --from=builder /usr/src/app/node_modules ./node_modules 
-# COPY --from=builder /usr/src/app/dist ./dist
-# COPY --from=builder /usr/src/app/package.json ./package.json 
-# COPY --from=builder /usr/src/app/package-lock.json ./package-lock.json
-
-# # Command that will be run when the docker image is run 
-# CMD ["node", "dist/converter/index.js"]
-
 FROM node:18 as builder
 
-# Set the build environment to production by default
+# Set the build environment to production by default why? so that we can run npm install without dev dependencies
 ARG BUILD_ENV=production 
 
 # Set the working directory in the container
 WORKDIR /usr/src/app
 
-# Install required packages, including ImageMagick
-RUN apt-get update && apt-get install -y build-essential libjpeg-dev libpng-dev libtiff-dev
+# # Install required packages including ImageMagick
+# RUN apt-get update && apt-get install -y build-essential libjpeg-dev libpng-dev libtiff-dev imagemagick 
+# RUN apt install -y potrace libreoffice ffmpeg pandoc --fix-missing
 
-# Add the ImageMagick repository
-RUN apt-get install -y software-properties-common
-RUN add-apt-repository -y ppa:rwky/graphicsmagick
+# Install ImageMagick and Ghostscript
+RUN apt-get update && apt-get install -y build-essential libjpeg-dev libpng-dev libtiff-dev ghostscript imagemagick
+RUN apt install -y potrace libreoffice ffmpeg pandoc --fix-missing
 
-# Install ImageMagick
-RUN apt-get update && apt-get install -y graphicsmagick ghostscript
+# Add policy to allow PDF conversion
+RUN sed -i '/rights="none" pattern="PDF"/s/none/read|write/' /etc/ImageMagick-6/policy.xml
 
 
 # Copy package.json and package-lock.json to the container
