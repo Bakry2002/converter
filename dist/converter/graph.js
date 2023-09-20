@@ -1,11 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.findPath = exports.nodes = void 0;
-// import { Converter } from './converters/def'
-// import all the converters
-const converters_1 = require("./converters/image/converters");
+const image_1 = require("./converters/image");
 const nodes_1 = require("./converters/image/nodes");
-const converters = [...converters_1.converters]; // combine all the converters into one array
+const converters = [...image_1.converters]; // combine all the converters into one array
 const nodes = {};
 exports.nodes = nodes;
 for (const node of nodes_1.nodes) {

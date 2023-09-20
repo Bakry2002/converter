@@ -1,8 +1,6 @@
 import { cn } from '@/lib/utils'
 import TextField from '../TextField'
-// import { Button } from '../ui/button'
 import { Button } from '@nextui-org/react'
-import { formats } from '@/converter/converters/formats'
 import { useState } from 'react'
 
 import { mimeToFileExtension } from '@/lib/file'
@@ -13,8 +11,6 @@ type SelectorProps = {
     value: string
     setValue: (node: MimeNode) => void
 }
-
-// 3:30:00
 
 export const Selector = ({ value, setValue }: SelectorProps) => {
     const [search, setSearch] = useState('')

@@ -1,6 +1,4 @@
-// import { Converter } from './converters/def'
-// import all the converters
-import { converters as imageConverters } from './converters/image/converters'
+import { converters as imageConverters } from './converters/image'
 import { nodes as imageNodes } from './converters/image/nodes'
 import { Converter, MimeNode } from './types'
 
@@ -36,27 +34,6 @@ for (const converter of converters) {
 console.log('Graph: ', nodes)
 
 export { nodes }
-
-// converters.forEach((converter) => {
-//     nodes[converter.to] = nodes[converter.to] || {
-//         type: converter.to,
-//         edges: [],
-//     }
-
-//     nodes[converter.from] = nodes[converter.from] || {
-//         type: converter.from,
-//         edges: [],
-//     }
-
-//     nodes[converter.from].edges.push({
-//         converter,
-//         from: nodes[converter.from],
-//         to: nodes[converter.to],
-//     })
-// })
-
-// // !FOR DEBUGGING
-// console.log('Graph: ', nodes)
 
 export type Path = Edge[] | null
 

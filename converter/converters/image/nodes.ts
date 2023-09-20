@@ -35,6 +35,30 @@ const IMAGE_WEBP: MimeNode = {
 }
 nodes.push(IMAGE_WEBP)
 
+//BMP
+const IMAGE_BMP: MimeNode = {
+    mime: 'image/bmp',
+}
+nodes.push(IMAGE_BMP)
+
+//TIFF
+const IMAGE_TIFF: MimeNode = {
+    mime: 'image/tiff',
+}
+nodes.push(IMAGE_TIFF)
+
+//PSD
+const IMAGE_VND_ADOBE_PHOTOSHOP: MimeNode = {
+    mime: 'image/vnd.adobe.photoshop',
+}
+nodes.push(IMAGE_VND_ADOBE_PHOTOSHOP)
+
+//SVG
+const IMAGE_SVG_XML: MimeNode = {
+    mime: 'image/svg+xml',
+}
+nodes.push(IMAGE_SVG_XML)
+
 // PDF
 const APPLICATION_PDF: MimeNode = {
     mime: 'application/pdf',

@@ -31,6 +31,26 @@ const IMAGE_WEBP = {
     mime: 'image/webp',
 };
 nodes.push(IMAGE_WEBP);
+//BMP
+const IMAGE_BMP = {
+    mime: 'image/bmp',
+};
+nodes.push(IMAGE_BMP);
+//TIFF
+const IMAGE_TIFF = {
+    mime: 'image/tiff',
+};
+nodes.push(IMAGE_TIFF);
+//PSD
+const IMAGE_VND_ADOBE_PHOTOSHOP = {
+    mime: 'image/vnd.adobe.photoshop',
+};
+nodes.push(IMAGE_VND_ADOBE_PHOTOSHOP);
+//SVG
+const IMAGE_SVG_XML = {
+    mime: 'image/svg+xml',
+};
+nodes.push(IMAGE_SVG_XML);
 // PDF
 const APPLICATION_PDF = {
     mime: 'application/pdf',
