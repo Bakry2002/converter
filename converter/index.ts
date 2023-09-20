@@ -18,6 +18,7 @@ type ConversionWithStagesWithArtifacts = Conversion & {
     })[]
 }
 
+//TODO: limit the number of retries why? because we don't want to wait forever
 // Define the checkObjectExistence function
 async function checkObjectExistence(key: any, retryInterval = 1000) {
     while (true) {

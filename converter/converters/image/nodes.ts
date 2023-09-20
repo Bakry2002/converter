@@ -59,6 +59,36 @@ const IMAGE_SVG_XML: MimeNode = {
 }
 nodes.push(IMAGE_SVG_XML)
 
+//HEIC
+const IMAGE_HEIC: MimeNode = {
+    mime: 'image/heic',
+}
+nodes.push(IMAGE_HEIC)
+
+//HEIF
+const IMAGE_HEIF: MimeNode = {
+    mime: 'image/heif',
+}
+nodes.push(IMAGE_HEIF)
+
+// JP2 JPX JPM => different compression methods for the same format
+const IMAGE_JP2: MimeNode = {
+    mime: 'image/jp2',
+}
+nodes.push(IMAGE_JP2)
+nodes.push({
+    mime: 'image/jpx',
+})
+nodes.push({
+    mime: 'image/jpm',
+})
+
+// // JXL
+// const IMAGE_JXL: MimeNode = {
+//     mime: 'image/jxl',
+// }
+// nodes.push(IMAGE_JXL)
+
 // PDF
 const APPLICATION_PDF: MimeNode = {
     mime: 'application/pdf',
