@@ -114,25 +114,30 @@ const convert = async (c: ConversionWithStagesWithArtifacts) => {
             output = await edge.converter.convert([Buffer.from(converted)]) // convert the file using the converter function
         }
 
-        // after the file is converted, we will create a new artifact in the next stage
-        const artifact = await prisma.artifact.create({
-            data: {
-                order: 0,
-                stageId: next.id, // set the stage id to the next stage id
-            },
-        })
+        // for loop to go through every file in the output array if it contains more than one file
+        for (let i = 0; i < output.length; i++) {
+            const buffer = output[i] // get the file from the output array
+            // after the files is converted, we will create a new artifacts in the next stage
+            const artifact = await prisma.artifact.create({
+                data: {
+                    order: i,
+                    stageId: next.id, // set the stage id to the next stage id
+                },
+            })
 
-        // !FOR DEBUGGING
-        console.log('Uploading to:', artifact.id)
+            // !FOR DEBUGGING
+            console.log('files Saved:', artifact.id)
 
-        const uploadParams = {
-            Bucket: bucket,
-            Key: key(c, 1, artifact), // set the key to the second stage
-            Body: output[0],
+            const uploadParams = {
+                Bucket: bucket,
+                Key: key(c, 1, artifact), // set the key to the second stage
+                Body: buffer,
+            }
+            await s3.putObject(uploadParams) // upload the file to s3 after converting it
         }
+        //! RECAP: we have downloaded the file from s3, converted it, and uploaded it back to s3, and then update the database
 
-        await s3.putObject(uploadParams) // upload the file to s3 after converting it
-
+        // update the conversion status to DONE
         await prisma.conversion.update({
             where: {
                 id: c.id,
@@ -141,8 +146,6 @@ const convert = async (c: ConversionWithStagesWithArtifacts) => {
                 status: ConversionStatus.DONE,
             },
         })
-
-        //! RECAP: we have downloaded the file from s3, converted it, and uploaded it back to s3, and then update the database
     } catch (error: any) {
         await prisma.conversion.update({
             where: {
@@ -150,7 +153,7 @@ const convert = async (c: ConversionWithStagesWithArtifacts) => {
             },
             data: {
                 status: ConversionStatus.ERROR,
-                error: `Could not convert: ${error.message}`,
+                error: `Could not convert: ${error?.message}`,
             },
         })
     }
