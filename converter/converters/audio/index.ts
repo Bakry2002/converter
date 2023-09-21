@@ -62,6 +62,8 @@ export class AudioConverter extends Converter {
 
         // !FOR DEBUGGING
         console.log('Conversion directory: ', cwd)
+        console.log('===============================\n')
+
         return buffers
     }
 
@@ -83,6 +85,7 @@ export class AudioConverter extends Converter {
         console.log(
             `ffmpeg ${this.inputOptions()} ${this.input()} ${this.outputOptions()} ${this.output()}`
         )
+        console.log('===============================\n')
 
         await exec(
             `ffmpeg ${this.inputOptions()} ${this.input()} ${this.outputOptions()} ${this.output()}`,
@@ -97,6 +100,7 @@ export class AudioConverter extends Converter {
     async read() {
         // !FOR DEBUGGING
         console.log('Inputs: ', this.inputs)
+        console.log('===============================\n')
 
         const outputs = (await readdir(this.cwd)).filter(
             (f) => !this.inputs.includes(f) // filter the output files, meaning that we will only get the output files that are not in the input files
@@ -104,6 +108,7 @@ export class AudioConverter extends Converter {
 
         // !FOR DEBUGGING
         console.log('Outputs: ', outputs)
+        console.log('===============================\n')
 
         this.outputBuffers = await Promise.all(
             outputs.map((f) => readFile(`${this.cwd}/${f}`))

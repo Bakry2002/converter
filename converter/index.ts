@@ -30,6 +30,7 @@ async function checkObjectExistence(key: any, retryInterval = 1000) {
             console.error(
                 `file is still being uploaded to s3, retrying in ${retryInterval}ms.`
             )
+            console.log('===============================\n')
         }
         // for (let retry = 0; retry < maxRetries; retry++) {}
 
@@ -52,6 +53,7 @@ const convert = async (c: ConversionWithStagesWithArtifacts) => {
 
         // !FOR DEBUGGING
         console.log(`Generated key: ${downloadParams.Key}`)
+        console.log('===============================\n')
 
         // // Check if the object exists in s3 using the retry mechanism
         // const objectExists = await checkObjectExistence(downloadParams.Key)
@@ -74,8 +76,8 @@ const convert = async (c: ConversionWithStagesWithArtifacts) => {
         const res = await s3.getObject(downloadParams)
 
         // !FOR DEBUGGING
-
         console.log(`Starting conversion: ${current.mime} => ${next.mime}`)
+        console.log('===============================\n')
 
         const converters = findPath(current.mime, next.mime) // find the path of converters from the current mime to the next mime
 
@@ -84,6 +86,8 @@ const convert = async (c: ConversionWithStagesWithArtifacts) => {
             console.error(
                 `Could not find a converters for ${current.mime} to ${next.mime}`
             )
+            console.log('===============================\n')
+
             await prisma.conversion.update({
                 where: {
                     id: c.id,
@@ -105,12 +109,14 @@ const convert = async (c: ConversionWithStagesWithArtifacts) => {
             throw new Error(
                 'Download file error: Could not convert file to byte array'
             )
+            console.log('===============================\n')
         }
 
         let output: Buffer[] = []
         for (const edge of converters) {
             // !FOR DEBUGGING
             console.log(`Converting to: ${edge.to.mime}`)
+            console.log('===============================\n')
 
             output = await edge.converter.convert([Buffer.from(converted)]) // convert the file using the converter function
         }
@@ -128,6 +134,7 @@ const convert = async (c: ConversionWithStagesWithArtifacts) => {
 
             // !FOR DEBUGGING
             console.log('files Saved:', artifact.id)
+            console.log('===============================\n')
 
             const uploadParams = {
                 Bucket: bucket,
@@ -177,6 +184,7 @@ const main = async () => {
 
     // !FOR DEBUGGING
     console.log(`Found ${conversions.length} conversions`)
+    console.log('===============================\n')
 
     // map over the conversions
     for (const conversion of conversions) {
