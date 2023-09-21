@@ -5,7 +5,7 @@ import { useState } from 'react'
 
 import { mimeToFileExtension } from '@/lib/file'
 import { MimeNode } from '@/converter/types'
-import { nodes } from '@/converter/converters/image/nodes'
+import { formats } from '@/converter/converters/formats'
 
 type SelectorProps = {
     value: string
@@ -24,7 +24,7 @@ export const Selector = ({ value, setValue }: SelectorProps) => {
             />
             <div className="py-2">
                 <ul className="grid gap-2 grid-cols-3 place-items-center">
-                    {nodes
+                    {formats
                         .filter((format) =>
                             mimeToFileExtension(format.mime).includes(search)
                         )

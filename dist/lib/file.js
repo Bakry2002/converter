@@ -4,20 +4,17 @@ exports.byteToSize = exports.fileExtensionToMime = exports.mimeToFileExtension =
 const mime_types_1 = require("mime-types");
 // here is the translate layer that will translate any unknown mime type to a known one from our API (i.e.image/vnd.microsoft.icon to image/x-icon)
 const _mimes = {
-    'image/vnd.microsoft.icon': 'image/x-icon',
-    'image/jpeg': 'image/jpeg',
-    'image/gif': 'image/gif',
-    'image/bmp': 'image/bmp',
-    'image/webp': 'image/webp',
-    'image/tiff': 'image/tiff',
-    'image/heic': 'image/heic',
-    'image/heif': 'image/heif',
-    'image/x-ico': 'image/x-ico',
-    'image/png': 'image/png',
+    'image/vnd.microsoft.icon': 'image/x-icon', // ico
+};
+const _mimeToExtension = {
+    'audio/aac': 'aac',
+};
+const _extensionToMime = {
+    aac: 'audio/aac',
 };
 //  function that returns the file extension from a mime type
 const mimeToFileExtension = (mime) => {
-    const ext = (0, mime_types_1.extension)(mime);
+    const ext = _mimeToExtension[mime] || (0, mime_types_1.extension)(mime);
     if (!ext) {
         throw new Error(`No file extension found for mime type ${mime}`);
     }
@@ -26,7 +23,7 @@ const mimeToFileExtension = (mime) => {
 exports.mimeToFileExtension = mimeToFileExtension;
 //function that returns the mime type from a file extension
 const fileExtensionToMime = (ext) => {
-    const mime = (0, mime_types_1.lookup)(ext);
+    const mime = _extensionToMime[ext] || (0, mime_types_1.lookup)(ext);
     if (!mime) {
         throw new Error(`No mime type found for extension ${ext}`);
     }

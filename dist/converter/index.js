@@ -12,6 +12,7 @@ const prisma_1 = require("../lib/prisma");
 const graph_1 = require("./graph");
 const s3_1 = require("../lib/s3");
 const bucket = process.env.AWS_S3_BUCKET_NAME;
+//TODO: limit the number of retries why? because we don't want to wait forever
 // Define the checkObjectExistence function
 async function checkObjectExistence(key, retryInterval = 1000) {
     while (true) {

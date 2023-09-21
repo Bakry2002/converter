@@ -3,19 +3,20 @@ import { extension, lookup } from 'mime-types'
 // here is the translate layer that will translate any unknown mime type to a known one from our API (i.e.image/vnd.microsoft.icon to image/x-icon)
 const _mimes: Record<string, string> = {
     'image/vnd.microsoft.icon': 'image/x-icon', // ico
-    'image/jpeg': 'image/jpeg',
-    'image/gif': 'image/gif',
-    'image/bmp': 'image/bmp',
-    'image/webp': 'image/webp',
-    'image/tiff': 'image/tiff',
-    'image/heic': 'image/heic',
-    'image/heif': 'image/heif',
-    'image/x-ico': 'image/x-ico',
-    'image/png': 'image/png',
 }
+
+const _mimeToExtension: Record<string, string> = {
+    'audio/aac': 'aac',
+}
+
+const _extensionToMime: Record<string, string> = {
+    aac: 'audio/aac',
+}
+
 //  function that returns the file extension from a mime type
 export const mimeToFileExtension = (mime: string) => {
-    const ext = extension(mime)
+    const ext = _mimeToExtension[mime] || extension(mime)
+
     if (!ext) {
         throw new Error(`No file extension found for mime type ${mime}`)
     }
@@ -24,7 +25,7 @@ export const mimeToFileExtension = (mime: string) => {
 
 //function that returns the mime type from a file extension
 export const fileExtensionToMime = (ext: string) => {
-    const mime = lookup(ext)
+    const mime = _extensionToMime[ext] || lookup(ext)
     if (!mime) {
         throw new Error(`No mime type found for extension ${ext}`)
     }

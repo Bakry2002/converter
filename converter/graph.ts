@@ -1,8 +1,11 @@
 import { converters as imageConverters } from './converters/image'
+import { converters as AudioConverters } from './converters/audio'
 import { nodes as imageNodes } from './converters/image/nodes'
+import { nodes as AudioNodes } from './converters/audio/nodes'
 import { Converter, MimeNode } from './types'
 
-const converters = [...imageConverters] // combine all the converters into one array
+const converters: Converter[] = [...imageConverters, ...AudioConverters] // combine all the converters into one array
+const allNodes: MimeNode[] = [...imageNodes, ...AudioNodes]
 
 type Edge = {
     converter: Converter
@@ -15,7 +18,7 @@ type GraphNode = MimeNode & {
 }
 
 const nodes: Record<string, GraphNode> = {}
-for (const node of imageNodes) {
+for (const node of allNodes) {
     nodes[node.mime] = { ...node, edges: [] }
 }
 

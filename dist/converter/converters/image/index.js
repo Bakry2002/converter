@@ -1,25 +1,22 @@
 "use strict";
+// TOOL => ImageMagick
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.converters = exports.PdfToConverter = exports.ImageConverter = void 0;
 //* Edit happened in this file
 // EDIT: change the format to be MIME types instead of file extensions
 // EDIT: add  the extra params (i.e. the extra command for some formats like ico, must come with a resize command)
 // EDIT: change the converter to use MIME types instead of file extensions
 //* ====================================
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.converters = exports.PdfToConverter = exports.ImageConverter = void 0;
-// ========== 00:30:00 ==========
-// import { Converter } from '../def'
 const child_process_1 = require("child_process");
 const util_1 = require("util");
 const crypto_1 = require("crypto");
 const promises_1 = require("fs/promises");
 const mime_types_1 = require("mime-types");
-// import { formats } from './formats'
 const types_1 = require("../../types");
 const file_1 = require("../../../lib/file");
 const path_1 = require("path");
 const nodes_1 = require("./nodes");
 const exec = (0, util_1.promisify)(child_process_1.exec); // promisify exec which mean we can use await on it
-// NEW CODE: Class component
 const _converters = [];
 // ==========================================================================================
 // ==========================================================================================
@@ -144,39 +141,3 @@ exports.converters = _converters; // export the converters
 // ==========================================================================================
 // NOTE: the ImageConverter class will have a template methods (i.e. input(), inputOption(), etc...) that will be used by the converters main class, and it can be overridden by a subclass of that converter
 // NOTE: the convert function will have some hooks (i.e. preWrite(), exec(), read(), etc...) that can be overridden by a subclass of that converter
-// OLD CODE: function component
-// const buildConverter = (
-//     from: string,
-//     to: string,
-//     params?: string
-// ): Converter => {
-//     const converter: Converter = async (buffers: Buffer[]) => {
-//         const file = randomUUID() // generate a random file name
-//         await writeFile(`/tmp/${file}.${extension(from)}`, buffers[0]) // write the buffer to the file
-//         await exec(
-//             `${
-//                 process.env.NODE_ENV === 'production' ? 'convert' : 'magick'
-//             } /tmp/${file}.${extension(from)} ${
-//                 params ?? ''
-//             } /tmp/${file}.${extension(to)}`
-//         ) // convert the file
-//         const data = await readFile(`/tmp/${file}.${extension(to)}`) // read the converted file
-//         return [data]
-//     }
-//     converter.from = from
-//     converter.to = to
-//     return converter
-// }
-// const _converters: Array<Converter> = []
-// for (const from of formats) {
-//     for (const to of formats) {
-//         if (from.mime === to.mime) {
-//             // if it the same format, skip
-//             continue
-//         }
-//         _converters.push(buildConverter(from.mime, to.mime, to.params)) // build the converter
-//         // !FOR DEBUGGING
-//         console.log(`${from.mime} => ${to.mime}`)
-//     }
-// }
-// export const converters = _converters // export the converters

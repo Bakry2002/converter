@@ -17,6 +17,8 @@ export async function POST(req: NextRequest) {
     // get the mime type of the file
     const from = fileExtensionToMime(file.name)
     const to = data.get('to') as string
+    console.log('FROM: ', from)
+    console.log('TO: ', to)
     // if there is no file, return an error
     if (!file) {
         return new NextResponse(JSON.stringify({ error: 'No file found!' }), {

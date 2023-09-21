@@ -2,11 +2,14 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.findPath = exports.nodes = void 0;
 const image_1 = require("./converters/image");
+const audio_1 = require("./converters/audio");
 const nodes_1 = require("./converters/image/nodes");
-const converters = [...image_1.converters]; // combine all the converters into one array
+const nodes_2 = require("./converters/audio/nodes");
+const converters = [...image_1.converters, ...audio_1.converters]; // combine all the converters into one array
+const allNodes = [...nodes_1.nodes, ...nodes_2.nodes];
 const nodes = {};
 exports.nodes = nodes;
-for (const node of nodes_1.nodes) {
+for (const node of allNodes) {
     nodes[node.mime] = { ...node, edges: [] };
 }
 for (const converter of converters) {
