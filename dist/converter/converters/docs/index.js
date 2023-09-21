@@ -77,6 +77,8 @@ class DocsConverter extends types_1.Converter {
     async postConvert() { }
     async preRead() { }
     async read() {
+        // !FOR DEBUGGING
+        console.log('Inputs: ', this.inputs);
         const outputs = (await (0, promises_1.readdir)(this.cwd)).filter((f) => !this.inputs.includes(f) // filter the output files, meaning that we will only get the output files that are not in the input files
         ); // read the output directory
         // !FOR DEBUGGING
