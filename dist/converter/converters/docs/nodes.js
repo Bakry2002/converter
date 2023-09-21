@@ -18,3 +18,8 @@ const APPLICATION_DOCX = {
     mime: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
 };
 nodes.push(APPLICATION_DOCX);
+//HTML
+const TEXT_HTML = {
+    mime: 'text/html',
+};
+nodes.push(TEXT_HTML);
