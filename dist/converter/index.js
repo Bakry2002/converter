@@ -23,6 +23,7 @@ async function checkObjectExistence(key, retryInterval = 1000) {
         }
         catch (error) {
             console.error(`file is still being uploaded to s3, retrying in ${retryInterval}ms.`);
+            console.log('===============================');
         }
         // for (let retry = 0; retry < maxRetries; retry++) {}
         // Wait for a while before retrying
@@ -42,6 +43,7 @@ const convert = async (c) => {
         console.log('Type: ', c.stages[0].mime);
         // !FOR DEBUGGING
         console.log(`Generated key: ${downloadParams.Key}`);
+        console.log('===============================');
         // // Check if the object exists in s3 using the retry mechanism
         // const objectExists = await checkObjectExistence(downloadParams.Key)
         // if (!objectExists) {
@@ -62,10 +64,12 @@ const convert = async (c) => {
         const res = await s3_1.s3.getObject(downloadParams);
         // !FOR DEBUGGING
         console.log(`Starting conversion: ${current.mime} => ${next.mime}`);
+        console.log('===============================');
         const converters = (0, graph_1.findPath)(current.mime, next.mime); // find the path of converters from the current mime to the next mime
         // if we don't have a path of converters, we will throw an error
         if (!converters) {
             console.error(`Could not find a converters for ${current.mime} to ${next.mime}`);
+            console.log('===============================');
             await prisma_1.prisma.conversion.update({
                 where: {
                     id: c.id,
@@ -87,6 +91,7 @@ const convert = async (c) => {
         for (const edge of converters) {
             // !FOR DEBUGGING
             console.log(`Converting to: ${edge.to.mime}`);
+            console.log('===============================');
             output = await edge.converter.convert([Buffer.from(converted)]); // convert the file using the converter function
         }
         // for loop to go through every file in the output array if it contains more than one file
@@ -101,6 +106,7 @@ const convert = async (c) => {
             });
             // !FOR DEBUGGING
             console.log('files Saved:', artifact.id);
+            console.log('===============================');
             const uploadParams = {
                 Bucket: bucket,
                 Key: (0, s3_1.key)(c, 1, artifact),
@@ -147,6 +153,7 @@ const main = async () => {
     });
     // !FOR DEBUGGING
     console.log(`Found ${conversions.length} conversions`);
+    console.log('===============================');
     // map over the conversions
     for (const conversion of conversions) {
         await convert(conversion);

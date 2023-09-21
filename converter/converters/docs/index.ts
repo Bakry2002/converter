@@ -62,7 +62,7 @@ export class DocsConverter extends Converter {
 
         // !FOR DEBUGGING
         console.log('Conversion directory: ', cwd)
-        console.log('===============================\n')
+        console.log('===============================')
 
         return buffers
     }
@@ -85,7 +85,7 @@ export class DocsConverter extends Converter {
         console.log(
             `pandoc ${this.inputOptions()} ${this.input()} ${this.outputOptions()} ${this.output()}`
         )
-        console.log('===============================\n')
+        console.log('===============================')
 
         await exec(
             `pandoc ${this.inputOptions()} ${this.input()} ${this.outputOptions()} ${this.output()}`,
@@ -100,7 +100,7 @@ export class DocsConverter extends Converter {
     async read() {
         // !FOR DEBUGGING
         console.log('Inputs: ', this.inputs)
-        console.log('===============================\n')
+        console.log('===============================')
 
         const outputs = (await readdir(this.cwd)).filter(
             (f) => !this.inputs.includes(f) // filter the output files, meaning that we will only get the output files that are not in the input files
@@ -108,7 +108,7 @@ export class DocsConverter extends Converter {
 
         // !FOR DEBUGGING
         console.log('Outputs: ', outputs)
-        console.log('===============================\n')
+        console.log('===============================')
 
         this.outputBuffers = await Promise.all(
             outputs.map((f) => readFile(`${this.cwd}/${f}`))

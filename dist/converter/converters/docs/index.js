@@ -58,7 +58,7 @@ class DocsConverter extends types_1.Converter {
         this.cwd = cwd; // set the current working directory to the generated directory
         // !FOR DEBUGGING
         console.log('Conversion directory: ', cwd);
-        console.log('===============================\n');
+        console.log('===============================');
         return buffers;
     }
     async write(buffers) {
@@ -73,7 +73,7 @@ class DocsConverter extends types_1.Converter {
     async preConvert() { }
     async execute() {
         console.log(`pandoc ${this.inputOptions()} ${this.input()} ${this.outputOptions()} ${this.output()}`);
-        console.log('===============================\n');
+        console.log('===============================');
         await exec(`pandoc ${this.inputOptions()} ${this.input()} ${this.outputOptions()} ${this.output()}`, { cwd: this.cwd });
     }
     async postConvert() { }
@@ -81,12 +81,12 @@ class DocsConverter extends types_1.Converter {
     async read() {
         // !FOR DEBUGGING
         console.log('Inputs: ', this.inputs);
-        console.log('===============================\n');
+        console.log('===============================');
         const outputs = (await (0, promises_1.readdir)(this.cwd)).filter((f) => !this.inputs.includes(f) // filter the output files, meaning that we will only get the output files that are not in the input files
         ); // read the output directory
         // !FOR DEBUGGING
         console.log('Outputs: ', outputs);
-        console.log('===============================\n');
+        console.log('===============================');
         this.outputBuffers = await Promise.all(outputs.map((f) => (0, promises_1.readFile)(`${this.cwd}/${f}`))); // read the output files and store them in the output buffers
     }
     async postRead() { }
