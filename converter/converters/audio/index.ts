@@ -69,7 +69,7 @@ export class AudioConverter extends Converter {
         this.inputs = await Promise.all(
             // why Promise.all ? because we want to wait for all the files to be written to the disk before we continue
             buffers.map(async (b) => {
-                const name = `${randomUUID()}.${extension(this.from)}` // generate a random file name with the input file extension
+                const name = `${randomUUID()}.${mimeToFileExtension(this.from)}` // generate a random file name with the input file extension
                 return writeFile(join(this.cwd, name), b).then(() => name) // write the buffer to the file and return the file name
             })
         )

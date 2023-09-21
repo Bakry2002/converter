@@ -44,7 +44,6 @@ export async function GET(req: NextRequest, { params }: RouteParams) {
 
     ////////////////////////////////*
     const last = conversion.stages[conversion.stages.length - 1] // get the last stage
-    console.log('Length', last.artifacts.length)
     if (last.artifacts.length > 1) {
         // if there is more than one artifact, archive them into a zip file
         const archive = archiver('zip', {
@@ -97,7 +96,7 @@ export async function GET(req: NextRequest, { params }: RouteParams) {
     return new NextResponse(stream as any, {
         headers: {
             'Content-Type': conversion.stages[1].mime,
-            'Content-Disposition': `attachment; filename=download.${extension(
+            'Content-Disposition': `attachment; filename=download.${mimeToFileExtension(
                 conversion.stages[1].mime
             )}`,
         },

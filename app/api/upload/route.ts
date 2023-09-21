@@ -43,7 +43,7 @@ export async function POST(req: NextRequest) {
     const conversion = await prisma.conversion.create({
         data: {
             currentStage: 0,
-            status: ConversionStatus.PENDING,
+            status: ConversionStatus.UPLOADING,
             stages: {
                 create: [
                     {
@@ -84,6 +84,15 @@ export async function POST(req: NextRequest) {
 
     // !FOR DEBUGGING
     console.log(`File uploaded successfully with id: ${conversion.id}`)
+
+    await prisma.conversion.update({
+        where: {
+            id: conversion.id,
+        },
+        data: {
+            status: ConversionStatus.PENDING,
+        },
+    })
 
     // return id of the file
     return NextResponse.json({ id: conversion.id })

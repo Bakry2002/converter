@@ -7,7 +7,6 @@ const file_1 = require("../../../lib/file");
 const child_process_1 = require("child_process");
 const crypto_1 = require("crypto");
 const promises_1 = require("fs/promises");
-const mime_types_1 = require("mime-types");
 const path_1 = require("path");
 const util_1 = require("util");
 const nodes_1 = require("./nodes");
@@ -66,7 +65,7 @@ class AudioConverter extends types_1.Converter {
         this.inputs = await Promise.all(
         // why Promise.all ? because we want to wait for all the files to be written to the disk before we continue
         buffers.map(async (b) => {
-            const name = `${(0, crypto_1.randomUUID)()}.${(0, mime_types_1.extension)(this.from)}`; // generate a random file name with the input file extension
+            const name = `${(0, crypto_1.randomUUID)()}.${(0, file_1.mimeToFileExtension)(this.from)}`; // generate a random file name with the input file extension
             return (0, promises_1.writeFile)((0, path_1.join)(this.cwd, name), b).then(() => name); // write the buffer to the file and return the file name
         }));
     }

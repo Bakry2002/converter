@@ -7,9 +7,11 @@ const _mimes = {
     'image/vnd.microsoft.icon': 'image/x-icon', // ico
 };
 const _mimeToExtension = {
+    'audio/mpeg': 'mp3',
     'audio/aac': 'aac',
 };
 const _extensionToMime = {
+    mp3: 'audio/mpeg',
     aac: 'audio/aac',
 };
 //  function that returns the file extension from a mime type

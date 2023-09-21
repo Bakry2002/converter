@@ -42,22 +42,22 @@ const convert = async (c) => {
         console.log('Type: ', c.stages[0].mime);
         // !FOR DEBUGGING
         console.log(`Generated key: ${downloadParams.Key}`);
-        // Check if the object exists in s3 using the retry mechanism
-        const objectExists = await checkObjectExistence(downloadParams.Key);
-        if (!objectExists) {
-            // Handle the error or return as needed
-            // For example, set the conversion status to ERROR and return
-            await prisma_1.prisma.conversion.update({
-                where: {
-                    id: c.id,
-                },
-                data: {
-                    error: `Object with key ${downloadParams.Key} does not exist`,
-                    status: client_1.ConversionStatus.ERROR,
-                },
-            });
-            return;
-        }
+        // // Check if the object exists in s3 using the retry mechanism
+        // const objectExists = await checkObjectExistence(downloadParams.Key)
+        // if (!objectExists) {
+        //     // Handle the error or return as needed
+        //     // For example, set the conversion status to ERROR and return
+        //     await prisma.conversion.update({
+        //         where: {
+        //             id: c.id,
+        //         },
+        //         data: {
+        //             error: `Object with key ${downloadParams.Key} does not exist`,
+        //             status: ConversionStatus.ERROR,
+        //         },
+        //     })
+        //     return
+        // }
         // get the file from s3 to convert it
         const res = await s3_1.s3.getObject(downloadParams);
         // !FOR DEBUGGING

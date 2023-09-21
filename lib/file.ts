@@ -6,10 +6,12 @@ const _mimes: Record<string, string> = {
 }
 
 const _mimeToExtension: Record<string, string> = {
+    'audio/mpeg': 'mp3',
     'audio/aac': 'aac',
 }
 
 const _extensionToMime: Record<string, string> = {
+    mp3: 'audio/mpeg',
     aac: 'audio/aac',
 }
 
