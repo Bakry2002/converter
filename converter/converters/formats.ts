@@ -1,4 +1,5 @@
 import { nodes as ImageNodes } from './image/nodes'
 import { nodes as AudioNodes } from './audio/nodes'
+import { nodes as DocsNodes } from './docs/nodes'
 
-export const formats = [...ImageNodes, ...AudioNodes]
+export const formats = [...ImageNodes, ...AudioNodes, ...DocsNodes]

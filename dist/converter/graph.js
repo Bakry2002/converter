@@ -3,10 +3,16 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.findPath = exports.nodes = void 0;
 const image_1 = require("./converters/image");
 const audio_1 = require("./converters/audio");
+const docs_1 = require("./converters/docs");
 const nodes_1 = require("./converters/image/nodes");
 const nodes_2 = require("./converters/audio/nodes");
-const converters = [...image_1.converters, ...audio_1.converters]; // combine all the converters into one array
-const allNodes = [...nodes_1.nodes, ...nodes_2.nodes];
+const nodes_3 = require("./converters/docs/nodes");
+const converters = [
+    ...image_1.converters,
+    ...audio_1.converters,
+    ...docs_1.converters,
+]; // combine all the converters into one array
+const allNodes = [...nodes_1.nodes, ...nodes_2.nodes, ...nodes_3.nodes];
 const nodes = {};
 exports.nodes = nodes;
 for (const node of allNodes) {
