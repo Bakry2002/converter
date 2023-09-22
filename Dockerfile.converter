@@ -11,8 +11,10 @@ WORKDIR /usr/src/app
 # RUN apt install -y potrace libreoffice ffmpeg pandoc --fix-missing
 
 # Install ImageMagick and Ghostscript
-RUN apt-get update && apt-get install -y build-essential libjpeg-dev libpng-dev libtiff-dev ghostscript imagemagick ffmpeg pandoc
+RUN apt-get update && apt-get install -y build-essential libjpeg-dev libpng-dev libtiff-dev ghostscript imagemagick 
 RUN apt install -y potrace libreoffice 
+RUN apt-get update && apt-get install -y ffmpeg
+RUN apt-get update && apt-get install -y pandoc
 
 # Add policy to allow PDF conversion
 RUN sed -i '/rights="none" pattern="PDF"/s/none/read|write/' /etc/ImageMagick-6/policy.xml
