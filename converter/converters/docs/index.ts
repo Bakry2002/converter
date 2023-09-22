@@ -11,7 +11,7 @@ import { promisify } from 'util'
 import { nodes } from './nodes'
 const exec = promisify(execAsync) // promisify exec which mean we can use await on it
 
-// ============= 1:45:00 =============
+// ============= 2:40:00 =============
 const _converters: Array<Converter> = []
 export class DocsConverter extends Converter {
     // getter for the converter
