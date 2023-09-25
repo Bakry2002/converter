@@ -14,6 +14,12 @@ const APPLICATION_RTF: MimeNode = {
 }
 nodes.push(APPLICATION_RTF)
 
+// PDF
+const APPLICATION_PDF: MimeNode = {
+    mime: 'application/pdf',
+}
+nodes.push(APPLICATION_PDF)
+
 // DOCX
 const APPLICATION_DOCX: MimeNode = {
     mime: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',

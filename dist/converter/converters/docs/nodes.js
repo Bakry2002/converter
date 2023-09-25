@@ -13,6 +13,11 @@ const APPLICATION_RTF = {
     mime: 'application/rtf',
 };
 nodes.push(APPLICATION_RTF);
+// PDF
+const APPLICATION_PDF = {
+    mime: 'application/pdf',
+};
+nodes.push(APPLICATION_PDF);
 // DOCX
 const APPLICATION_DOCX = {
     mime: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
