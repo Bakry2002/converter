@@ -72,14 +72,6 @@ apt-get update && \
 apt-get install -y ffmpeg && \
 apt-get clean
 
-RUN apt-get update && apt-get install -y --no-install-recommends \
-    software-properties-common && \
-    add-apt-repository "deb http://archive.ubuntu.com/ubuntu focal universe" && \
-    apt-get update && \
-    apt-get install -y pandoc && \
-    apt-get clean
-
-
 # Copy package.json and package-lock.json to the container
 COPY package*.json ./
 
