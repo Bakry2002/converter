@@ -94,15 +94,15 @@ export class DocsConverter extends Converter {
     //     )
     // }
     async execute() {
-        const pandoc = 'C:\\Users\\lenovo\\AppData\\Local\\Pandoc\\pandoc.exe'
+        // const pandoc = 'C:\\Users\\lenovo\\AppData\\Local\\Pandoc\\pandoc.exe'
 
         console.log(
-            `"${pandoc}" ${this.inputOptions()} ${this.input()} ${this.outputOptions()} ${this.output()}`
+            `pandoc ${this.inputOptions()} ${this.input()} ${this.outputOptions()} ${this.output()}`
         )
         console.log('===============================')
 
         await exec(
-            `"${pandoc}" ${this.inputOptions()} ${this.input()} ${this.outputOptions()} ${this.output()}`,
+            `pandoc ${this.inputOptions()} ${this.input()} ${this.outputOptions()} ${this.output()}`,
             { cwd: this.cwd }
         )
     }
