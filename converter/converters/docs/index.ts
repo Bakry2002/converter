@@ -1,6 +1,6 @@
 // TOOL => pandoc
 
-import { Converter } from '../../types'
+import { Converter, MimeNode } from '../../types'
 import { mimeToFileExtension } from '../../../lib/file'
 import { exec as execAsync } from 'child_process'
 import { randomUUID } from 'crypto'
@@ -11,7 +11,14 @@ import { promisify } from 'util'
 import { nodes } from './nodes'
 const exec = promisify(execAsync) // promisify exec which mean we can use await on it
 
-// ============= 2:50:00 =============
+// ============ Paths for the tool used in the conversion ============
+const pandocPath = 'C:\\Users\\lenovo\\AppData\\Local\\Pandoc\\pandoc.exe'
+const pdf2docxPath =
+    'C:\\Users\\lenovo\\AppData\\Local\\Programs\\Python\\Python311\\Scripts\\pdf2docx.exe'
+const gttsPath =
+    'C:\\Users\\lenovo\\AppData\\Local\\Programs\\Python\\Python311\\Scripts\\gtts-cli.exe'
+// ====================================================================
+
 const _converters: Array<Converter> = []
 export class DocsConverter extends Converter {
     // getter for the converter
@@ -80,29 +87,18 @@ export class DocsConverter extends Converter {
     async postWrite() {}
 
     async preConvert() {}
-
-    // async execute() {
-    //     C:\Users\lenovo\AppData\Local\Pandoc\pandoc.exe
-    //     console.log(
-    //         `pandoc ${this.inputOptions()} ${this.input()} ${this.outputOptions()} ${this.output()}`
-    //     )
-    //     console.log('===============================')
-
-    //     await exec(
-    //         `pandoc ${this.inputOptions()} ${this.input()} ${this.outputOptions()} ${this.output()}`,
-    //         { cwd: this.cwd }
-    //     )
-    // }
     async execute() {
-        // const pandoc = 'C:\\Users\\lenovo\\AppData\\Local\\Pandoc\\pandoc.exe'
-
         console.log(
-            `pandoc ${this.inputOptions()} ${this.input()} ${this.outputOptions()} ${this.output()}`
+            `${
+                process.env.NODE_ENV === 'development' ? pandocPath : 'pandoc'
+            } ${this.inputOptions()} ${this.input()} ${this.outputOptions()} ${this.output()}`
         )
         console.log('===============================')
 
         await exec(
-            `pandoc ${this.inputOptions()} ${this.input()} ${this.outputOptions()} ${this.output()}`,
+            `${
+                process.env.NODE_ENV === 'development' ? pandocPath : 'pandoc'
+            } ${this.inputOptions()} ${this.input()} ${this.outputOptions()} ${this.output()}`,
             { cwd: this.cwd }
         )
     }
@@ -203,28 +199,22 @@ export class Pdf2DocxConverter extends Converter {
 
     async preConvert() {}
 
-    // async execute() {
-    //     console.log(
-    //         `pdf2docx convert ${this.inputOptions()} ${this.input()} ${this.outputOptions()} ${this.output()}`
-    //     )
-    //     console.log('===============================')
-
-    //     await exec(
-    //         `pdf2docx convert ${this.inputOptions()} ${this.input()} ${this.outputOptions()} ${this.output()}`,
-    //         { cwd: this.cwd }
-    //     )
-    // }
     async execute() {
-        const pdf2docxPath =
-            'C:\\Users\\lenovo\\AppData\\Local\\Programs\\Python\\Python311\\Scripts\\pdf2docx.exe'
-
         console.log(
-            `"${pdf2docxPath}" convert ${this.inputOptions()} ${this.input()} ${this.outputOptions()} ${this.output()}`
+            `"${
+                process.env.NODE_ENV === 'development'
+                    ? pdf2docxPath
+                    : 'pdf2docx'
+            }" convert ${this.inputOptions()} ${this.input()} ${this.outputOptions()} ${this.output()}`
         )
         console.log('===============================')
 
         await exec(
-            `"${pdf2docxPath}" convert ${this.inputOptions()} ${this.input()} ${this.outputOptions()} ${this.output()}`,
+            `"${
+                process.env.NODE_ENV === 'development'
+                    ? pdf2docxPath
+                    : 'pdf2docx'
+            }" convert ${this.inputOptions()} ${this.input()} ${this.outputOptions()} ${this.output()}`,
             { cwd: this.cwd }
         )
     }
@@ -254,6 +244,52 @@ export class Pdf2DocxConverter extends Converter {
     async postRead() {}
 }
 //
+
+// subclass from the DocsConverter that convert plain text to an audio file using the text to speech tool gtts
+
+export class TxtToAudioConverter extends DocsConverter {
+    override get from() {
+        return 'text/plain' // override the from property from the parent class to be "text/plain"
+    }
+
+    constructor(to: MimeNode) {
+        super({ mime: 'text/plain' }, to) // call the parent constructor
+    }
+
+    override output() {
+        return `output.${mimeToFileExtension(this.to)}` // return the output file name in the format of "output.extension"
+    }
+
+    override inputOptions(): string {
+        return `${this.fromNode.options?.inputs ?? ''} -l hi -f`
+    }
+
+    override outputOptions() {
+        return `${this.toNode.options?.outputs ?? ''} -o` // return the output options if exists, otherwise return an empty string
+    }
+
+    override execute: () => Promise<void> = async () => {
+        console.log(
+            `${
+                process.env.NODE_ENV === 'development' ? gttsPath : 'gtts-cli'
+            } ${this.inputOptions()} ${this.input()} ${this.outputOptions()} ${this.output()}`
+        )
+
+        await exec(
+            `${
+                process.env.NODE_ENV === 'development' ? gttsPath : 'gtts-cli'
+            } ${this.inputOptions()} ${this.input()} ${this.outputOptions()} ${this.output()}`,
+            { cwd: this.cwd }
+        )
+    }
+}
+
+// add the TxtToAudioConverter to the converters array
+for (const to of nodes) {
+    // ignore anything that is not audio
+    if (!to.mime.startsWith('audio')) continue
+    _converters.push(new TxtToAudioConverter(to))
+}
 
 for (const from of nodes) {
     for (const to of nodes) {

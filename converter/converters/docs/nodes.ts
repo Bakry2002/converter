@@ -31,4 +31,17 @@ const TEXT_HTML: MimeNode = {
     mime: 'text/html',
 }
 nodes.push(TEXT_HTML)
+
+//AUDIO
+const AUDIO_MP3: MimeNode = {
+    mime: 'audio/mpeg',
+}
+nodes.push(AUDIO_MP3)
+
+// wav
+const AUDIO_WAV: MimeNode = {
+    mime: 'audio/wav',
+}
+nodes.push(AUDIO_WAV)
+
 export { nodes }

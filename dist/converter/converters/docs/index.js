@@ -1,7 +1,7 @@
 "use strict";
 // TOOL => pandoc
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.converters = exports.Pdf2DocxConverter = exports.DocsConverter = void 0;
+exports.converters = exports.TxtToAudioConverter = exports.Pdf2DocxConverter = exports.DocsConverter = void 0;
 const types_1 = require("../../types");
 const file_1 = require("../../../lib/file");
 const child_process_1 = require("child_process");
@@ -11,7 +11,11 @@ const path_1 = require("path");
 const util_1 = require("util");
 const nodes_1 = require("./nodes");
 const exec = (0, util_1.promisify)(child_process_1.exec); // promisify exec which mean we can use await on it
-// ============= 2:50:00 =============
+// ============ Paths for the tool used in the conversion ============
+const pandocPath = 'C:\\Users\\lenovo\\AppData\\Local\\Pandoc\\pandoc.exe';
+const pdf2docxPath = 'C:\\Users\\lenovo\\AppData\\Local\\Programs\\Python\\Python311\\Scripts\\pdf2docx.exe';
+const gttsPath = 'C:\\Users\\lenovo\\AppData\\Local\\Programs\\Python\\Python311\\Scripts\\gtts-cli.exe';
+// ====================================================================
 const _converters = [];
 class DocsConverter extends types_1.Converter {
     constructor() {
@@ -71,22 +75,10 @@ class DocsConverter extends types_1.Converter {
     }
     async postWrite() { }
     async preConvert() { }
-    // async execute() {
-    //     C:\Users\lenovo\AppData\Local\Pandoc\pandoc.exe
-    //     console.log(
-    //         `pandoc ${this.inputOptions()} ${this.input()} ${this.outputOptions()} ${this.output()}`
-    //     )
-    //     console.log('===============================')
-    //     await exec(
-    //         `pandoc ${this.inputOptions()} ${this.input()} ${this.outputOptions()} ${this.output()}`,
-    //         { cwd: this.cwd }
-    //     )
-    // }
     async execute() {
-        const pandoc = 'C:\\Users\\lenovo\\AppData\\Local\\Pandoc\\pandoc.exe';
-        console.log(`"${pandoc}" ${this.inputOptions()} ${this.input()} ${this.outputOptions()} ${this.output()}`);
+        console.log(`${process.env.NODE_ENV === 'development' ? pandocPath : 'pandoc'} ${this.inputOptions()} ${this.input()} ${this.outputOptions()} ${this.output()}`);
         console.log('===============================');
-        await exec(`"${pandoc}" ${this.inputOptions()} ${this.input()} ${this.outputOptions()} ${this.output()}`, { cwd: this.cwd });
+        await exec(`${process.env.NODE_ENV === 'development' ? pandocPath : 'pandoc'} ${this.inputOptions()} ${this.input()} ${this.outputOptions()} ${this.output()}`, { cwd: this.cwd });
     }
     async postConvert() { }
     async preRead() { }
@@ -164,21 +156,14 @@ class Pdf2DocxConverter extends types_1.Converter {
     }
     async postWrite() { }
     async preConvert() { }
-    // async execute() {
-    //     console.log(
-    //         `pdf2docx convert ${this.inputOptions()} ${this.input()} ${this.outputOptions()} ${this.output()}`
-    //     )
-    //     console.log('===============================')
-    //     await exec(
-    //         `pdf2docx convert ${this.inputOptions()} ${this.input()} ${this.outputOptions()} ${this.output()}`,
-    //         { cwd: this.cwd }
-    //     )
-    // }
     async execute() {
-        const pdf2docxPath = 'C:\\Users\\lenovo\\AppData\\Local\\Programs\\Python\\Python311\\Scripts\\pdf2docx.exe';
-        console.log(`"${pdf2docxPath}" convert ${this.inputOptions()} ${this.input()} ${this.outputOptions()} ${this.output()}`);
+        console.log(`"${process.env.NODE_ENV === 'development'
+            ? pdf2docxPath
+            : 'pdf2docx'}" convert ${this.inputOptions()} ${this.input()} ${this.outputOptions()} ${this.output()}`);
         console.log('===============================');
-        await exec(`"${pdf2docxPath}" convert ${this.inputOptions()} ${this.input()} ${this.outputOptions()} ${this.output()}`, { cwd: this.cwd });
+        await exec(`"${process.env.NODE_ENV === 'development'
+            ? pdf2docxPath
+            : 'pdf2docx'}" convert ${this.inputOptions()} ${this.input()} ${this.outputOptions()} ${this.output()}`, { cwd: this.cwd });
     }
     async postConvert() { }
     async preRead() { }
@@ -197,6 +182,38 @@ class Pdf2DocxConverter extends types_1.Converter {
 }
 exports.Pdf2DocxConverter = Pdf2DocxConverter;
 //
+// subclass from the DocsConverter that convert plain text to an audio file using the text to speech tool gtts
+class TxtToAudioConverter extends DocsConverter {
+    get from() {
+        return 'text/plain'; // override the from property from the parent class to be "text/plain"
+    }
+    constructor(to) {
+        super({ mime: 'text/plain' }, to); // call the parent constructor
+        this.execute = async () => {
+            console.log(`${process.env.NODE_ENV === 'development' ? gttsPath : 'gtts-cli'} ${this.inputOptions()} ${this.input()} ${this.outputOptions()} ${this.output()}`);
+            await exec(`${process.env.NODE_ENV === 'development' ? gttsPath : 'gtts-cli'} ${this.inputOptions()} ${this.input()} ${this.outputOptions()} ${this.output()}`, { cwd: this.cwd });
+        };
+    }
+    output() {
+        return `output.${(0, file_1.mimeToFileExtension)(this.to)}`; // return the output file name in the format of "output.extension"
+    }
+    inputOptions() {
+        var _a, _b;
+        return `${(_b = (_a = this.fromNode.options) === null || _a === void 0 ? void 0 : _a.inputs) !== null && _b !== void 0 ? _b : ''} -l hi -f`;
+    }
+    outputOptions() {
+        var _a, _b;
+        return `${(_b = (_a = this.toNode.options) === null || _a === void 0 ? void 0 : _a.outputs) !== null && _b !== void 0 ? _b : ''} -o`; // return the output options if exists, otherwise return an empty string
+    }
+}
+exports.TxtToAudioConverter = TxtToAudioConverter;
+// add the TxtToAudioConverter to the converters array
+for (const to of nodes_1.nodes) {
+    // ignore anything that is not audio
+    if (!to.mime.startsWith('audio'))
+        continue;
+    _converters.push(new TxtToAudioConverter(to));
+}
 for (const from of nodes_1.nodes) {
     for (const to of nodes_1.nodes) {
         if (from.mime === 'application/pdf')

@@ -11,7 +11,6 @@ const path_1 = require("path");
 const util_1 = require("util");
 const nodes_1 = require("./nodes");
 const exec = (0, util_1.promisify)(child_process_1.exec); // promisify exec which mean we can use await on it
-// ============= 1:45:00 =============
 const _converters = [];
 class AudioConverter extends types_1.Converter {
     constructor() {

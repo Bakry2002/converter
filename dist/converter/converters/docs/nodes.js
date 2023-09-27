@@ -28,3 +28,13 @@ const TEXT_HTML = {
     mime: 'text/html',
 };
 nodes.push(TEXT_HTML);
+//AUDIO
+const AUDIO_MP3 = {
+    mime: 'audio/mpeg',
+};
+nodes.push(AUDIO_MP3);
+// wav
+const AUDIO_WAV = {
+    mime: 'audio/wav',
+};
+nodes.push(AUDIO_WAV);
