@@ -261,7 +261,7 @@ export class TxtToAudioConverter extends DocsConverter {
     }
 
     override inputOptions(): string {
-        return `${this.fromNode.options?.inputs ?? ''} -f`
+        return `${this.fromNode.options?.inputs ?? ''} -l en -f`
     }
 
     override outputOptions() {

@@ -199,7 +199,7 @@ class TxtToAudioConverter extends DocsConverter {
     }
     inputOptions() {
         var _a, _b;
-        return `${(_b = (_a = this.fromNode.options) === null || _a === void 0 ? void 0 : _a.inputs) !== null && _b !== void 0 ? _b : ''} -f`;
+        return `${(_b = (_a = this.fromNode.options) === null || _a === void 0 ? void 0 : _a.inputs) !== null && _b !== void 0 ? _b : ''} -l en -f`;
     }
     outputOptions() {
         var _a, _b;
