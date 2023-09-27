@@ -201,20 +201,20 @@ export class Pdf2DocxConverter extends Converter {
 
     async execute() {
         console.log(
-            `"${
+            `${
                 process.env.NODE_ENV === 'development'
                     ? pdf2docxPath
                     : 'pdf2docx'
-            }" convert ${this.inputOptions()} ${this.input()} ${this.outputOptions()} ${this.output()}`
+            } convert ${this.inputOptions()} ${this.input()} ${this.outputOptions()} ${this.output()}`
         )
         console.log('===============================')
 
         await exec(
-            `"${
+            `${
                 process.env.NODE_ENV === 'development'
                     ? pdf2docxPath
                     : 'pdf2docx'
-            }" convert ${this.inputOptions()} ${this.input()} ${this.outputOptions()} ${this.output()}`,
+            } convert ${this.inputOptions()} ${this.input()} ${this.outputOptions()} ${this.output()}`,
             { cwd: this.cwd }
         )
     }
@@ -261,7 +261,7 @@ export class TxtToAudioConverter extends DocsConverter {
     }
 
     override inputOptions(): string {
-        return `${this.fromNode.options?.inputs ?? ''} -l hi -f`
+        return `${this.fromNode.options?.inputs ?? ''} -f`
     }
 
     override outputOptions() {

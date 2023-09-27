@@ -157,13 +157,13 @@ class Pdf2DocxConverter extends types_1.Converter {
     async postWrite() { }
     async preConvert() { }
     async execute() {
-        console.log(`"${process.env.NODE_ENV === 'development'
+        console.log(`${process.env.NODE_ENV === 'development'
             ? pdf2docxPath
-            : 'pdf2docx'}" convert ${this.inputOptions()} ${this.input()} ${this.outputOptions()} ${this.output()}`);
+            : 'pdf2docx'} convert ${this.inputOptions()} ${this.input()} ${this.outputOptions()} ${this.output()}`);
         console.log('===============================');
-        await exec(`"${process.env.NODE_ENV === 'development'
+        await exec(`${process.env.NODE_ENV === 'development'
             ? pdf2docxPath
-            : 'pdf2docx'}" convert ${this.inputOptions()} ${this.input()} ${this.outputOptions()} ${this.output()}`, { cwd: this.cwd });
+            : 'pdf2docx'} convert ${this.inputOptions()} ${this.input()} ${this.outputOptions()} ${this.output()}`, { cwd: this.cwd });
     }
     async postConvert() { }
     async preRead() { }
@@ -199,7 +199,7 @@ class TxtToAudioConverter extends DocsConverter {
     }
     inputOptions() {
         var _a, _b;
-        return `${(_b = (_a = this.fromNode.options) === null || _a === void 0 ? void 0 : _a.inputs) !== null && _b !== void 0 ? _b : ''} -l hi -f`;
+        return `${(_b = (_a = this.fromNode.options) === null || _a === void 0 ? void 0 : _a.inputs) !== null && _b !== void 0 ? _b : ''} -f`;
     }
     outputOptions() {
         var _a, _b;
