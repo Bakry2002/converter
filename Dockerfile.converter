@@ -118,8 +118,18 @@ RUN apt-get update && apt-get install -y ffmpeg
 RUN apt-get update && apt-get install -y pandoc build-essential libjpeg-dev libpng-dev libtiff-dev ghostscript imagemagick \
     potrace libreoffice && apt-get clean
 
-# Install Python and the pdf2docx library
-RUN apt-get update && apt-get install -y python3 python3-pip && pip3 install pdf2docx gTTS
+# Install Python 3 and venv
+RUN apt-get update && apt-get install -y python3 python3-venv
+
+# Create a virtual environment
+RUN python3 -m venv /venv
+
+# Activate the virtual environment
+ENV PATH="/venv/bin:$PATH"
+
+# Install your Python packages within the virtual environment
+RUN pip install pdf2docx gTTS
+
 
 # Copy package.json and package-lock.json to the container
 COPY package*.json ./
