@@ -89,13 +89,10 @@ RUN apt-get update && apt-get install -y unzip && \
 #     aws configure set aws_secret_access_key <YOUR_AWS_SECRET_KEY> && \
 #     aws configure set default.region <YOUR_AWS_REGION>
 
-# Copy the .env file to the container
-COPY .env.development .env
-
-# Set AWS configuration from environment variables
-RUN aws configure set aws_access_key_id $(cat .env.local | grep AWS_ACCESS_KEY_ID | cut -d'=' -f2) && \
-    aws configure set aws_secret_access_key $(cat .env.local | grep AWS_SECRET_ACCESS_KEY | cut -d'=' -f2) && \
-    aws configure set default.region $(cat .env.local | grep AWS_REGION | cut -d'=' -f2)
+# Define build arguments for AWS credentials
+ARG AWS_ACCESS_KEY_ID
+ARG AWS_SECRET_ACCESS_KEY
+ARG AWS_REGION
 
 # Copy package.json and package-lock.json to the container
 COPY package*.json ./
