@@ -90,7 +90,7 @@ RUN apt-get update && apt-get install -y unzip && \
 #     aws configure set default.region <YOUR_AWS_REGION>
 
 # Copy the .env file to the container
-COPY .env.local .env
+COPY .env .env.local
 
 # Set AWS configuration from environment variables
 RUN aws configure set aws_access_key_id $(cat .env.local | grep AWS_ACCESS_KEY_ID | cut -d'=' -f2) && \
