@@ -1,12 +1,4 @@
 {
     "cSpell.words": ["nextui", "openai"],
-    "sqltools.connections": [
-        {
-            "previewLimit": 50,
-            "server": "localhost",
-            "driver": "PostgreSQL",
-            "name": "prod-convert_it",
-            "connectString": "postgresql://doadmin:AVNS_sBnPrn2vNqqRQdJphZo@prod-convertit-do-user-13867539-0.b.db.ondigitalocean.com:25060/defaultdb?sslmode=require"
-        }
-    ]
+    "sqltools.connections": []
 }
