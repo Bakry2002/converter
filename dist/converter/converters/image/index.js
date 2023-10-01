@@ -39,7 +39,7 @@ class ImageConverter extends types_1.Converter {
     }
     inputOptions() {
         var _a, _b;
-        return (_b = (_a = this.fromNode.options) === null || _a === void 0 ? void 0 : _a.inputs) !== null && _b !== void 0 ? _b : ''; // return the input options if exists, otherwise return an empty string
+        return `${(_b = (_a = this.fromNode.options) === null || _a === void 0 ? void 0 : _a.inputs) !== null && _b !== void 0 ? _b : ''} ${this.from === 'application/pdf' ? '-density 400' : ''}`; // return the input options if exists, otherwise return an empty string
     }
     output() {
         return `output.${(0, file_1.mimeToFileExtension)(this.to)}`; // return the output file name in the format of "output.extension"
@@ -80,7 +80,7 @@ class ImageConverter extends types_1.Converter {
     async postWrite() { }
     async preConvert() { }
     async execute() {
-        console.log(`${process.env.NODE_ENV === 'development' ? 'magick' : 'convert'}`);
+        console.log(`${process.env.NODE_ENV === 'development' ? 'magick' : 'convert'}${this.inputOptions()} ${this.input()} ${this.outputOptions()} ${this.output()}`);
         console.log('===============================');
         await exec(`${process.env.NODE_ENV === 'development' ? 'magick' : 'convert'}${this.inputOptions()} ${this.input()} ${this.outputOptions()} ${this.output()}`, { cwd: this.cwd });
     }

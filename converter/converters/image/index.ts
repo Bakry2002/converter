@@ -39,7 +39,9 @@ export class ImageConverter extends Converter {
     }
 
     public inputOptions(): string {
-        return this.fromNode.options?.inputs ?? '' // return the input options if exists, otherwise return an empty string
+        return `${this.fromNode.options?.inputs ?? ''} ${
+            this.from === 'application/pdf' ? '-density 400' : ''
+        }` // return the input options if exists, otherwise return an empty string
     }
 
     public output(): string {
@@ -91,7 +93,9 @@ export class ImageConverter extends Converter {
 
     async execute() {
         console.log(
-            `${process.env.NODE_ENV === 'development' ? 'magick' : 'convert'}`
+            `${
+                process.env.NODE_ENV === 'development' ? 'magick' : 'convert'
+            }${this.inputOptions()} ${this.input()} ${this.outputOptions()} ${this.output()}`
         )
         console.log('===============================')
 

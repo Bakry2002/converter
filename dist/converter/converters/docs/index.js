@@ -1,7 +1,7 @@
 "use strict";
 // TOOL => pandoc
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.converters = exports.TxtToAudioConverter = exports.Pdf2DocxConverter = exports.DocsConverter = void 0;
+exports.converters = exports.PdfToTxtConverter = exports.TxtToAudioConverter = exports.Pdf2DocxConverter = exports.DocsConverter = void 0;
 const types_1 = require("../../types");
 const file_1 = require("../../../lib/file");
 const child_process_1 = require("child_process");
@@ -15,6 +15,7 @@ const exec = (0, util_1.promisify)(child_process_1.exec); // promisify exec whic
 const pandocPath = 'C:\\Users\\lenovo\\AppData\\Local\\Pandoc\\pandoc.exe';
 const pdf2docxPath = 'C:\\Users\\lenovo\\AppData\\Local\\Programs\\Python\\Python311\\Scripts\\pdf2docx.exe';
 const gttsPath = 'C:\\Users\\lenovo\\AppData\\Local\\Programs\\Python\\Python311\\Scripts\\gtts-cli.exe';
+const pdfToTxtPath = 'C:\\Users\\lenovo\\AppData\\Local\\Programs\\MiKTeX\\miktex\\bin\\x64\\pdftotext.exe';
 // ====================================================================
 const _converters = [];
 class DocsConverter extends types_1.Converter {
@@ -207,6 +208,40 @@ class TxtToAudioConverter extends DocsConverter {
     }
 }
 exports.TxtToAudioConverter = TxtToAudioConverter;
+// PDF to plain text converter
+class PdfToTxtConverter extends DocsConverter {
+    get from() {
+        return 'application/pdf';
+    }
+    constructor(to) {
+        super({ mime: 'application/pdf' }, to); // call the parent constructor
+        this.execute = async () => {
+            console.log(`${process.env.NODE_ENV === 'development'
+                ? pdfToTxtPath
+                : 'pdftotext'} ${this.inputOptions()} ${this.input()} ${this.outputOptions()} ${this.output()}`);
+            await exec(`${process.env.NODE_ENV === 'development'
+                ? pdfToTxtPath
+                : 'pdftotext'} ${this.inputOptions()} ${this.input()} ${this.outputOptions()} ${this.output()}`, { cwd: this.cwd });
+        };
+    }
+    output() {
+        return `output.${(0, file_1.mimeToFileExtension)(this.to)}`; // return the output file name in the format of "output.extension"
+    }
+    inputOptions() {
+        return '';
+    }
+    outputOptions() {
+        return '';
+    }
+}
+exports.PdfToTxtConverter = PdfToTxtConverter;
+// add the PdfToTxtConverter to the converters array
+for (const to of nodes_1.nodes) {
+    // ignore anything that is not text
+    if (!to.mime.startsWith('text'))
+        continue;
+    _converters.push(new PdfToTxtConverter(to));
+}
 // add the TxtToAudioConverter to the converters array
 for (const to of nodes_1.nodes) {
     // ignore anything that is not audio
@@ -214,9 +249,10 @@ for (const to of nodes_1.nodes) {
         continue;
     _converters.push(new TxtToAudioConverter(to));
 }
+// add the DocsConverter to the converters array
 for (const from of nodes_1.nodes) {
     for (const to of nodes_1.nodes) {
-        if (from.mime === 'application/pdf')
+        if (from.mime === 'application/pdf' || to.mime === 'text/plain')
             continue;
         _converters.push(new DocsConverter(from, to)); // push the converter to the converters array
     }

@@ -5,7 +5,6 @@ import { mimeToFileExtension } from '../../../lib/file'
 import { exec as execAsync } from 'child_process'
 import { randomUUID } from 'crypto'
 import { mkdir, readFile, readdir, writeFile } from 'fs/promises'
-import { extension } from 'mime-types'
 import { join } from 'path'
 import { promisify } from 'util'
 import { nodes } from './nodes'
@@ -17,6 +16,8 @@ const pdf2docxPath =
     'C:\\Users\\lenovo\\AppData\\Local\\Programs\\Python\\Python311\\Scripts\\pdf2docx.exe'
 const gttsPath =
     'C:\\Users\\lenovo\\AppData\\Local\\Programs\\Python\\Python311\\Scripts\\gtts-cli.exe'
+const pdfToTxtPath =
+    'C:\\Users\\lenovo\\AppData\\Local\\Programs\\MiKTeX\\miktex\\bin\\x64\\pdftotext.exe'
 // ====================================================================
 
 const _converters: Array<Converter> = []
@@ -284,6 +285,55 @@ export class TxtToAudioConverter extends DocsConverter {
     }
 }
 
+// PDF to plain text converter
+export class PdfToTxtConverter extends DocsConverter {
+    override get from() {
+        return 'application/pdf'
+    }
+
+    constructor(to: MimeNode) {
+        super({ mime: 'application/pdf' }, to) // call the parent constructor
+    }
+
+    override output() {
+        return `output.${mimeToFileExtension(this.to)}` // return the output file name in the format of "output.extension"
+    }
+
+    override inputOptions(): string {
+        return ''
+    }
+
+    override outputOptions() {
+        return ''
+    }
+
+    override execute: () => Promise<void> = async () => {
+        console.log(
+            `${
+                process.env.NODE_ENV === 'development'
+                    ? pdfToTxtPath
+                    : 'pdftotext'
+            } ${this.inputOptions()} ${this.input()} ${this.outputOptions()} ${this.output()}`
+        )
+
+        await exec(
+            `${
+                process.env.NODE_ENV === 'development'
+                    ? pdfToTxtPath
+                    : 'pdftotext'
+            } ${this.inputOptions()} ${this.input()} ${this.outputOptions()} ${this.output()}`,
+            { cwd: this.cwd }
+        )
+    }
+}
+
+// add the PdfToTxtConverter to the converters array
+for (const to of nodes) {
+    // ignore anything that is not text
+    if (!to.mime.startsWith('text')) continue
+    _converters.push(new PdfToTxtConverter(to))
+}
+
 // add the TxtToAudioConverter to the converters array
 for (const to of nodes) {
     // ignore anything that is not audio
@@ -291,9 +341,11 @@ for (const to of nodes) {
     _converters.push(new TxtToAudioConverter(to))
 }
 
+// add the DocsConverter to the converters array
 for (const from of nodes) {
     for (const to of nodes) {
-        if (from.mime === 'application/pdf') continue
+        if (from.mime === 'application/pdf' || to.mime === 'text/plain')
+            continue
         _converters.push(new DocsConverter(from, to)) // push the converter to the converters array
     }
 }
