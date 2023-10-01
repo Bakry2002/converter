@@ -237,7 +237,7 @@ class PdfToTxtConverter extends DocsConverter {
 exports.PdfToTxtConverter = PdfToTxtConverter;
 // add the PdfToTxtConverter to the converters array
 for (const to of nodes_1.nodes) {
-    // ignore anything that is not text
+    // ignore anything that is not text/plain
     if (!to.mime.startsWith('text'))
         continue;
     _converters.push(new PdfToTxtConverter(to));

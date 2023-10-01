@@ -329,7 +329,7 @@ export class PdfToTxtConverter extends DocsConverter {
 
 // add the PdfToTxtConverter to the converters array
 for (const to of nodes) {
-    // ignore anything that is not text
+    // ignore anything that is not text/plain
     if (!to.mime.startsWith('text')) continue
     _converters.push(new PdfToTxtConverter(to))
 }

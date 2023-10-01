@@ -32,6 +32,9 @@ nodes.push(IMAGE_ICO)
 // WEBP
 const IMAGE_WEBP: MimeNode = {
     mime: 'image/webp',
+    options: {
+        outputs: '-quality 100 -define webp:lossless=true',
+    },
 }
 nodes.push(IMAGE_WEBP)
 
