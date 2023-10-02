@@ -18,6 +18,9 @@ module.exports = {
                 '2xl': '1400px',
             },
         },
+        screens: {
+            xll: '1248px',
+        },
         extend: {
             keyframes: {
                 'accordion-down': {
@@ -42,6 +45,9 @@ module.exports = {
             colors: {
                 primary: '#F11A7B',
                 secondary: '#feff9c ',
+            },
+            boxShadow: {
+                basic: '-1px 17px 31px -29px',
             },
         },
     },

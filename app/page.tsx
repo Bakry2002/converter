@@ -1,6 +1,7 @@
 import { DropZone } from '@/components/DropZone'
 import { Footer } from '@/components/Footer'
 import { Header } from '@/components/Header'
+import { HeaderNavMenu } from '@/components/HeaderNavMenu'
 
 import { OpenButton } from '@/components/OpenButton'
 import { Manager } from '@/components/files/Manager'
@@ -50,6 +51,7 @@ export default function Home() {
         <DropZone>
             <>
                 <Header />
+
                 <main>
                     <Hero />
                     <Manager />
