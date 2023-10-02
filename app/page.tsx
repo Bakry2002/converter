@@ -1,16 +1,12 @@
 import { DropZone } from '@/components/DropZone'
 import { Footer } from '@/components/Footer'
 import { Header } from '@/components/Header'
-import { HeaderNavMenu } from '@/components/HeaderNavMenu'
 
 import { OpenButton } from '@/components/OpenButton'
 import { Manager } from '@/components/files/Manager'
 
-import Image from 'next/image'
-import Link from 'next/link'
-
 const Hero = () => (
-    <section className="py-32 flex items-center flex-col gap-16">
+    <section className="pb-32 pt-56 flex items-center flex-col gap-16">
         <h1 className="text-7xl font-bold text-center [text-wrap:balance]">
             Convert any file to any{' '}
             <span className="text-transparent bg-clip-text bg-hero-gradient-text">
@@ -58,6 +54,7 @@ export default function Home() {
 
                     <About />
                 </main>
+                <div className="h-[1000px]"></div>
                 <Footer />
             </>
         </DropZone>

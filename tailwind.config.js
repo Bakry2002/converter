@@ -19,7 +19,13 @@ module.exports = {
             },
         },
         screens: {
-            xll: '1248px',
+            xs: '475px',
+            sm: '640px',
+            md: '768px',
+            xmd: '900px',
+            lg: '1024px',
+            xl: '1248px',
+            '2xl': '1536px',
         },
         extend: {
             keyframes: {
