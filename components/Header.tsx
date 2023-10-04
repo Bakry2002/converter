@@ -1,6 +1,6 @@
 'use client'
 
-import { useMotionValueEvent, useScroll } from 'framer-motion'
+import { useScroll } from 'framer-motion'
 import Link from 'next/link'
 import {
     FileAudio,

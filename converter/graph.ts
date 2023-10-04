@@ -1,17 +1,25 @@
 import { converters as imageConverters } from './converters/image'
 import { converters as AudioConverters } from './converters/audio'
 import { converters as DocsConverters } from './converters/docs'
+import { converters as VideoConverter } from './converters/video'
 import { nodes as imageNodes } from './converters/image/nodes'
 import { nodes as AudioNodes } from './converters/audio/nodes'
 import { nodes as DocsNodes } from './converters/docs/nodes'
+import { nodes as VideoNodes } from './converters/video/nodes'
 import { Converter, MimeNode } from './types'
 
 const converters: Converter[] = [
     ...imageConverters,
     ...AudioConverters,
     ...DocsConverters,
+    ...VideoConverter,
 ] // combine all the converters into one array
-const allNodes: MimeNode[] = [...imageNodes, ...AudioNodes, ...DocsNodes]
+const allNodes: MimeNode[] = [
+    ...imageNodes,
+    ...AudioNodes,
+    ...DocsNodes,
+    ...VideoNodes,
+]
 
 type Edge = {
     converter: Converter
