@@ -17,7 +17,9 @@ describe('Image Converter', () => {
     })
 
     it('should convert to "test.jpeg" to PNG', async () => {
-        const imageBuffer = await readFile(join(__dirname, 'test.jpeg'))
+        const imageBuffer = await readFile(
+            'D:\\My Work\\converter\\converter\\converters\\image\\test.jpeg'
+        )
         const results = await imageConverter.convert([imageBuffer])
         const pngMagickSignature = Buffer.from([
             137, 80, 78, 71, 13, 10, 26, 10,
@@ -31,7 +33,9 @@ describe('Image Converter', () => {
     })
 
     it('should convert "test.pdf" to JPG format', async () => {
-        const pdfBuffer = await readFile(join(__dirname, 'test.pdf'))
+        const pdfBuffer = await readFile(
+            'D:\\My Work\\converter\\converter\\converters\\image\\test.pdf'
+        )
         const results = await pdfToImageConverter.convert([pdfBuffer])
         const jpgMagickSignature = Buffer.from([255, 216, 255]) // JPEG signature
 

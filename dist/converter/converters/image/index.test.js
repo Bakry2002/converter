@@ -2,7 +2,6 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const index_1 = require("./index");
 const promises_1 = require("fs/promises");
-const path_1 = require("path");
 describe('Image Converter', () => {
     let imageConverter;
     let pdfToImageConverter;
@@ -11,7 +10,7 @@ describe('Image Converter', () => {
         pdfToImageConverter = new index_1.PdfToConverter({ mime: 'image/jpeg' });
     });
     it('should convert to "test.jpeg" to PNG', async () => {
-        const imageBuffer = await (0, promises_1.readFile)((0, path_1.join)(__dirname, 'test.jpeg'));
+        const imageBuffer = await (0, promises_1.readFile)('D:\\My Work\\converter\\converter\\converters\\image\\test.jpeg');
         const results = await imageConverter.convert([imageBuffer]);
         const pngMagickSignature = Buffer.from([
             137, 80, 78, 71, 13, 10, 26, 10,
@@ -21,7 +20,7 @@ describe('Image Converter', () => {
         }
     });
     it('should convert "test.pdf" to JPG format', async () => {
-        const pdfBuffer = await (0, promises_1.readFile)((0, path_1.join)(__dirname, 'test.pdf'));
+        const pdfBuffer = await (0, promises_1.readFile)('D:\\My Work\\converter\\converter\\converters\\image\\test.pdf');
         const results = await pdfToImageConverter.convert([pdfBuffer]);
         const jpgMagickSignature = Buffer.from([255, 216, 255]); // JPEG signature
         for (const jpgBuffer of results) {
