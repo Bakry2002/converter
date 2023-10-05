@@ -91,14 +91,18 @@ export class DocsConverter extends Converter {
     async execute() {
         console.log(
             `${
-                process.env.NODE_ENV === 'development' ? pandocPath : 'pandoc'
+                process.env.NODE_ENV === 'test' || 'development'
+                    ? pandocPath
+                    : 'pandoc'
             } ${this.inputOptions()} ${this.input()} ${this.outputOptions()} ${this.output()}`
         )
         console.log('===============================')
 
         await exec(
             `${
-                process.env.NODE_ENV === 'development' ? pandocPath : 'pandoc'
+                process.env.NODE_ENV === 'test' || 'development'
+                    ? pandocPath
+                    : 'pandoc'
             } ${this.inputOptions()} ${this.input()} ${this.outputOptions()} ${this.output()}`,
             { cwd: this.cwd }
         )
@@ -203,7 +207,7 @@ export class Pdf2DocxConverter extends Converter {
     async execute() {
         console.log(
             `${
-                process.env.NODE_ENV === 'development'
+                process.env.NODE_ENV === 'test' || 'development'
                     ? pdf2docxPath
                     : 'pdf2docx'
             } convert ${this.inputOptions()} ${this.input()} ${this.outputOptions()} ${this.output()}`
@@ -212,7 +216,7 @@ export class Pdf2DocxConverter extends Converter {
 
         await exec(
             `${
-                process.env.NODE_ENV === 'development'
+                process.env.NODE_ENV === 'test' || 'development'
                     ? pdf2docxPath
                     : 'pdf2docx'
             } convert ${this.inputOptions()} ${this.input()} ${this.outputOptions()} ${this.output()}`,
@@ -272,13 +276,17 @@ export class TxtToAudioConverter extends DocsConverter {
     override execute: () => Promise<void> = async () => {
         console.log(
             `${
-                process.env.NODE_ENV === 'development' ? gttsPath : 'gtts-cli'
+                process.env.NODE_ENV === 'test' || 'development'
+                    ? gttsPath
+                    : 'gtts-cli'
             } ${this.inputOptions()} ${this.input()} ${this.outputOptions()} ${this.output()}`
         )
 
         await exec(
             `${
-                process.env.NODE_ENV === 'development' ? gttsPath : 'gtts-cli'
+                process.env.NODE_ENV === 'test' || 'development'
+                    ? gttsPath
+                    : 'gtts-cli'
             } ${this.inputOptions()} ${this.input()} ${this.outputOptions()} ${this.output()}`,
             { cwd: this.cwd }
         )
@@ -310,7 +318,7 @@ export class PdfToTxtConverter extends DocsConverter {
     override execute: () => Promise<void> = async () => {
         console.log(
             `${
-                process.env.NODE_ENV === 'development'
+                process.env.NODE_ENV === 'test' || 'development'
                     ? pdfToTxtPath
                     : 'pdftotext'
             } ${this.inputOptions()} ${this.input()} ${this.outputOptions()} ${this.output()}`
@@ -318,7 +326,7 @@ export class PdfToTxtConverter extends DocsConverter {
 
         await exec(
             `${
-                process.env.NODE_ENV === 'development'
+                process.env.NODE_ENV === 'test' || 'development'
                     ? pdfToTxtPath
                     : 'pdftotext'
             } ${this.inputOptions()} ${this.input()} ${this.outputOptions()} ${this.output()}`,

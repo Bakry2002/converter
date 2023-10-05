@@ -77,9 +77,13 @@ class DocsConverter extends types_1.Converter {
     async postWrite() { }
     async preConvert() { }
     async execute() {
-        console.log(`${process.env.NODE_ENV === 'development' ? pandocPath : 'pandoc'} ${this.inputOptions()} ${this.input()} ${this.outputOptions()} ${this.output()}`);
+        console.log(`${process.env.NODE_ENV === 'test' || 'development'
+            ? pandocPath
+            : 'pandoc'} ${this.inputOptions()} ${this.input()} ${this.outputOptions()} ${this.output()}`);
         console.log('===============================');
-        await exec(`${process.env.NODE_ENV === 'development' ? pandocPath : 'pandoc'} ${this.inputOptions()} ${this.input()} ${this.outputOptions()} ${this.output()}`, { cwd: this.cwd });
+        await exec(`${process.env.NODE_ENV === 'test' || 'development'
+            ? pandocPath
+            : 'pandoc'} ${this.inputOptions()} ${this.input()} ${this.outputOptions()} ${this.output()}`, { cwd: this.cwd });
     }
     async postConvert() { }
     async preRead() { }
@@ -158,11 +162,11 @@ class Pdf2DocxConverter extends types_1.Converter {
     async postWrite() { }
     async preConvert() { }
     async execute() {
-        console.log(`${process.env.NODE_ENV === 'development'
+        console.log(`${process.env.NODE_ENV === 'test' || 'development'
             ? pdf2docxPath
             : 'pdf2docx'} convert ${this.inputOptions()} ${this.input()} ${this.outputOptions()} ${this.output()}`);
         console.log('===============================');
-        await exec(`${process.env.NODE_ENV === 'development'
+        await exec(`${process.env.NODE_ENV === 'test' || 'development'
             ? pdf2docxPath
             : 'pdf2docx'} convert ${this.inputOptions()} ${this.input()} ${this.outputOptions()} ${this.output()}`, { cwd: this.cwd });
     }
@@ -191,8 +195,12 @@ class TxtToAudioConverter extends DocsConverter {
     constructor(to) {
         super({ mime: 'text/plain' }, to); // call the parent constructor
         this.execute = async () => {
-            console.log(`${process.env.NODE_ENV === 'development' ? gttsPath : 'gtts-cli'} ${this.inputOptions()} ${this.input()} ${this.outputOptions()} ${this.output()}`);
-            await exec(`${process.env.NODE_ENV === 'development' ? gttsPath : 'gtts-cli'} ${this.inputOptions()} ${this.input()} ${this.outputOptions()} ${this.output()}`, { cwd: this.cwd });
+            console.log(`${process.env.NODE_ENV === 'test' || 'development'
+                ? gttsPath
+                : 'gtts-cli'} ${this.inputOptions()} ${this.input()} ${this.outputOptions()} ${this.output()}`);
+            await exec(`${process.env.NODE_ENV === 'test' || 'development'
+                ? gttsPath
+                : 'gtts-cli'} ${this.inputOptions()} ${this.input()} ${this.outputOptions()} ${this.output()}`, { cwd: this.cwd });
         };
     }
     output() {
@@ -216,10 +224,10 @@ class PdfToTxtConverter extends DocsConverter {
     constructor(to) {
         super({ mime: 'application/pdf' }, to); // call the parent constructor
         this.execute = async () => {
-            console.log(`${process.env.NODE_ENV === 'development'
+            console.log(`${process.env.NODE_ENV === 'test' || 'development'
                 ? pdfToTxtPath
                 : 'pdftotext'} ${this.inputOptions()} ${this.input()} ${this.outputOptions()} ${this.output()}`);
-            await exec(`${process.env.NODE_ENV === 'development'
+            await exec(`${process.env.NODE_ENV === 'test' || 'development'
                 ? pdfToTxtPath
                 : 'pdftotext'} ${this.inputOptions()} ${this.input()} ${this.outputOptions()} ${this.output()}`, { cwd: this.cwd });
         };

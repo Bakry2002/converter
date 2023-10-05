@@ -1,18 +1,18 @@
-// TOOL => ffmpeg
-
 import { Converter } from '../../types'
 import { mimeToFileExtension } from '../../../lib/file'
 import { exec as execAsync } from 'child_process'
 import { randomUUID } from 'crypto'
 import { mkdir, readFile, readdir, writeFile } from 'fs/promises'
 import { extension } from 'mime-types'
-import { join } from 'path'
+import path, { join } from 'path'
 import { promisify } from 'util'
+import { move, ensureDir, remove } from 'fs-extra' // Import the fs-extra library for file operations
 import { nodes } from './nodes'
 const exec = promisify(execAsync) // promisify exec which mean we can use await on it
 
+const zPath = '"C:\\Program Files\\7-Zip\\7z.exe"' // path to 7z.exe
 const _converters: Array<Converter> = []
-export class VideoConverter extends Converter {
+export class ArchiveConverter extends Converter {
     // getter for the converter
     get from(): string {
         return this.fromNode.mime
@@ -40,7 +40,6 @@ export class VideoConverter extends Converter {
     public outputOptions(): string {
         return this.toNode.options?.outputs ?? '' // return the output options if exists, otherwise return an empty string
     }
-
     // the actual conversion function that does the whole conversion process
     async convert(buffers: Buffer[]): Promise<Buffer[]> {
         await this.preWrite(buffers) // pre-write the files, meaning that we will write the input files to the disk
@@ -71,7 +70,7 @@ export class VideoConverter extends Converter {
             // why Promise.all ? because we want to wait for all the files to be written to the disk before we continue
             buffers.map(async (b) => {
                 const name = `${randomUUID()}.${mimeToFileExtension(this.from)}` // generate a random file name with the input file extension
-                return writeFile(join(this.cwd, name), b).then(() => name) // write the buffer to the file and return the file name
+                return writeFile(path.join(this.cwd, name), b).then(() => name) // write the buffer to the file and return the file name
             })
         )
     }
@@ -81,15 +80,26 @@ export class VideoConverter extends Converter {
     async preConvert() {}
 
     async execute() {
-        console.log(
-            `ffmpeg ${this.inputOptions()} ${this.input()} ${this.outputOptions()} ${this.output()}`
-        )
-        console.log('===============================')
+        // Define the input and output file paths
+        const fromFile = path.join(this.cwd, this.inputs[0]) // Assuming there is only one input file
+        const toFile = path.join(this.cwd, this.output())
 
-        await exec(
-            `ffmpeg ${this.inputOptions()} ${this.input()} ${this.outputOptions()} ${this.output()}`,
-            { cwd: this.cwd }
-        )
+        // Create a temporary directory for extracting files
+        const extractionFolder = path.join(this.cwd, 'extracted')
+        await ensureDir(extractionFolder)
+
+        // Unzip the 'from' file into the extraction folder using 7z
+        const unzipCommand = `${zPath} x "${fromFile}" -o"${extractionFolder}"`
+        console.log('firstCommand: ', unzipCommand)
+        await exec(unzipCommand)
+
+        // Zip the extracted files into a new archive with the 'to' format
+        const zipCommand = `${zPath} a "${toFile}" "${extractionFolder}"/*`
+        console.log('SecondCommand: ', zipCommand)
+        await exec(zipCommand)
+
+        // Clean up: Remove the temporary extraction folder
+        await remove(extractionFolder)
     }
 
     async postConvert() {}
@@ -117,32 +127,9 @@ export class VideoConverter extends Converter {
     async postRead() {}
 }
 
-export class VideoToAudioConverter extends VideoConverter {
-    override get to(): string {
-        return this.toNode.mime
-    }
-
-    override output(): string {
-        return `output.${mimeToFileExtension(this.to)}`
-    }
-
-    override outputOptions(): string {
-        return `${
-            this.toNode.options?.outputs ?? ''
-        } -vn -ar 44100 -ac 2 -ab 192k`
-    }
-}
-
-// Add the videoToAudioConverter to the converters array
 for (const from of nodes) {
     for (const to of nodes) {
-        _converters.push(new VideoToAudioConverter(from, to))
-    }
-}
-
-for (const from of nodes) {
-    for (const to of nodes) {
-        _converters.push(new VideoConverter(from, to)) // push the converter to the converters array
+        _converters.push(new ArchiveConverter(from, to)) // push the converter to the converters array
     }
 }
 

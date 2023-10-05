@@ -44,4 +44,22 @@ const AUDIO_MPEG: MimeNode = {
 }
 nodes.push(AUDIO_MPEG)
 
+//MP3
+const AUDIO_MP3: MimeNode = {
+    mime: 'audio/mpeg',
+}
+nodes.push(AUDIO_MP3)
+
+//WAV
+const AUDIO_WAV: MimeNode = {
+    mime: 'audio/wav',
+}
+nodes.push(AUDIO_WAV)
+
+//AAC
+const AUDIO_AAC: MimeNode = {
+    mime: 'audio/aac',
+}
+nodes.push(AUDIO_AAC)
+
 export { nodes }

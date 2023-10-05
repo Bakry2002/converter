@@ -1,18 +1,42 @@
 "use strict";
-// TOOL => ffmpeg
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.converters = exports.VideoToAudioConverter = exports.VideoConverter = void 0;
+exports.converters = exports.ArchiveConverter = void 0;
 const types_1 = require("../../types");
 const file_1 = require("../../../lib/file");
 const child_process_1 = require("child_process");
 const crypto_1 = require("crypto");
 const promises_1 = require("fs/promises");
-const path_1 = require("path");
+const path_1 = __importStar(require("path"));
 const util_1 = require("util");
+const fs_extra_1 = require("fs-extra"); // Import the fs-extra library for file operations
 const nodes_1 = require("./nodes");
 const exec = (0, util_1.promisify)(child_process_1.exec); // promisify exec which mean we can use await on it
+const zPath = '"C:\\Program Files\\7-Zip\\7z.exe"'; // path to 7z.exe
 const _converters = [];
-class VideoConverter extends types_1.Converter {
+class ArchiveConverter extends types_1.Converter {
     constructor() {
         super(...arguments);
         this.cwd = ''; // the current working directory
@@ -66,15 +90,28 @@ class VideoConverter extends types_1.Converter {
         // why Promise.all ? because we want to wait for all the files to be written to the disk before we continue
         buffers.map(async (b) => {
             const name = `${(0, crypto_1.randomUUID)()}.${(0, file_1.mimeToFileExtension)(this.from)}`; // generate a random file name with the input file extension
-            return (0, promises_1.writeFile)((0, path_1.join)(this.cwd, name), b).then(() => name); // write the buffer to the file and return the file name
+            return (0, promises_1.writeFile)(path_1.default.join(this.cwd, name), b).then(() => name); // write the buffer to the file and return the file name
         }));
     }
     async postWrite() { }
     async preConvert() { }
     async execute() {
-        console.log(`ffmpeg ${this.inputOptions()} ${this.input()} ${this.outputOptions()} ${this.output()}`);
-        console.log('===============================');
-        await exec(`ffmpeg ${this.inputOptions()} ${this.input()} ${this.outputOptions()} ${this.output()}`, { cwd: this.cwd });
+        // Define the input and output file paths
+        const fromFile = path_1.default.join(this.cwd, this.inputs[0]); // Assuming there is only one input file
+        const toFile = path_1.default.join(this.cwd, this.output());
+        // Create a temporary directory for extracting files
+        const extractionFolder = path_1.default.join(this.cwd, 'extracted');
+        await (0, fs_extra_1.ensureDir)(extractionFolder);
+        // Unzip the 'from' file into the extraction folder using 7z
+        const unzipCommand = `${zPath} x "${fromFile}" -o"${extractionFolder}"`;
+        console.log('firstCommand: ', unzipCommand);
+        await exec(unzipCommand);
+        // Zip the extracted files into a new archive with the 'to' format
+        const zipCommand = `${zPath} a "${toFile}" "${extractionFolder}"/*`;
+        console.log('SecondCommand: ', zipCommand);
+        await exec(zipCommand);
+        // Clean up: Remove the temporary extraction folder
+        await (0, fs_extra_1.remove)(extractionFolder);
     }
     async postConvert() { }
     async preRead() { }
@@ -91,29 +128,10 @@ class VideoConverter extends types_1.Converter {
     }
     async postRead() { }
 }
-exports.VideoConverter = VideoConverter;
-class VideoToAudioConverter extends VideoConverter {
-    get to() {
-        return this.toNode.mime;
-    }
-    output() {
-        return `output.${(0, file_1.mimeToFileExtension)(this.to)}`;
-    }
-    outputOptions() {
-        var _a, _b;
-        return `${(_b = (_a = this.toNode.options) === null || _a === void 0 ? void 0 : _a.outputs) !== null && _b !== void 0 ? _b : ''} -vn -ar 44100 -ac 2 -ab 192k`;
-    }
-}
-exports.VideoToAudioConverter = VideoToAudioConverter;
-// Add the videoToAudioConverter to the converters array
+exports.ArchiveConverter = ArchiveConverter;
 for (const from of nodes_1.nodes) {
     for (const to of nodes_1.nodes) {
-        _converters.push(new VideoToAudioConverter(from, to));
-    }
-}
-for (const from of nodes_1.nodes) {
-    for (const to of nodes_1.nodes) {
-        _converters.push(new VideoConverter(from, to)); // push the converter to the converters array
+        _converters.push(new ArchiveConverter(from, to)); // push the converter to the converters array
     }
 }
 exports.converters = _converters; // export the converters

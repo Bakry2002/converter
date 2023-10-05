@@ -3,6 +3,7 @@ import { extension, lookup } from 'mime-types'
 // here is the translate layer that will translate any unknown mime type to a known one from our API (i.e.image/vnd.microsoft.icon to image/x-icon)
 const _mimes: Record<string, string> = {
     'image/vnd.microsoft.icon': 'image/x-icon', // ico
+    'audio/x-aac': 'audio/aac', // aac
 }
 
 const _mimeToExtension: Record<string, string> = {

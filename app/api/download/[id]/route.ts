@@ -50,6 +50,7 @@ export async function GET(req: NextRequest, { params }: RouteParams) {
             zlib: { level: 9 }, // Sets the compression level. means that the compression will be the highest
         })
 
+        let index = 1 // Initialize the index to 1
         for (const artifact of last.artifacts) {
             const downloadParams = {
                 Bucket: bucket,
@@ -58,16 +59,24 @@ export async function GET(req: NextRequest, { params }: RouteParams) {
 
             const stream = await (
                 await s3.getObject(downloadParams)
-            ).Body?.transformToByteArray() // get the file from S3 to be able to download it, but with the Readable.toWeb() function, we can stream the file to the client instead of downloading it first
+            ).Body?.transformToByteArray()
 
             if (!stream) {
                 throw new Error('Could not get Stream')
             }
 
-            const buffer = Buffer.from(stream) // convert the stream to a buffer
+            const buffer = Buffer.from(stream)
+            let fileName = artifact.filename
+
+            fileName = `${artifact.filename}`
+
             archive.append(buffer, {
-                name: `${artifact.id}.${mimeToFileExtension(last.mime)}`,
-            }) // append the file to the archive with the name of the artifact id and the file extension
+                name: `${fileName.split('.')[0]}_${index}.${mimeToFileExtension(
+                    last.mime
+                )}`,
+            })
+
+            index++
         }
 
         archive.finalize() // finalize the archive
@@ -75,7 +84,9 @@ export async function GET(req: NextRequest, { params }: RouteParams) {
         return new NextResponse(archive as any, {
             headers: {
                 'Content-Type': 'application/zip',
-                'Content-Disposition': `attachment; filename=download.zip`,
+                'Content-Disposition': `attachment; filename=${
+                    conversion.stages[1].artifacts[0].filename.split('.')[0]
+                }.zip`,
             },
         })
     }
@@ -96,9 +107,9 @@ export async function GET(req: NextRequest, { params }: RouteParams) {
     return new NextResponse(stream as any, {
         headers: {
             'Content-Type': conversion.stages[1].mime,
-            'Content-Disposition': `attachment; filename=download.${mimeToFileExtension(
-                conversion.stages[1].mime
-            )}`,
+            'Content-Disposition': `attachment; filename=${
+                conversion.stages[1].artifacts[0].filename.split('.')[0]
+            }.${mimeToFileExtension(conversion.stages[1].mime)}`,
         },
     })
 }

@@ -52,6 +52,7 @@ export async function POST(req: NextRequest) {
                         artifacts: {
                             create: [
                                 {
+                                    filename: file.name,
                                     order: 0,
                                 },
                             ],

@@ -4,7 +4,8 @@ exports.byteToSize = exports.fileExtensionToMime = exports.mimeToFileExtension =
 const mime_types_1 = require("mime-types");
 // here is the translate layer that will translate any unknown mime type to a known one from our API (i.e.image/vnd.microsoft.icon to image/x-icon)
 const _mimes = {
-    'image/vnd.microsoft.icon': 'image/x-icon', // ico
+    'image/vnd.microsoft.icon': 'image/x-icon',
+    'audio/x-aac': 'audio/aac', // aac
 };
 const _mimeToExtension = {
     'audio/mpeg': 'mp3',

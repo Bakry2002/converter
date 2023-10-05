@@ -126,6 +126,7 @@ const convert = async (c: ConversionWithStagesWithArtifacts) => {
             // after the files is converted, we will create a new artifacts in the next stage
             const artifact = await prisma.artifact.create({
                 data: {
+                    filename: c.stages[0].artifacts[0].filename, // set the filename to the first artifact of the first stage
                     order: i,
                     stageId: next.id, // set the stage id to the next stage id
                 },

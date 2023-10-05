@@ -38,3 +38,18 @@ const AUDIO_MPEG = {
     mime: 'video/mpeg',
 };
 nodes.push(AUDIO_MPEG);
+//MP3
+const AUDIO_MP3 = {
+    mime: 'audio/mpeg',
+};
+nodes.push(AUDIO_MP3);
+//WAV
+const AUDIO_WAV = {
+    mime: 'audio/wav',
+};
+nodes.push(AUDIO_WAV);
+//AAC
+const AUDIO_AAC = {
+    mime: 'audio/aac',
+};
+nodes.push(AUDIO_AAC);
