@@ -60,6 +60,7 @@ CREATE TABLE "Stage" (
 -- CreateTable
 CREATE TABLE "Artifact" (
     "id" TEXT NOT NULL DEFAULT concat('art_', replace(cast(gen_random_uuid() as text), '-', '')),
+    "filename" TEXT NOT NULL,
     "order" INTEGER NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,

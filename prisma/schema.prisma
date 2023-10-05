@@ -79,6 +79,7 @@ model Stage {
 
 model Artifact {
   id         String     @id @default(dbgenerated("concat('art_', replace(cast(gen_random_uuid() as text), '-', ''))")) @db.Text
+  filename  String
   order     Int
   createdAt  DateTime   @default(now())
   updatedAt  DateTime   @updatedAt
