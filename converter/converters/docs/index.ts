@@ -91,18 +91,14 @@ export class DocsConverter extends Converter {
     async execute() {
         console.log(
             `${
-                process.env.NODE_ENV === 'test' || 'development'
-                    ? pandocPath
-                    : 'pandoc'
+                process.env.NODE_ENV === 'production' ? 'pandoc' : pandocPath
             } ${this.inputOptions()} ${this.input()} ${this.outputOptions()} ${this.output()}`
         )
         console.log('===============================')
 
         await exec(
             `${
-                process.env.NODE_ENV === 'test' || 'development'
-                    ? pandocPath
-                    : 'pandoc'
+                process.env.NODE_ENV === 'production' ? 'pandoc' : pandocPath
             } ${this.inputOptions()} ${this.input()} ${this.outputOptions()} ${this.output()}`,
             { cwd: this.cwd }
         )
@@ -207,18 +203,18 @@ export class Pdf2DocxConverter extends Converter {
     async execute() {
         console.log(
             `${
-                process.env.NODE_ENV === 'test' || 'development'
-                    ? pdf2docxPath
-                    : 'pdf2docx'
+                process.env.NODE_ENV === 'production'
+                    ? 'pdf2docx'
+                    : pdf2docxPath
             } convert ${this.inputOptions()} ${this.input()} ${this.outputOptions()} ${this.output()}`
         )
         console.log('===============================')
 
         await exec(
             `${
-                process.env.NODE_ENV === 'test' || 'development'
-                    ? pdf2docxPath
-                    : 'pdf2docx'
+                process.env.NODE_ENV === 'production'
+                    ? 'pdf2docx'
+                    : pdf2docxPath
             } convert ${this.inputOptions()} ${this.input()} ${this.outputOptions()} ${this.output()}`,
             { cwd: this.cwd }
         )
@@ -248,10 +244,8 @@ export class Pdf2DocxConverter extends Converter {
 
     async postRead() {}
 }
-//
 
-// subclass from the DocsConverter that convert plain text to an audio file using the text to speech tool gtts
-
+// convert plain text to an audio file using the text to speech tool 'gtts-cli'
 export class TxtToAudioConverter extends DocsConverter {
     override get from() {
         return 'text/plain' // override the from property from the parent class to be "text/plain"
@@ -276,17 +270,13 @@ export class TxtToAudioConverter extends DocsConverter {
     override execute: () => Promise<void> = async () => {
         console.log(
             `${
-                process.env.NODE_ENV === 'test' || 'development'
-                    ? gttsPath
-                    : 'gtts-cli'
+                process.env.NODE_ENV === 'production' ? 'gtts-cli' : gttsPath
             } ${this.inputOptions()} ${this.input()} ${this.outputOptions()} ${this.output()}`
         )
 
         await exec(
             `${
-                process.env.NODE_ENV === 'test' || 'development'
-                    ? gttsPath
-                    : 'gtts-cli'
+                process.env.NODE_ENV === 'production' ? 'gtts-cli' : gttsPath
             } ${this.inputOptions()} ${this.input()} ${this.outputOptions()} ${this.output()}`,
             { cwd: this.cwd }
         )
@@ -318,17 +308,17 @@ export class PdfToTxtConverter extends DocsConverter {
     override execute: () => Promise<void> = async () => {
         console.log(
             `${
-                process.env.NODE_ENV === 'test' || 'development'
-                    ? pdfToTxtPath
-                    : 'pdftotext'
+                process.env.NODE_ENV === 'production'
+                    ? 'pdftotext'
+                    : pdfToTxtPath
             } ${this.inputOptions()} ${this.input()} ${this.outputOptions()} ${this.output()}`
         )
 
         await exec(
             `${
-                process.env.NODE_ENV === 'test' || 'development'
-                    ? pdfToTxtPath
-                    : 'pdftotext'
+                process.env.NODE_ENV === 'production'
+                    ? 'pdftotext'
+                    : pdfToTxtPath
             } ${this.inputOptions()} ${this.input()} ${this.outputOptions()} ${this.output()}`,
             { cwd: this.cwd }
         )

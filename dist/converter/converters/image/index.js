@@ -80,13 +80,9 @@ class ImageConverter extends types_1.Converter {
     async postWrite() { }
     async preConvert() { }
     async execute() {
-        console.log(`${process.env.NODE_ENV === 'test' || 'development'
-            ? 'magick'
-            : 'convert'}${this.inputOptions()} ${this.input()} ${this.outputOptions()} ${this.output()}`);
+        console.log(`${process.env.NODE_ENV === 'production' ? 'convert' : 'magick'}${this.inputOptions()} ${this.input()} ${this.outputOptions()} ${this.output()}`);
         console.log('===============================');
-        await exec(`${process.env.NODE_ENV === 'test' || 'development'
-            ? 'magick'
-            : 'convert'}${this.inputOptions()} ${this.input()} ${this.outputOptions()} ${this.output()}`, { cwd: this.cwd });
+        await exec(`${process.env.NODE_ENV === 'production' ? 'convert' : 'magick'}${this.inputOptions()} ${this.input()} ${this.outputOptions()} ${this.output()}`, { cwd: this.cwd });
     }
     async postConvert() { }
     async preRead() { }

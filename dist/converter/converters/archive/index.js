@@ -1,4 +1,5 @@
 "use strict";
+// TOOL => 7z-Zip
 var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
     if (k2 === undefined) k2 = k;
     var desc = Object.getOwnPropertyDescriptor(m, k);
@@ -35,6 +36,7 @@ const fs_extra_1 = require("fs-extra"); // Import the fs-extra library for file 
 const nodes_1 = require("./nodes");
 const exec = (0, util_1.promisify)(child_process_1.exec); // promisify exec which mean we can use await on it
 const zPath = '"C:\\Program Files\\7-Zip\\7z.exe"'; // path to 7z.exe
+// ================================================================
 const _converters = [];
 class ArchiveConverter extends types_1.Converter {
     constructor() {
@@ -103,12 +105,16 @@ class ArchiveConverter extends types_1.Converter {
         const extractionFolder = path_1.default.join(this.cwd, 'extracted');
         await (0, fs_extra_1.ensureDir)(extractionFolder);
         // Unzip the 'from' file into the extraction folder using 7z
-        const unzipCommand = `${zPath} x "${fromFile}" -o"${extractionFolder}"`;
+        const unzipCommand = `${process.env.NODE_ENV === 'production' ? '7z' : zPath} x "${fromFile}" -o"${extractionFolder}"`;
+        // !FOR DEBUGGING
         console.log('firstCommand: ', unzipCommand);
+        console.log('===============================');
         await exec(unzipCommand);
         // Zip the extracted files into a new archive with the 'to' format
-        const zipCommand = `${zPath} a "${toFile}" "${extractionFolder}"/*`;
+        const zipCommand = `${process.env.NODE_ENV === 'production' ? '7z' : zPath} a "${toFile}" "${extractionFolder}"/*`;
+        // !FOR DEBUGGING
         console.log('SecondCommand: ', zipCommand);
+        console.log('===============================');
         await exec(zipCommand);
         // Clean up: Remove the temporary extraction folder
         await (0, fs_extra_1.remove)(extractionFolder);

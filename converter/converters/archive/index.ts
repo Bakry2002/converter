@@ -1,17 +1,21 @@
+// TOOL => 7z-Zip
+
 import { Converter } from '../../types'
 import { mimeToFileExtension } from '../../../lib/file'
 import { exec as execAsync } from 'child_process'
 import { randomUUID } from 'crypto'
 import { mkdir, readFile, readdir, writeFile } from 'fs/promises'
-import { extension } from 'mime-types'
 import path, { join } from 'path'
 import { promisify } from 'util'
-import { move, ensureDir, remove } from 'fs-extra' // Import the fs-extra library for file operations
+import { ensureDir, remove } from 'fs-extra' // Import the fs-extra library for file operations
 import { nodes } from './nodes'
 const exec = promisify(execAsync) // promisify exec which mean we can use await on it
 
 const zPath = '"C:\\Program Files\\7-Zip\\7z.exe"' // path to 7z.exe
+// ================================================================
+
 const _converters: Array<Converter> = []
+
 export class ArchiveConverter extends Converter {
     // getter for the converter
     get from(): string {
@@ -89,13 +93,25 @@ export class ArchiveConverter extends Converter {
         await ensureDir(extractionFolder)
 
         // Unzip the 'from' file into the extraction folder using 7z
-        const unzipCommand = `${zPath} x "${fromFile}" -o"${extractionFolder}"`
+        const unzipCommand = `${
+            process.env.NODE_ENV === 'production' ? '7z' : zPath
+        } x "${fromFile}" -o"${extractionFolder}"`
+
+        // !FOR DEBUGGING
         console.log('firstCommand: ', unzipCommand)
+        console.log('===============================')
+
         await exec(unzipCommand)
 
         // Zip the extracted files into a new archive with the 'to' format
-        const zipCommand = `${zPath} a "${toFile}" "${extractionFolder}"/*`
+        const zipCommand = `${
+            process.env.NODE_ENV === 'production' ? '7z' : zPath
+        } a "${toFile}" "${extractionFolder}"/*`
+
+        // !FOR DEBUGGING
         console.log('SecondCommand: ', zipCommand)
+        console.log('===============================')
+
         await exec(zipCommand)
 
         // Clean up: Remove the temporary extraction folder
