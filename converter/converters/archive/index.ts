@@ -93,26 +93,34 @@ export class ArchiveConverter extends Converter {
         await ensureDir(extractionFolder)
 
         // Unzip the 'from' file into the extraction folder using 7z
-        const unzipCommand = `${
-            process.env.NODE_ENV === 'production' ? '7z' : zPath
-        } x "${fromFile}" -o"${extractionFolder}"`
+        if (process.env.NODE_ENV === 'production') {
+            await exec(`7z x "${fromFile}" -o"${extractionFolder}"`) // extract the file using 7z
+            await exec(`7z a "${toFile}" "${extractionFolder}"/*`) // zip the extracted files into a new archive with the 'to' format
+        } else {
+            await exec(`${zPath} x "${fromFile}" -o"${extractionFolder}"`)
+            await exec(`${zPath} a "${toFile}" "${extractionFolder}"/*`)
+        }
+        // const unzipCommand = `${
+        //     process.env.NODE_ENV === 'production' ? '7z' : zPath
+        // } x "${fromFile}" -o"${extractionFolder}"`
 
         // !FOR DEBUGGING
-        console.log('firstCommand: ', unzipCommand)
+        // console.log('firstCommand: ', unzipCommand)
         console.log('===============================')
+        console.log('NODE_ENV: ', process.env.NODE_ENV)
 
-        await exec(unzipCommand)
+        // await exec(unzipCommand)
 
         // Zip the extracted files into a new archive with the 'to' format
-        const zipCommand = `${
-            process.env.NODE_ENV === 'production' ? '7z' : zPath
-        } a "${toFile}" "${extractionFolder}"/*`
+        // const zipCommand = `${
+        //     process.env.NODE_ENV === 'production' ? '7z' : zPath
+        // } a "${toFile}" "${extractionFolder}"/*`
 
         // !FOR DEBUGGING
-        console.log('SecondCommand: ', zipCommand)
+        // console.log('SecondCommand: ', zipCommand)
         console.log('===============================')
 
-        await exec(zipCommand)
+        // await exec(zipCommand)
 
         // Clean up: Remove the temporary extraction folder
         await remove(extractionFolder)
