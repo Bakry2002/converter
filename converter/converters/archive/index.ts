@@ -94,14 +94,14 @@ export class ArchiveConverter extends Converter {
 
         // Unzip the 'from' file into the extraction folder using 7z
         const unzipCommand = `${
-            process.env.NODE_ENV === 'development' || 'test' ? zPath : '7z'
+            process.env.NODE_ENV === 'development' ? zPath : '7z'
         } x "${fromFile}" -o"${extractionFolder}"`
         console.log('firstCommand: ', unzipCommand)
         await exec(unzipCommand)
 
         // Zip the extracted files into a new archive with the 'to' format
         const zipCommand = `${
-            process.env.NODE_ENV === 'development' || 'test' ? zPath : '7z'
+            process.env.NODE_ENV === 'development' ? zPath : '7z'
         } a "${toFile}" "${extractionFolder}"/*`
         console.log('SecondCommand: ', zipCommand)
         await exec(zipCommand)

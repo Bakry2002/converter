@@ -105,11 +105,11 @@ class ArchiveConverter extends types_1.Converter {
         const extractionFolder = path_1.default.join(this.cwd, 'extracted');
         await (0, fs_extra_1.ensureDir)(extractionFolder);
         // Unzip the 'from' file into the extraction folder using 7z
-        const unzipCommand = `${process.env.NODE_ENV === 'development' || 'test' ? zPath : '7z'} x "${fromFile}" -o"${extractionFolder}"`;
+        const unzipCommand = `${process.env.NODE_ENV === 'development' ? zPath : '7z'} x "${fromFile}" -o"${extractionFolder}"`;
         console.log('firstCommand: ', unzipCommand);
         await exec(unzipCommand);
         // Zip the extracted files into a new archive with the 'to' format
-        const zipCommand = `${process.env.NODE_ENV === 'development' || 'test' ? zPath : '7z'} a "${toFile}" "${extractionFolder}"/*`;
+        const zipCommand = `${process.env.NODE_ENV === 'development' ? zPath : '7z'} a "${toFile}" "${extractionFolder}"/*`;
         console.log('SecondCommand: ', zipCommand);
         await exec(zipCommand);
         // Clean up: Remove the temporary extraction folder

@@ -94,14 +94,14 @@ export class ImageConverter extends Converter {
     async execute() {
         console.log(
             `${
-                process.env.NODE_ENV === 'production' ? 'convert' : 'magick'
+                process.env.NODE_ENV === 'development' ? 'convert' : 'magick'
             }${this.inputOptions()} ${this.input()} ${this.outputOptions()} ${this.output()}`
         )
         console.log('===============================')
 
         await exec(
             `${
-                process.env.NODE_ENV === 'production' ? 'convert' : 'magick'
+                process.env.NODE_ENV === 'development' ? 'convert' : 'magick'
             }${this.inputOptions()} ${this.input()} ${this.outputOptions()} ${this.output()}`,
             { cwd: this.cwd }
         )
