@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.nodes = void 0;
 const nodes = [];
 exports.nodes = nodes;
+// 4 nodes
 //ZIP
 const ARCHIVE_ZIP = {
     mime: 'application/zip',

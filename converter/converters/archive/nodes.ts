@@ -2,6 +2,8 @@ import { MimeNode } from '@/converter/types'
 
 const nodes: MimeNode[] = []
 
+// 4 nodes
+
 //ZIP
 const ARCHIVE_ZIP: MimeNode = {
     mime: 'application/zip',

@@ -51,9 +51,6 @@ const ConversionListItem: React.FC<ConversionListItemProps> = ({
     const [open, setOpen] = useState(false)
     const { file, to } = conversion
     const fileMime: any = lookup(conversion.file?.name)
-
-    console.log('NODE_ENV:', process.env.NODE_ENV)
-
     return (
         <li
             className={`grid md:grid-cols-[40px_1fr_80px_120px_48px] grid-cols-[40px_1fr_0px_0px_100px]  md:grid-rows-1 grid-rows-[1fr_0.5fr] md:gap-8 gap-2 last-of-type:border-none border-b border-b-neutral-200 pb-4 md:gap-y-0 gap-y-6`}

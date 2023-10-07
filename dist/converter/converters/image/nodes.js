@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.nodes = void 0;
 const nodes = [];
 exports.nodes = nodes;
+// 15 nodes
 // JPEG, JPG
 const IMAGE_JPEG = {
     mime: 'image/jpeg',

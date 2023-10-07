@@ -2,6 +2,8 @@ import { MimeNode } from '@/converter/types'
 
 const nodes: MimeNode[] = []
 
+// 7 nodes
+
 //TEXT FILE
 const TEXT_PLAIN: MimeNode = {
     mime: 'text/plain',
