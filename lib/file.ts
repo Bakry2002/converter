@@ -9,11 +9,13 @@ const _mimes: Record<string, string> = {
 const _mimeToExtension: Record<string, string> = {
     'audio/mpeg': 'mp3',
     'audio/aac': 'aac',
+    'application/x-fictionbook+xml': 'fb2',
 }
 
 const _extensionToMime: Record<string, string> = {
     mp3: 'audio/mpeg',
     aac: 'audio/aac',
+    fb2: 'application/x-fictionbook+xml',
 }
 
 //  function that returns the file extension from a mime type

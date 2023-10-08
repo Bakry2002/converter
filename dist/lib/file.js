@@ -10,10 +10,12 @@ const _mimes = {
 const _mimeToExtension = {
     'audio/mpeg': 'mp3',
     'audio/aac': 'aac',
+    'application/x-fictionbook+xml': 'fb2',
 };
 const _extensionToMime = {
     mp3: 'audio/mpeg',
     aac: 'audio/aac',
+    fb2: 'application/x-fictionbook+xml',
 };
 //  function that returns the file extension from a mime type
 const mimeToFileExtension = (mime) => {
