@@ -7,6 +7,7 @@ import ConversionListItem from './ConversionListItem'
 import { z } from 'zod'
 import { Button } from '../ui/button'
 import { useEffect, useState } from 'react'
+import { ConversionStatus } from '@prisma/client'
 
 // the schema is a zod schema that takes an array of objects that have a property to that is an object that has a property mime that is a string and a property ext that is a string
 const schema = z.array(
@@ -68,18 +69,29 @@ export const Manager = () => {
                         ))}
                     </ul>
                     <div className="flex justify-center py-4">
-                        <Button
-                            color="primary"
-                            className="bg-neutral-900 text-white p-2 rounded-md"
-                            onClick={() => validate()}
-                            disabled={conversions.some(
-                                (conversion) =>
-                                    conversion.status !=
-                                    UXConversionStatus.Pending // if there is a conversion that is not pending, then the button is disabled
+                        <>
+                            {console.log(
+                                conversions.some(
+                                    (conversion) =>
+                                        conversion.status ===
+                                        UXConversionStatus.Completed
+                                )
                             )}
-                        >
-                            Convert
-                        </Button>
+                            <Button
+                                color="primary"
+                                className="bg-neutral-900 text-white p-2 rounded-md"
+                                onClick={() => validate()}
+                                disabled={
+                                    !conversions.some(
+                                        (conversion) =>
+                                            conversion.status !==
+                                            UXConversionStatus.Completed
+                                    )
+                                }
+                            >
+                                Convert
+                            </Button>
+                        </>
                     </div>
                 </motion.div>
             )}

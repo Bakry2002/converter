@@ -14,8 +14,7 @@ type SelectorProps = {
 
 export const Selector = ({ value, setValue }: SelectorProps) => {
     const [search, setSearch] = useState('')
-    const uniqueMimeValues = new Set()
-    console.log('FORMATS', formats)
+    const uniqueMimeValues = new Set() // Set is a collection of unique values of the format.mime
     return (
         <div>
             <TextField
