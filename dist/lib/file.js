@@ -10,12 +10,20 @@ const _mimes = {
 const _mimeToExtension = {
     'audio/mpeg': 'mp3',
     'audio/aac': 'aac',
-    'application/x-fictionbook+xml': 'fb2',
+    'application/x-ms-reader': 'lit',
+    'application/vnd.amazon.ebook': 'azw3',
+    'application/octet-stream': 'tcr',
+    'application/x-mobipocket-ebook': 'mobi',
+    'application/x-shanda-bambook': 'snb',
 };
 const _extensionToMime = {
     mp3: 'audio/mpeg',
     aac: 'audio/aac',
-    fb2: 'application/x-fictionbook+xml',
+    lit: 'application/x-ms-reader',
+    azw3: 'application/vnd.amazon.ebook',
+    tcr: 'application/octet-stream',
+    mobi: 'application/x-mobipocket-ebook',
+    snb: 'application/x-shanda-bambook',
 };
 //  function that returns the file extension from a mime type
 const mimeToFileExtension = (mime) => {
@@ -28,6 +36,8 @@ const mimeToFileExtension = (mime) => {
 exports.mimeToFileExtension = mimeToFileExtension;
 //function that returns the mime type from a file extension
 const fileExtensionToMime = (ext) => {
+    //console.log('TEST: ', extension(mime))
+    console.log('TEST: ', (0, mime_types_1.lookup)(ext));
     const mime = _extensionToMime[ext] || (0, mime_types_1.lookup)(ext);
     if (!mime) {
         throw new Error(`No mime type found for extension ${ext}`);

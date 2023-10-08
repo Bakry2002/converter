@@ -9,13 +9,21 @@ const _mimes: Record<string, string> = {
 const _mimeToExtension: Record<string, string> = {
     'audio/mpeg': 'mp3',
     'audio/aac': 'aac',
-    'application/x-fictionbook+xml': 'fb2',
+    'application/x-ms-reader': 'lit',
+    'application/vnd.amazon.ebook': 'azw3',
+    'application/octet-stream': 'tcr',
+    'application/x-mobipocket-ebook': 'mobi',
+    'application/x-shanda-bambook': 'snb',
 }
 
 const _extensionToMime: Record<string, string> = {
     mp3: 'audio/mpeg',
     aac: 'audio/aac',
-    fb2: 'application/x-fictionbook+xml',
+    lit: 'application/x-ms-reader',
+    azw3: 'application/vnd.amazon.ebook',
+    tcr: 'application/octet-stream',
+    mobi: 'application/x-mobipocket-ebook',
+    snb: 'application/x-shanda-bambook',
 }
 
 //  function that returns the file extension from a mime type
@@ -30,6 +38,9 @@ export const mimeToFileExtension = (mime: string) => {
 
 //function that returns the mime type from a file extension
 export const fileExtensionToMime = (ext: string) => {
+    //console.log('TEST: ', extension(mime))
+    console.log('TEST: ', lookup(ext))
+
     const mime = _extensionToMime[ext] || lookup(ext)
     if (!mime) {
         throw new Error(`No mime type found for extension ${ext}`)

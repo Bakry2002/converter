@@ -10,7 +10,8 @@ import { promisify } from 'util'
 import { ensureDir, remove } from 'fs-extra' // Import the fs-extra library for file operations
 import { nodes } from './nodes'
 const exec = promisify(execAsync) // promisify exec which mean we can use await on it
-
+// ebook-convert report.epub output_shit.fb2
+const calibrePath = '"C:\\Program Files\\Calibre2\\ebook-convert.exe"'
 const pandocPath = 'C:\\Users\\lenovo\\AppData\\Local\\Pandoc\\pandoc.exe' // path to pandoc
 // ================================================================
 
@@ -42,7 +43,7 @@ export class EbookConversion extends Converter {
     }
 
     public outputOptions(): string {
-        return `${this.toNode.options?.outputs ?? ''} -s -o` // return the output options if exists, otherwise return an empty string
+        return `${this.toNode.options?.outputs ?? ''} --pretty-print` // return the output options if exists, otherwise return an empty string
     }
 
     // the actual conversion function that does the whole conversion process
@@ -87,15 +88,19 @@ export class EbookConversion extends Converter {
     async execute() {
         console.log(
             `${
-                process.env.NODE_ENV === 'development' ? pandocPath : 'pandoc'
-            } ${this.inputOptions()} ${this.input()} ${this.outputOptions()} ${this.output()}`
+                process.env.NODE_ENV === 'development'
+                    ? calibrePath
+                    : 'ebook-convert'
+            } ${this.inputOptions()} ${this.input()} ${this.output()} ${this.outputOptions()}`
         )
         console.log('===============================')
 
         await exec(
             `${
-                process.env.NODE_ENV === 'development' ? pandocPath : 'pandoc'
-            } ${this.inputOptions()} ${this.input()} ${this.outputOptions()} ${this.output()}`,
+                process.env.NODE_ENV === 'development'
+                    ? calibrePath
+                    : 'ebook-convert'
+            } ${this.inputOptions()} ${this.input()} ${this.output()} ${this.outputOptions()}`,
             { cwd: this.cwd }
         )
     }

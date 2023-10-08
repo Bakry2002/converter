@@ -34,6 +34,8 @@ const path_1 = __importStar(require("path"));
 const util_1 = require("util");
 const nodes_1 = require("./nodes");
 const exec = (0, util_1.promisify)(child_process_1.exec); // promisify exec which mean we can use await on it
+// ebook-convert report.epub output_shit.fb2
+const calibrePath = '"C:\\Program Files\\Calibre2\\ebook-convert.exe"';
 const pandocPath = 'C:\\Users\\lenovo\\AppData\\Local\\Pandoc\\pandoc.exe'; // path to pandoc
 // ================================================================
 const _converters = [];
@@ -62,7 +64,7 @@ class EbookConversion extends types_1.Converter {
     }
     outputOptions() {
         var _a, _b;
-        return `${(_b = (_a = this.toNode.options) === null || _a === void 0 ? void 0 : _a.outputs) !== null && _b !== void 0 ? _b : ''} -s -o`; // return the output options if exists, otherwise return an empty string
+        return `${(_b = (_a = this.toNode.options) === null || _a === void 0 ? void 0 : _a.outputs) !== null && _b !== void 0 ? _b : ''} --pretty-print`; // return the output options if exists, otherwise return an empty string
     }
     // the actual conversion function that does the whole conversion process
     async convert(buffers) {
@@ -96,9 +98,13 @@ class EbookConversion extends types_1.Converter {
     async postWrite() { }
     async preConvert() { }
     async execute() {
-        console.log(`${process.env.NODE_ENV === 'development' ? pandocPath : 'pandoc'} ${this.inputOptions()} ${this.input()} ${this.outputOptions()} ${this.output()}`);
+        console.log(`${process.env.NODE_ENV === 'development'
+            ? calibrePath
+            : 'ebook-convert'} ${this.inputOptions()} ${this.input()} ${this.output()} ${this.outputOptions()}`);
         console.log('===============================');
-        await exec(`${process.env.NODE_ENV === 'development' ? pandocPath : 'pandoc'} ${this.inputOptions()} ${this.input()} ${this.outputOptions()} ${this.output()}`, { cwd: this.cwd });
+        await exec(`${process.env.NODE_ENV === 'development'
+            ? calibrePath
+            : 'ebook-convert'} ${this.inputOptions()} ${this.input()} ${this.output()} ${this.outputOptions()}`, { cwd: this.cwd });
     }
     async postConvert() { }
     async preRead() { }
