@@ -3,14 +3,16 @@
 import { useDropzone } from '@/context/ConversionContext'
 import { Button } from './ui/button'
 
-interface OpenButtonProps {}
+type OpenButtonProps = {
+    label: string
+}
 
-export const OpenButton: React.FC<OpenButtonProps> = ({}) => {
+export const OpenButton: React.FC<OpenButtonProps> = ({ label }) => {
     const { open } = useDropzone()
 
     return (
         <Button variant="default" onClick={open}>
-            Upload a file to convert
+            {label}
         </Button>
     )
 }

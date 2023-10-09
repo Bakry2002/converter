@@ -3,11 +3,8 @@
 import { UXConversionStatus, useConversion } from '@/context/ConversionContext'
 import { AnimatePresence, motion } from 'framer-motion'
 import ConversionListItem from './ConversionListItem'
-//import { Button } from '../ui/button'
 import { z } from 'zod'
 import { Button } from '../ui/button'
-import { useEffect, useState } from 'react'
-import { ConversionStatus } from '@prisma/client'
 
 // the schema is a zod schema that takes an array of objects that have a property to that is an object that has a property mime that is a string and a property ext that is a string
 const schema = z.array(

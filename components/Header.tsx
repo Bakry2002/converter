@@ -56,6 +56,11 @@ export const Links: LinkProps[] = [
         ],
     },
     {
+        title: 'OCR',
+        description: 'Extract text from images',
+        href: '/ocr',
+    },
+    {
         title: 'Formats',
         href: '/formats',
     },

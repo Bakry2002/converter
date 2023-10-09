@@ -4,12 +4,18 @@ import { converters as DocsConverters } from './converters/docs'
 import { converters as VideoConverter } from './converters/video'
 import { converters as ArchiveConverter } from './converters/archive'
 import { converters as EbookConverter } from './converters/ebook'
+import { converters as OCRConverter } from './converters/OCR'
+import { converters as PresentationConverter } from './converters/presentation'
+//==============================================================================================
 import { nodes as imageNodes } from './converters/image/nodes'
 import { nodes as AudioNodes } from './converters/audio/nodes'
 import { nodes as DocsNodes } from './converters/docs/nodes'
 import { nodes as VideoNodes } from './converters/video/nodes'
 import { nodes as ArchiveNodes } from './converters/archive/nodes'
 import { nodes as EbookNodes } from './converters/ebook/nodes'
+import { nodes as OCRNodes } from './converters/OCR/nodes'
+import { nodes as PresentationNodes } from './converters/presentation/nodes'
+//==============================================================================================
 import { Converter, MimeNode } from './types'
 
 const converters: Converter[] = [
@@ -19,6 +25,8 @@ const converters: Converter[] = [
     ...VideoConverter,
     ...ArchiveConverter,
     ...EbookConverter,
+    ...OCRConverter,
+    ...PresentationConverter,
 ] // combine all the converters into one array
 const allNodes: MimeNode[] = [
     ...imageNodes,
@@ -27,6 +35,8 @@ const allNodes: MimeNode[] = [
     ...VideoNodes,
     ...ArchiveNodes,
     ...EbookNodes,
+    ...OCRNodes,
+    ...PresentationNodes,
 ]
 
 type Edge = {

@@ -36,8 +36,6 @@ const mimeToFileExtension = (mime) => {
 exports.mimeToFileExtension = mimeToFileExtension;
 //function that returns the mime type from a file extension
 const fileExtensionToMime = (ext) => {
-    //console.log('TEST: ', extension(mime))
-    console.log('TEST: ', (0, mime_types_1.lookup)(ext));
     const mime = _extensionToMime[ext] || (0, mime_types_1.lookup)(ext);
     if (!mime) {
         throw new Error(`No mime type found for extension ${ext}`);

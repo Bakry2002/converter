@@ -80,16 +80,16 @@ const NormalNavbar: React.FC<NormalNavbarProps> = React.memo(
                                 link.href ? (
                                     <Link
                                         key={index}
-                                        href={link.href}
+                                        href={link.href || '/'}
                                         className={cn(
                                             'first-of-type:ml-10 bg-transparent py-2 px-3 rounded font-light cursor-pointer text-lg',
                                             selectedLink === index
                                                 ? 'bg-[#f3f5f9]'
                                                 : ''
                                         )}
-                                        onClick={(event) =>
-                                            handleLinkClick(event, index)
-                                        }
+                                        // onClick={(event) =>
+                                        //     handleLinkClick(event, index)
+                                        // }
                                     >
                                         {link.title}
                                         {link.childLinks && (

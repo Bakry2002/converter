@@ -4,24 +4,26 @@ import { Header } from '@/components/Header'
 
 import { OpenButton } from '@/components/OpenButton'
 import { Manager } from '@/components/files/Manager'
+import OCRButton from './OCRButton'
 
 const Hero = () => (
     <section className="pb-32 pt-56 flex items-center flex-col gap-16">
         <h1 className="text-7xl font-bold text-center [text-wrap:balance]">
-            Convert any file to any{' '}
+            OCR tool that allows you to convert{' '}
             <span className="text-transparent bg-clip-text bg-hero-gradient-text">
-                format
+                Picture{' '}
             </span>
-            {/* <span className="text-transparent bg-clip-text bg-gradient-to-br from-green-500 to-blue-500">
-                format
-            </span> */}
-            , keep the quality{' '}
+            to{' '}
             <span className="text-transparent bg-clip-text bg-hero-gradient-text">
-                untouched.
+                Text{' '}
+            </span>
+            With absolute{' '}
+            <span className="text-transparent bg-clip-text bg-hero-gradient-text">
+                ease.{' '}
             </span>
             {/* Toggle between formats, keep the quality untouched. */}
         </h1>
-        <OpenButton label="Upload a file to convert" />
+        <OpenButton label="Upload Image" />
     </section>
 )
 
@@ -51,7 +53,6 @@ export default function Home() {
                 <main>
                     <Hero />
                     <Manager />
-
                     <About />
                 </main>
                 <div className="h-[1000px]"></div>
