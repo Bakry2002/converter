@@ -9,6 +9,7 @@ const promises_1 = require("fs/promises");
 const types_1 = require("../../types");
 const file_1 = require("../../../lib/file");
 const path_1 = require("path");
+const nodes_1 = require("./nodes");
 const exec = (0, util_1.promisify)(child_process_1.exec);
 const tesseractPath = '"C:\\Program Files\\Tesseract-OCR\\tesseract.exe"';
 const _converters = [];
@@ -97,12 +98,12 @@ class OCR extends types_1.Converter {
     async postRead() { }
 }
 exports.OCR = OCR;
-// for (const from of nodes) {
-//     for (const to of nodes) {
-//         // only iif the from is image and the to is text
-//         if (from.mime.startsWith('image/') && to.mime === 'text/plain')
-//             _converters.push(new OCR(from)) // push the converter to the converters array
-//         continue
-//     }
-// }
+for (const from of nodes_1.nodes) {
+    for (const to of nodes_1.nodes) {
+        // only iif the from is image and the to is text
+        if (from.mime.startsWith('image/') && to.mime === 'text/plain')
+            _converters.push(new OCR(from)); // push the converter to the converters array
+        continue;
+    }
+}
 exports.converters = _converters;

@@ -89,7 +89,7 @@ const Sidebar: React.FC<SidebarProps> = React.memo(
                                     selectedLink !== null
                                         ? 'right-0 transition-all duration-300'
                                         : '-right-full transition-all duration-300'
-                                } transition-all duration-300 xmd:w-1/2 w-full flex-col z-[22] fixed top-[100px] h-[calc(100vh-100px)] bg-white flex xs:px-12 sm:p-0`}
+                                } transition-all duration-300 xmd:w-1/2 w-full flex-col z-[22] fixed top-[68px] h-[calc(100vh-100px)] bg-white flex xs:px-12 sm:p-0`}
                             >
                                 {
                                     // Render child links if the parent link is open

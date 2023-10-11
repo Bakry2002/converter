@@ -12,8 +12,7 @@ import { DropzoneState, useDropzone as useCreateDropzone } from 'react-dropzone'
 import { createContext } from 'react'
 import { useRouter } from 'next/navigation'
 import axios from 'axios'
-import { fileExtensionToMime } from '@/lib/file'
-import { Format } from '@/lib/types'
+import { set } from 'zod'
 
 export enum UXConversionStatus {
     Pending,
@@ -25,7 +24,7 @@ export enum UXConversionStatus {
 export type Conversion = {
     id?: string
     file: File
-    to?: { mime: string }
+    to?: { mime: string } | null
     status: UXConversionStatus
     upload?: number
     error?: any
@@ -65,6 +64,29 @@ export const ConversionProvider = ({ children }: props) => {
         ])
     }
 
+    // // what this onDrop function do is that it takes the files and add them to the conversions with status PENDING
+    // const onDrop = useCallback((files: File[]) => {
+    //     setConversions((conversions) => [
+    //         ...conversions,
+    //         ...files.map((file) => ({
+    //             file,
+    //             status: UXConversionStatus.Pending,
+    //         })),
+    //     ])
+    // }, [])
+    const onDrop = useCallback(async (files: File[]) => {
+        for (const file of files) {
+            setConversions((conversions) => [
+                ...conversions,
+                {
+                    file,
+                    to: null, // null for now
+                    status: UXConversionStatus.Pending,
+                },
+            ])
+        }
+    }, [])
+
     const updateConversion = (
         index: number,
         conversion: Partial<Conversion>
@@ -75,17 +97,6 @@ export const ConversionProvider = ({ children }: props) => {
             ...conversions.slice(index + 1), // get the conversions after the index
         ])
     }
-
-    // what this onDrop function do is that it takes the files and add them to the conversions with status PENDING
-    const onDrop = useCallback((files: File[]) => {
-        setConversions((conversions) => [
-            ...conversions,
-            ...files.map((file) => ({
-                file,
-                status: UXConversionStatus.Pending,
-            })),
-        ])
-    }, [])
 
     useEffect(() => {
         // Check if any conversion is not in "Pending" status

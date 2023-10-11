@@ -4,7 +4,6 @@ import { exec as execAsync } from 'child_process'
 import { promisify } from 'util'
 import { randomUUID } from 'crypto'
 import { readFile, readdir, writeFile, mkdir } from 'fs/promises'
-import { extension } from 'mime-types'
 import { Converter, MimeNode } from '../../types'
 import { mimeToFileExtension } from '../../../lib/file'
 import { join } from 'path'
@@ -139,13 +138,13 @@ export class OCR extends Converter {
     async postRead() {}
 }
 
-// for (const from of nodes) {
-//     for (const to of nodes) {
-//         // only iif the from is image and the to is text
-//         if (from.mime.startsWith('image/') && to.mime === 'text/plain')
-//             _converters.push(new OCR(from)) // push the converter to the converters array
-//         continue
-//     }
-// }
+for (const from of nodes) {
+    for (const to of nodes) {
+        // only iif the from is image and the to is text
+        if (from.mime.startsWith('image/') && to.mime === 'text/plain')
+            _converters.push(new OCR(from)) // push the converter to the converters array
+        continue
+    }
+}
 
 export const converters = _converters

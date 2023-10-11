@@ -3,8 +3,10 @@
 import { useScroll } from 'framer-motion'
 import Link from 'next/link'
 import {
+    FileArchive,
     FileAudio,
     FileImage,
+    FileLineChart,
     FileText,
     FileVideo,
     LucideIcon,
@@ -53,6 +55,18 @@ export const Links: LinkProps[] = [
                 Icon: FileAudio,
                 href: '/audio-converter',
             },
+            {
+                title: 'Archive Converter',
+                description: 'Convert between archives formats',
+                Icon: FileArchive,
+                href: '/archive-converter',
+            },
+            {
+                title: 'Presentation Converter',
+                description: 'Convert between presentation formats',
+                Icon: FileLineChart,
+                href: '/presentation-converter',
+            },
         ],
     },
     {
@@ -86,14 +100,10 @@ export const Links: LinkProps[] = [
             },
         ],
     },
-    {
-        title: 'Help',
-        href: '/help',
-    },
 ]
 
 export const Header: React.FC = () => {
-    const [border, setBorder] = useState('border-transparent')
+    const [_, setBorder] = useState('border-transparent')
     const [selectedLink, setSelectedLink] = useState<number | null>(null)
     const [mobileNavOpen, setMobileNavOpen] = useState(false)
     const { scrollY } = useScroll()
@@ -115,10 +125,9 @@ export const Header: React.FC = () => {
 
     return (
         // Big Wrapper -> Navbar + Sidebar
-        <div className="w-full">
+        <>
             {/* ======== Normal Nav ======== */}
             <NormalNavbar
-                border={border}
                 selectedLink={selectedLink}
                 setSelectedLink={setSelectedLink}
             />
@@ -136,7 +145,7 @@ export const Header: React.FC = () => {
                 setSelectedLink={setSelectedLink}
                 setMobileMenuOpen={setMobileNavOpen}
             />
-        </div>
+        </>
     )
 }
 
@@ -146,7 +155,7 @@ export const LowNavbarLink: React.FC<LinkProps & { Icon?: LucideIcon }> =
         return (
             <Link
                 href={href || '/'}
-                className="flex flex-row bg-transparent border-none mb-6 cursor-pointer group hover:bg-neutral-50 w-[calc(100%-40px)] p-2 rounded "
+                className="flex flex-row bg-transparent border-none mb-6 cursor-pointer group hover:bg-neutral-50 w-full p-2 rounded "
             >
                 {Icon && (
                     <Icon className="text-neutral-800 mr-[10px] w-6 h-6 transition-all duration-700 ease-in group-hover:text-primary" />

@@ -56,6 +56,11 @@ module.exports = {
                 basic: '-1px 17px 31px -29px',
             },
         },
+        backgroundImage: {
+            'hero-gradient-text':
+                'linear-gradient( 120deg, #F11A7B 10%, #feff9c  )',
+            'hero-bg': 'url("/images/hero.jpg")',
+        },
     },
     plugins: [
         require('tailwindcss-animate'),

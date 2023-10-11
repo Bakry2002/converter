@@ -5,27 +5,32 @@ import { Header } from '@/components/Header'
 import { OpenButton } from '@/components/OpenButton'
 import { Manager } from '@/components/files/Manager'
 
-const Hero = () => (
-    <section className="pb-32 pt-56 flex items-center flex-col gap-16">
-        <h1 className="text-7xl font-bold text-center [text-wrap:balance]">
-            Convert any file to any{' '}
-            <span className="text-transparent bg-clip-text bg-hero-gradient-text">
-                format
-            </span>
-            {/* <span className="text-transparent bg-clip-text bg-gradient-to-br from-green-500 to-blue-500">
+const Hero: any = () => (
+    <section className="relative h-screen justify-center flex items-center flex-col gap-16 bg-hero-bg bg-no-repeat bg-cover">
+        <div className="absolute top-0 left-0 w-full h-full bg-black/30 z-10 xl:pt-[calc(75px+150px)] pt-[calc(75px+100px)]">
+            <h1 className=" text-7xl font-bold text-white text-center [text-wrap:balance]">
+                Convert any file to any{' '}
+                <span className="text-transparent bg-clip-text bg-hero-gradient-text">
+                    format
+                </span>
+                {/* <span className="text-transparent bg-clip-text bg-gradient-to-br from-green-500 to-blue-500">
                 format
             </span> */}
-            , keep the quality{' '}
-            <span className="text-transparent bg-clip-text bg-hero-gradient-text">
-                untouched.
-            </span>
-            {/* Toggle between formats, keep the quality untouched. */}
-        </h1>
-        <OpenButton label="Upload a file to convert" />
+                , keep the quality{' '}
+                <span className="text-transparent bg-clip-text bg-hero-gradient-text">
+                    untouched.
+                </span>
+                {/* Toggle between formats, keep the quality untouched. */}
+            </h1>
+            <OpenButton
+                label="Upload a file to convert"
+                className="relative left-1/2 -translate-x-1/2 mt-12"
+            />
+        </div>
     </section>
 )
 
-const About = () => (
+const About: any = () => (
     <section className="container mx-auto flex flex-col gap-52">
         <p>
             Lorem ipsum, dolor sit amet consectetur adipisicing elit. Nisi
