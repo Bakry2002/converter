@@ -89,7 +89,7 @@ const NormalNavbar: React.FC<NormalNavbarProps> = ({
                     className={`hidden xl:flex transition fixed z-20 top-0 overflow-hidden bg-white ${navStyle} z-10 border-b duration-100 ease-soft-spring flex-col items-center py-2`}
                 >
                     {/* High NAVBAR */}
-                    <div className="py mx-auto p-6 w-full h-[75px] flex flex-row items-center justify-between">
+                    <div className="py mx-auto p-6 w-full h-[60px] flex flex-row items-center justify-between">
                         {/* Website Part */}
                         {/* LOGO */}
                         <div className="">
@@ -107,7 +107,7 @@ const NormalNavbar: React.FC<NormalNavbarProps> = ({
                                             key={index}
                                             href={link.href || '/'}
                                             className={cn(
-                                                'bg-transparent py-2 px-3 rounded font-light cursor-pointer text-lg',
+                                                'bg-transparent py-2 px-3 rounded font-light cursor-pointer  text-base',
                                                 selectedLink === index
                                                     ? 'bg-[#f3f5f9]'
                                                     : ''
@@ -135,7 +135,7 @@ const NormalNavbar: React.FC<NormalNavbarProps> = ({
                                                 handleLinkClick(event, index)
                                             }
                                             className={cn(
-                                                'bg-transparent py-2 px-3 rounded font-light cursor-pointer text-lg',
+                                                'bg-transparent py-2 px-3 rounded font-light cursor-pointer text-base',
                                                 selectedLink === index
                                                     ? 'bg-[#f3f5f9]'
                                                     : ''

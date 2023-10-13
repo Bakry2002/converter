@@ -1,4 +1,4 @@
-// TOOL => pandoc
+// TOOL => Calibre (ebook)
 
 import { Converter } from '../../types'
 import { mimeToFileExtension } from '../../../lib/file'
@@ -7,12 +7,9 @@ import { randomUUID } from 'crypto'
 import { mkdir, readFile, readdir, writeFile } from 'fs/promises'
 import path, { join } from 'path'
 import { promisify } from 'util'
-import { ensureDir, remove } from 'fs-extra' // Import the fs-extra library for file operations
 import { nodes } from './nodes'
 const exec = promisify(execAsync) // promisify exec which mean we can use await on it
-// ebook-convert report.epub output_shit.fb2
 const calibrePath = '"C:\\Program Files\\Calibre2\\ebook-convert.exe"'
-const pandocPath = 'C:\\Users\\lenovo\\AppData\\Local\\Pandoc\\pandoc.exe' // path to pandoc
 // ================================================================
 
 const _converters: Array<Converter> = []

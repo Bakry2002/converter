@@ -1,5 +1,5 @@
 "use strict";
-// TOOL => pandoc
+// TOOL => Calibre (ebook)
 var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
     if (k2 === undefined) k2 = k;
     var desc = Object.getOwnPropertyDescriptor(m, k);
@@ -34,9 +34,7 @@ const path_1 = __importStar(require("path"));
 const util_1 = require("util");
 const nodes_1 = require("./nodes");
 const exec = (0, util_1.promisify)(child_process_1.exec); // promisify exec which mean we can use await on it
-// ebook-convert report.epub output_shit.fb2
 const calibrePath = '"C:\\Program Files\\Calibre2\\ebook-convert.exe"';
-const pandocPath = 'C:\\Users\\lenovo\\AppData\\Local\\Pandoc\\pandoc.exe'; // path to pandoc
 // ================================================================
 const _converters = [];
 class EbookConversion extends types_1.Converter {

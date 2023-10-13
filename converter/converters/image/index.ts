@@ -92,16 +92,17 @@ export class ImageConverter extends Converter {
     async preConvert() {}
 
     async execute() {
+        const prodCommand = 'convert' // the command to execute in production
         console.log(
             `${
-                process.env.NODE_ENV === 'development' ? 'magick' : 'convert'
+                process.env.NODE_ENV === 'development' ? 'magick' : prodCommand
             }${this.inputOptions()} ${this.input()} ${this.outputOptions()} ${this.output()}`
         )
         console.log('===============================')
 
         await exec(
             `${
-                process.env.NODE_ENV === 'development' ? 'magick' : 'convert'
+                process.env.NODE_ENV === 'development' ? 'magick' : prodCommand
             }${this.inputOptions()} ${this.input()} ${this.outputOptions()} ${this.output()}`,
             { cwd: this.cwd }
         )

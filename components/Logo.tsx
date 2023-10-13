@@ -10,7 +10,7 @@ export const Logo = () => {
                 width={25}
                 height={40}
             />
-            <div className="md:text-2xl text-xl font-black text-transparent bg-hero-gradient-text bg-clip-text">
+            <div className="md:text-xl text-lg font-black text-transparent bg-hero-gradient-text bg-clip-text">
                 Convert it
             </div>
         </Link>
