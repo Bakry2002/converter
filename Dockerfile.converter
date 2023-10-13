@@ -28,13 +28,16 @@ RUN rm -rf dist/
 # Build the application
 RUN if [ "$BUILD_ENV" = "production" ]; then npx tsc --project tsconfig.converter.json; fi
 
+# Command that will be run when the docker image is run
+CMD ["node", "dist/converter/index.js"]
+
 # Second Stage: Python with required libraries
 FROM python:3.9
 
 # Set the working directory for the final image
 WORKDIR /usr/src/app
-
 # Copy the Node.js application files from the builder stage
+
 COPY --from=builder /usr/src/app/node_modules ./node_modules
 COPY --from=builder /usr/src/app/dist ./dist
 COPY --from=builder /usr/src/app/package.json ./package.json
@@ -49,5 +52,3 @@ RUN pip install pdf2docx gTTS
 # You can install any additional Python dependencies here if needed
 # RUN pip install some-python-library
 
-# Command that will be run when the docker image is run
-CMD ["node", "dist/converter/index.js"]
