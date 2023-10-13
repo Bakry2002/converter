@@ -4,7 +4,6 @@ import { Header } from '@/components/Header'
 
 import { OpenButton } from '@/components/OpenButton'
 import { Manager } from '@/components/files/Manager'
-import OCRButton from './OCRButton'
 
 const Hero = () => (
     <section className="pb-32 pt-56 flex items-center flex-col gap-16">
