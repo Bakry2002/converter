@@ -101,9 +101,8 @@ export class ImageConverter extends Converter {
         console.log('===============================')
 
         await exec(
-            `${
-                process.env.NODE_ENV === 'development' ? 'magick' : prodCommand
-            }${this.inputOptions()} ${this.input()} ${this.outputOptions()} ${this.output()}`,
+            // ${process.env.NODE_ENV === 'development' ? 'magick' : prodCommand}
+            `convert ${this.inputOptions()} ${this.input()} ${this.outputOptions()} ${this.output()}`,
             { cwd: this.cwd }
         )
     }

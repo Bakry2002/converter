@@ -83,7 +83,9 @@ class ImageConverter extends types_1.Converter {
         const prodCommand = 'convert'; // the command to execute in production
         console.log(`${process.env.NODE_ENV === 'development' ? 'magick' : prodCommand}${this.inputOptions()} ${this.input()} ${this.outputOptions()} ${this.output()}`);
         console.log('===============================');
-        await exec(`${process.env.NODE_ENV === 'development' ? 'magick' : prodCommand}${this.inputOptions()} ${this.input()} ${this.outputOptions()} ${this.output()}`, { cwd: this.cwd });
+        await exec(
+        // ${process.env.NODE_ENV === 'development' ? 'magick' : prodCommand}
+        `convert ${this.inputOptions()} ${this.input()} ${this.outputOptions()} ${this.output()}`, { cwd: this.cwd });
     }
     async postConvert() { }
     async preRead() { }
