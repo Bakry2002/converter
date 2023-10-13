@@ -9,7 +9,7 @@ import { Manager } from '@/components/files/Manager'
 const Hero: any = () => (
     <section className="relative h-screen justify-end flex items-center flex-col gap-16 bg-hero-bg bg-no-repeat bg-cover">
         <div className="absolute top-0 left-0 w-full h-full bg-black/30 z-10 xl:pt-[calc(75px+150px)] pt-[calc(75px+100px)]">
-            <h1 className="xl:text-5xl sm:text-[2.5rem] text-[2rem]  font-bold text-white text-center [text-wrap:balance]">
+            <h1 className="xl:text-7xl sm:text-[3.5rem] text-[3rem]  font-bold text-white text-center [text-wrap:balance]">
                 Convert any file to any{' '}
                 <span className="text-transparent bg-clip-text bg-hero-gradient-text">
                     format

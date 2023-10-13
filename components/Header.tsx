@@ -161,7 +161,7 @@ export const LowNavbarLink: React.FC<LinkProps & { Icon?: LucideIcon }> =
                     <Icon className="text-neutral-800 mr-[10px] w-6 h-6 transition-all duration-700 ease-in group-hover:text-primary" />
                 )}
                 <div className="flex flex-col items-start">
-                    <p className="max-w-[240px] font-medium">{title}</p>
+                    <p className="max-w-[240px] font-medium text-sm">{title}</p>
                     {description && (
                         <p className="max-w-[240px] text-neutral-500 text-sm">
                             {description}

@@ -26,18 +26,18 @@ export const DropDownNavbar: React.FC<DropDownNavbarProps> = ({
             {/* Container */}
             <div
                 className={`${
-                    isNavStyleActivated ? 'px-16' : 'px-6'
+                    isNavStyleActivated ? 'px-8' : 'px-6'
                 } w-full ml-auto mr-auto block`}
             >
-                <div className="grid grid-cols-4 w-full py-[38px]">
+                <div className="grid grid-cols-4 w-full pt-[38px]">
                     {
                         // Render child links if the parent link is open
                         selectedLink !== null &&
                             Links[selectedLink].childLinks &&
                             Links[selectedLink] && (
                                 <>
-                                    <div className="pr-16 flex flex-col">
-                                        <h2 className="m-0 text-[3.25rem] text-neutral-900 font-bold tracking-tight">
+                                    <div className="pr-16 flex flex-col mt-4">
+                                        <h2 className="m-0 text-[1.5rem] text-neutral-900 font-bold tracking-tight">
                                             {Links[selectedLink].title}
                                         </h2>
                                         <p className="font-light text-base">
