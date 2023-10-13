@@ -3,12 +3,13 @@ import { Footer } from '@/components/Footer'
 import { Header } from '@/components/Header'
 
 import { OpenButton } from '@/components/OpenButton'
+import { ProgressDemo } from '@/components/ProgressDemo'
 import { Manager } from '@/components/files/Manager'
 
 const Hero: any = () => (
-    <section className="relative h-screen justify-center flex items-center flex-col gap-16 bg-hero-bg bg-no-repeat bg-cover">
+    <section className="relative h-screen justify-end flex items-center flex-col gap-16 bg-hero-bg bg-no-repeat bg-cover">
         <div className="absolute top-0 left-0 w-full h-full bg-black/30 z-10 xl:pt-[calc(75px+150px)] pt-[calc(75px+100px)]">
-            <h1 className=" text-7xl font-bold text-white text-center [text-wrap:balance]">
+            <h1 className="xl:text-7xl sm:text-[3.5rem] text-[3rem]  font-bold text-white text-center [text-wrap:balance]">
                 Convert any file to any{' '}
                 <span className="text-transparent bg-clip-text bg-hero-gradient-text">
                     format
@@ -22,10 +23,25 @@ const Hero: any = () => (
                 </span>
                 {/* Toggle between formats, keep the quality untouched. */}
             </h1>
-            <OpenButton
-                label="Upload a file to convert"
-                className="relative left-1/2 -translate-x-1/2 mt-12"
-            />
+        </div>
+
+        <div className="w-[calc(100%-50%)] mb-6 z-20 mx-auto">
+            <div className="relative bg-neutral-200/20 flex rounded justify-center items-center border-3 border-dashed border-neutral-500 p-[70px] flex-col">
+                {/* Content */}
+                <div className="sm:px-0 px-2 flex justify-center flex-wrap -mx-[15px]">
+                    <div className="relative border-none py-8 flex flex-col md:flex-row break-words bg-clip-border rounded-sm w-full min-w-0">
+                        <ProgressDemo />
+                        <div className="md:pl-5 px-6 flex items-center flex-col basis-[33.333333%] max-w-[33.333333%] w-full relative">
+                            <h6 className="text-white text-center hidden ">
+                                Select a file
+                            </h6>
+                            <div className="-ml-[5px] animate-pulse w-[44px] h-[44px] text-white mb-8 flex items-center justify-center rounded-full bg-green-700 text-3xl"></div>
+                        </div>
+                    </div>
+
+                    <OpenButton label="Upload a file to convert" className="" />
+                </div>
+            </div>
         </div>
     </section>
 )

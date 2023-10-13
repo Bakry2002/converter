@@ -2,7 +2,7 @@
 
 import { DropEvent, FileRejection } from 'react-dropzone'
 import { useDropzone } from '@/context/ConversionContext'
-import { Button } from './ui/button'
+
 type Props = {
     onDrop?: <T extends File>(
         acceptedFiles: T[],
@@ -34,7 +34,7 @@ export const DropZone = ({ children }: Props) => {
 
 function DragActive() {
     return (
-        <div className="backdrop-blur-md bg-white/20 fixed inset-0 flex items-center justify-center">
+        <div className="backdrop-blur-md bg-white/20 fixed z-50 inset-0 flex items-center justify-center">
             <h2 className="text-center font-light text-6xl">
                 Drop Files Anywhere Here
             </h2>

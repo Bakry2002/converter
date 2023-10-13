@@ -81,7 +81,10 @@ const ConversionListItem: React.FC<ConversionListItemProps> = ({
             {/* File Name */}
             <div className="flex flex-col md:col-span-1 col-span-3 md:-ml-6">
                 <span className="overflow-hidden text-ellipsis whitespace-nowrap">
-                    {file?.name}
+                    <>
+                        {console.log('FILE: ', file?.name)}
+                        {file?.name}
+                    </>
                 </span>
                 <span className="text-xs text-neutral-500">
                     {byteToSize(file?.size || 0)}

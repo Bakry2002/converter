@@ -11,7 +11,7 @@ import {
 import { DropzoneState, useDropzone as useCreateDropzone } from 'react-dropzone'
 import { createContext } from 'react'
 import { useRouter } from 'next/navigation'
-import axios from 'axios'
+import axios, { AxiosProgressEvent } from 'axios'
 import { set } from 'zod'
 
 export enum UXConversionStatus {
@@ -64,27 +64,15 @@ export const ConversionProvider = ({ children }: props) => {
         ])
     }
 
-    // // what this onDrop function do is that it takes the files and add them to the conversions with status PENDING
-    // const onDrop = useCallback((files: File[]) => {
-    //     setConversions((conversions) => [
-    //         ...conversions,
-    //         ...files.map((file) => ({
-    //             file,
-    //             status: UXConversionStatus.Pending,
-    //         })),
-    //     ])
-    // }, [])
-    const onDrop = useCallback(async (files: File[]) => {
-        for (const file of files) {
-            setConversions((conversions) => [
-                ...conversions,
-                {
-                    file,
-                    to: null, // null for now
-                    status: UXConversionStatus.Pending,
-                },
-            ])
-        }
+    // what this onDrop function do is that it takes the files and add them to the conversions with status PENDING
+    const onDrop = useCallback((files: File[]) => {
+        setConversions((conversions) => [
+            ...conversions,
+            ...files.map((file) => ({
+                file,
+                status: UXConversionStatus.Pending,
+            })),
+        ])
     }, [])
 
     const updateConversion = (
@@ -97,6 +85,20 @@ export const ConversionProvider = ({ children }: props) => {
             ...conversions.slice(index + 1), // get the conversions after the index
         ])
     }
+
+    // const onDrop = useCallback(
+    //     async (files: File[]) => {
+    //         setConversions((conversions) => [
+    //             ...conversions,
+    //             ...files.map((file) => ({
+    //                 file,
+    //                 status: UXConversionStatus.Pending,
+    //             })),
+    //         ])
+    //         handleFileUpload()
+    //     },
+    //     [conversions.length]
+    // )
 
     useEffect(() => {
         // Check if any conversion is not in "Pending" status
