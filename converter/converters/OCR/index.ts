@@ -15,16 +15,15 @@ const tesseractPath = '"C:\\Program Files\\Tesseract-OCR\\tesseract.exe"'
 const _converters: Array<Converter> = []
 
 export class OCR extends Converter {
-    private OCRLanguage: string = 'eng' // the OCR language default is english
+    // private OCRLanguage: string = 'eng' // the OCR language default is english
 
-    constructor(
-        fromNode: MimeNode,
-
-        OCRLanguage: string = 'eng'
-    ) {
-        super(fromNode, { mime: 'text/plain' })
-        this.OCRLanguage = OCRLanguage
-    }
+    // constructor(
+    //     fromNode: MimeNode,
+    //     toNode: MimeNode
+    //     // OCRLanguage: string = 'eng'
+    // ) {
+    //     super(fromNode, { mime: 'text/plain' })
+    // }
 
     get from(): string {
         return this.fromNode.mime
@@ -51,7 +50,7 @@ export class OCR extends Converter {
     }
 
     public outputOptions(): string {
-        return `${this.toNode.options?.outputs ?? ''} -l ${this.OCRLanguage}` // return the output options if exists, otherwise return an empty string
+        return `${this.toNode.options?.outputs ?? ''}` // return the output options if exists, otherwise return an empty string
     }
 
     // the actual conversion function that does the whole conversion process
@@ -142,7 +141,7 @@ for (const from of nodes) {
     for (const to of nodes) {
         // only iif the from is image and the to is text
         if (from.mime.startsWith('image/') && to.mime === 'text/plain')
-            _converters.push(new OCR(from)) // push the converter to the converters array
+            _converters.push(new OCR(from, to)) // push the converter to the converters array
         continue
     }
 }

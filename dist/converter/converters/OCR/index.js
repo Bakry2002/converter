@@ -14,14 +14,20 @@ const exec = (0, util_1.promisify)(child_process_1.exec);
 const tesseractPath = '"C:\\Program Files\\Tesseract-OCR\\tesseract.exe"';
 const _converters = [];
 class OCR extends types_1.Converter {
-    constructor(fromNode, OCRLanguage = 'eng') {
-        super(fromNode, { mime: 'text/plain' });
-        this.OCRLanguage = 'eng'; // the OCR language default is english
+    constructor() {
+        // private OCRLanguage: string = 'eng' // the OCR language default is english
+        super(...arguments);
         this.cwd = ''; // the current working directory
         this.inputs = []; // the input files
         this.outputBuffers = []; // the output buffers
-        this.OCRLanguage = OCRLanguage;
     }
+    // constructor(
+    //     fromNode: MimeNode,
+    //     toNode: MimeNode
+    //     // OCRLanguage: string = 'eng'
+    // ) {
+    //     super(fromNode, { mime: 'text/plain' })
+    // }
     get from() {
         return this.fromNode.mime;
     }
@@ -40,7 +46,7 @@ class OCR extends types_1.Converter {
     }
     outputOptions() {
         var _a, _b;
-        return `${(_b = (_a = this.toNode.options) === null || _a === void 0 ? void 0 : _a.outputs) !== null && _b !== void 0 ? _b : ''} -l ${this.OCRLanguage}`; // return the output options if exists, otherwise return an empty string
+        return `${(_b = (_a = this.toNode.options) === null || _a === void 0 ? void 0 : _a.outputs) !== null && _b !== void 0 ? _b : ''}`; // return the output options if exists, otherwise return an empty string
     }
     // the actual conversion function that does the whole conversion process
     async convert(buffers) {
@@ -102,7 +108,7 @@ for (const from of nodes_1.nodes) {
     for (const to of nodes_1.nodes) {
         // only iif the from is image and the to is text
         if (from.mime.startsWith('image/') && to.mime === 'text/plain')
-            _converters.push(new OCR(from)); // push the converter to the converters array
+            _converters.push(new OCR(from, to)); // push the converter to the converters array
         continue;
     }
 }
