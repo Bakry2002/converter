@@ -64,7 +64,7 @@ WORKDIR /usr/src/app
 
 # Install required packages including ImageMagick, Pandoc, and other dependencies
 RUN apt-get update && apt-get install -y pandoc build-essential libjpeg-dev libpng-dev libtiff-dev ghostscript imagemagick \
-    potrace && apt-get clean
+    potrace libreoffice && apt-get clean
 
 # Copy only package.json and package-lock.json to the container
 COPY package*.json ./
