@@ -4,7 +4,7 @@ import { Header } from '@/components/Header'
 
 import { OpenButton } from '@/components/OpenButton'
 import { Manager } from '@/components/files/Manager'
-import ProgressComponent from '@/components/progress/ProgressComponent'
+// import ProgressComponent from '@/components/progress/ProgressComponent'
 
 const Hero: any = () => (
     <section className="relative h-screen  bg-hero-bg bg-no-repeat bg-cover">
@@ -41,7 +41,7 @@ const Hero: any = () => (
                     </div>
                 </div>
             </div>
-            <ProgressComponent />
+            {/* <ProgressComponent /> */}
         </div>
     </section>
 )
