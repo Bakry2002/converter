@@ -26,7 +26,8 @@ RUN npx prisma generate
 RUN rm -rf dist/
 
 # Build the application
-RUN if [ "$BUILD_ENV" = "production" ]; then npx tsc --project tsconfig.converter.json; fi
+# RUN if [ "$BUILD_ENV" = "production" ]; then npx tsc --project tsconfig.converter.json; fi
+RUN npx tsc --project tsconfig.converter.json
 
 # Second Stage: Python with required libraries
 FROM python:3.9
