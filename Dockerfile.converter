@@ -1,3 +1,58 @@
+# # First Stage: Build the Node.js application
+# FROM node:18 as builder
+
+# # Set the build environment to production by default so that we can run npm install without dev dependencies
+# ARG BUILD_ENV=production 
+
+# # Set the working directory in the container
+# WORKDIR /usr/src/app
+
+# # Install required packages including ImageMagick, Pandoc, and other dependencies
+# RUN apt-get update && apt-get install -y pandoc build-essential libjpeg-dev libpng-dev libtiff-dev ghostscript imagemagick \
+#     potrace && apt-get clean
+
+# # Copy package.json and package-lock.json to the container
+# COPY package*.json ./
+
+# RUN npm install
+
+# # Copy the rest of the application code to the container
+# COPY . .
+
+# # Generate prisma client
+# RUN npx prisma generate
+
+# # Clear the dist/ directory (if it exists)
+# RUN rm -rf dist/
+
+# # Build the application
+# # RUN if [ "$BUILD_ENV" = "production" ]; then npx tsc --project tsconfig.converter.json; fi
+# RUN npx tsc --project tsconfig.converter.json
+
+# # Second Stage: Python with required libraries
+# FROM python:3.9
+
+# # Set the working directory for the final image
+# WORKDIR /usr/src/app
+# # Copy the Node.js application files from the builder stage
+
+# COPY --from=builder /usr/src/app/node_modules ./node_modules
+# COPY --from=builder /usr/src/app/dist ./dist
+# COPY --from=builder /usr/src/app/package.json ./package.json
+# COPY --from=builder /usr/src/app/package-lock.json ./package-lock.json
+
+# # Install Node.js in the final image
+# RUN apt-get update && apt-get install -y nodejs
+
+# # Install Python libraries 'pdf2docx' and 'gTTS'
+# RUN pip install pdf2docx gTTS
+
+# # You can install any additional Python dependencies here if needed
+# # RUN pip install some-python-library
+
+# # Command that will be run when the docker image is run
+# CMD ["node", "dist/converter/index.js"]
+
 # First Stage: Build the Node.js application
 FROM node:18 as builder
 
@@ -11,10 +66,14 @@ WORKDIR /usr/src/app
 RUN apt-get update && apt-get install -y pandoc build-essential libjpeg-dev libpng-dev libtiff-dev ghostscript imagemagick \
     potrace && apt-get clean
 
-# Copy package.json and package-lock.json to the container
+# Copy only package.json and package-lock.json to the container
 COPY package*.json ./
 
+# Install dependencies (this will use cached layers if package.json hasn't changed)
 RUN npm install
+
+# Clear the dist/ directory (if it exists)
+RUN rm -rf dist/
 
 # Copy the rest of the application code to the container
 COPY . .
@@ -22,11 +81,7 @@ COPY . .
 # Generate prisma client
 RUN npx prisma generate
 
-# Clear the dist/ directory (if it exists)
-RUN rm -rf dist/
-
 # Build the application
-# RUN if [ "$BUILD_ENV" = "production" ]; then npx tsc --project tsconfig.converter.json; fi
 RUN npx tsc --project tsconfig.converter.json
 
 # Second Stage: Python with required libraries
@@ -34,8 +89,8 @@ FROM python:3.9
 
 # Set the working directory for the final image
 WORKDIR /usr/src/app
-# Copy the Node.js application files from the builder stage
 
+# Copy the Node.js application files from the builder stage, including dist/
 COPY --from=builder /usr/src/app/node_modules ./node_modules
 COPY --from=builder /usr/src/app/dist ./dist
 COPY --from=builder /usr/src/app/package.json ./package.json
@@ -46,9 +101,6 @@ RUN apt-get update && apt-get install -y nodejs
 
 # Install Python libraries 'pdf2docx' and 'gTTS'
 RUN pip install pdf2docx gTTS
-
-# You can install any additional Python dependencies here if needed
-# RUN pip install some-python-library
 
 # Command that will be run when the docker image is run
 CMD ["node", "dist/converter/index.js"]
