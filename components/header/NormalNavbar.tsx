@@ -86,7 +86,7 @@ const NormalNavbar: React.FC<NormalNavbarProps> = ({
             {/* ======== Normal Nav ======== */}
             <div className="w-full flex items-center justify-center">
                 <div
-                    className={`hidden xl:flex transition fixed z-20 top-0 overflow-hidden bg-white ${navStyle} z-10 border-b duration-100 ease-soft-spring flex-col items-center py-2`}
+                    className={`hidden xl:flex transition fixed top-0 overflow-hidden bg-white ${navStyle} z-10 border-b duration-100 ease-soft-spring flex-col items-center py-2`}
                 >
                     {/* High NAVBAR */}
                     <div className="py mx-auto p-6 w-full h-[60px] flex flex-row items-center justify-between">
