@@ -34,7 +34,6 @@ const Hero: any = () => (
                                 </h6>
                             </div>
                         </div>
-                        <ProgressComponent />
                         <OpenButton
                             label="Upload a file to convert"
                             className=""
@@ -42,6 +41,7 @@ const Hero: any = () => (
                     </div>
                 </div>
             </div>
+            <ProgressComponent />
         </div>
     </section>
 )
