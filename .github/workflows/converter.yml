@@ -26,7 +26,7 @@ jobs:
               id: meta
               uses: docker/metadata-action@v2
               with:
-                  images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+                  images: ghcr.io/bakry2002/converter
                   flavor: |
                       prefix=converter-
             - name: Clean up Docker
