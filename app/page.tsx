@@ -3,8 +3,8 @@ import { Footer } from '@/components/Footer'
 import { Header } from '@/components/Header'
 
 import { OpenButton } from '@/components/OpenButton'
-import { ProgressDemo } from '@/components/ProgressDemo'
 import { Manager } from '@/components/files/Manager'
+import ProgressComponent from '@/components/progress/ProgressComponent'
 
 const Hero: any = () => (
     <section className="relative h-screen  bg-hero-bg bg-no-repeat bg-cover">
@@ -34,7 +34,7 @@ const Hero: any = () => (
                                 </h6>
                             </div>
                         </div>
-
+                        <ProgressComponent />
                         <OpenButton
                             label="Upload a file to convert"
                             className=""
