@@ -29,7 +29,7 @@ const NormalNavbar: React.FC<NormalNavbarProps> = ({
     useEffect(() => {
         const handleScroll = () => {
             setNavStyle(
-                scrollY.get() > 120
+                scrollY.get() > 150
                     ? 'translate-y-0 rounded-none w-full px-32'
                     : 'translate-y-12 rounded-[15px] w-[calc(100%-15%)]'
             )

@@ -29,7 +29,7 @@ export const CustomButton: React.FC<CustomButtonProps> = ({
             onClick={onClick}
             disabled={disabled}
             className={cn(
-                'flex flex-row items-center justify-center gap-x-2 h-12 tracking-wide text-xl capitalize font-medium rounded-md bg-neutral-100 border-none outline-none hover:opacity-90 text-neutral-900 focus:outline-none w-full transition-all duration-250',
+                'flex flex-row items-center justify-center gap-x-2 xmd:h-12 h-14 tracking-wide text-xl capitalize font-medium rounded-lg bg-neutral-100 border-none outline-none hover:opacity-90 text-neutral-900 focus:outline-none w-full transition-all duration-250',
                 className,
                 variant === 'success' &&
                     'bg-green-500 text-white hover:opacity-90 focus:opacity-90 animate-pulse duration-[2000] ease-in-out',

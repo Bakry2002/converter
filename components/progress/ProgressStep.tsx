@@ -10,9 +10,9 @@ const ProgressStep: React.FC<ProgressStepProps> = ({
     children,
 }) => {
     return (
-        <div className="relative min-w-[240px] z-[3] flex items-center flex-col gap-12">
+        <div className="relative min-w-[240px] z-[3] justify-center flex items-center flex-col gap-12">
             {/* Step number */}
-            <div className="w-[60px] h-[60px] mb-8 self-center bg-primary text-white rounded-full flex items-center justify-center text-[2rem]">
+            <div className="hidden xmd:flex w-[60px] h-[60px] mb-8 self-center bg-primary text-white rounded-full items-center justify-center text-[2rem]">
                 {stepNumber}
             </div>
             {/* Step process */}

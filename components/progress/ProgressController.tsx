@@ -1,7 +1,7 @@
 'use client'
 
 import { mimeToFileExtension } from '@/lib/file'
-import { ChevronDown, Upload } from 'lucide-react'
+import { ChevronDown, ShieldCheck, Upload } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { Button } from '../ui/button'
 
@@ -19,6 +19,7 @@ import { CustomButton } from '../CustomButton'
 import z from 'zod'
 import ProgressStep from './ProgressStep'
 import { DownloadButton } from '../DownloadButton'
+import Link from 'next/link'
 
 export enum CONVERT_STEPS {
     STEP_1 = 'Upload',
@@ -89,26 +90,38 @@ const ProgressController: React.FC<ProgressControllerProps> = ({
     }
 
     return (
-        <div className="grid grid-cols-3 gap-8">
+        <div className="grid xmd:grid-cols-3 xmd:grid-rows-1 grid-rows-3 xmd:w-auto  w-full xmd:gap-8 gap-10">
             {/* STEP 1, 2, 3  */}
             <ProgressStep stepNumber={1}>
-                <CustomButton
-                    label="Choose file"
-                    className={` text-white animat ${
-                        conversion?.file
-                            ? 'bg-neutral-100 text-black'
-                            : 'bg-primary'
-                    }`}
-                    onClick={open}
-                    icon={Upload}
-                />
+                <div className="flex items-center flex-col justify-center">
+                    <p className="mb-4 xmd:hidden text-center text-lg font-light text-white">
+                        First, Select a file(s) to convert
+                    </p>
+                    <CustomButton
+                        label="Choose file"
+                        className={` text-white ${
+                            conversion?.file
+                                ? 'bg-neutral-100 text-black'
+                                : 'bg-primary'
+                        }`}
+                        onClick={open}
+                        icon={Upload}
+                    />
+                    <Link
+                        href=""
+                        className="flex items-center xmd:order-1 order-2 mt-2 justify-center text-center underline text-white font-medium"
+                    >
+                        <ShieldCheck className="w-5 h-5 mr-2" />
+                        How are my files protected?
+                    </Link>
+                </div>
             </ProgressStep>
 
             <ProgressStep stepNumber={2}>
                 <Popover>
                     <PopoverTrigger asChild>
                         <button
-                            className={`flex flex-row items-center uppercase justify-center gap-x-2 h-12 tracking-wide text-xl font-medium rounded-md hover:opacity-90 text-neutral-900 focus:bg-neutral-200 focus:outline-none w-full transition-all duration-250 ${
+                            className={`flex flex-row xmd:h-12 h-14 items-center uppercase justify-center gap-x-2 tracking-wide text-xl font-medium rounded-md hover:opacity-90 text-neutral-900 focus:bg-neutral-200 focus:outline-none w-full transition-all duration-250 ${
                                 step === CONVERT_STEPS.STEP_2 &&
                                 !conversion?.to?.mime
                                     ? 'bg-primary text-white'

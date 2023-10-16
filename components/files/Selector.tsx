@@ -52,24 +52,6 @@ export const Selector = ({ value, setValue }: SelectorProps) => {
 
                         return null // Skip rendering for duplicates or formats that don't match the search
                     })}
-                    {/* {formats
-                        .filter((format) => format.mime.includes(search))
-                        .map((format) => (
-                            <li key={format.mime}>
-                                <Button
-                                    className={`rounded-3xl w-14 h-10 uppercase ${cn(
-                                        {
-                                            'bg-emerald-500':
-                                                value === format.mime,
-                                        }
-                                    )}`}
-                                    size="sm"
-                                    onPress={() => setValue(format)}
-                                >
-                                    {mimeToFileExtension(format.mime)}
-                                </Button>
-                            </li>
-                        ))} */}
                 </ul>
             </div>
         </div>
