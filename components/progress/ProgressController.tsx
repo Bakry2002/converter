@@ -2,20 +2,23 @@
 
 import { mimeToFileExtension } from '@/lib/file'
 import { ChevronDown, Upload } from 'lucide-react'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { Button } from '../ui/button'
+
 import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover'
 import {
     Conversion,
     UXConversionStatus,
     useConversion,
+    useDropzone,
 } from '@/context/ConversionContext'
 import useSWr from 'swr'
 import { ConversionStatus } from '@prisma/client'
 import { Selector } from '../files/Selector'
-import { OpenButton } from '../OpenButton'
+import { CustomButton } from '../CustomButton'
 import z from 'zod'
 import ProgressStep from './ProgressStep'
+import { DownloadButton } from '../DownloadButton'
 
 export enum CONVERT_STEPS {
     STEP_1 = 'Upload',
@@ -51,6 +54,7 @@ const ProgressController: React.FC<ProgressControllerProps> = ({
     step,
 }) => {
     const { conversions, updateConversion, convert } = useConversion()
+    const { open } = useDropzone()
     const { data } = useSWr(
         () =>
             conversion.id && conversion.status !== UXConversionStatus.Completed
@@ -88,34 +92,57 @@ const ProgressController: React.FC<ProgressControllerProps> = ({
         <div className="grid grid-cols-3 gap-8">
             {/* STEP 1, 2, 3  */}
             <ProgressStep stepNumber={1}>
-                <OpenButton
+                <CustomButton
                     label="Choose file"
-                    className="tracking-wide h-10 "
-                    variant="default"
+                    className={` text-white animat ${
+                        conversion?.file
+                            ? 'bg-neutral-100 text-black'
+                            : 'bg-primary'
+                    }`}
+                    onClick={open}
+                    icon={Upload}
                 />
             </ProgressStep>
+
             <ProgressStep stepNumber={2}>
                 <Popover>
                     <PopoverTrigger asChild>
-                        <Button
+                        <button
+                            className={`flex flex-row items-center uppercase justify-center gap-x-2 h-12 tracking-wide text-xl font-medium rounded-md hover:opacity-90 text-neutral-900 focus:bg-neutral-200 focus:outline-none w-full transition-all duration-250 ${
+                                step === CONVERT_STEPS.STEP_2 &&
+                                !conversion?.to?.mime
+                                    ? 'bg-primary text-white'
+                                    : 'bg-neutral-100'
+                            }`}
                             disabled={
                                 conversion?.status !==
                                 UXConversionStatus.Pending
-                            }
-                            className="px-2 w-full flex gap-2 items-center flex-row uppercase"
-                            variant={
-                                conversion?.error ? 'destructive' : 'secondary'
                             }
                         >
                             {conversion?.to?.mime ? (
                                 mimeToFileExtension(conversion.to.mime)
                             ) : (
-                                <span className="capitalize">Convert To</span>
+                                <span className="capitalize flex items-center justify-center">
+                                    convert To <ChevronDown />
+                                </span>
                             )}
-                            {!conversion?.to?.mime && (
-                                <ChevronDown className="w-4 h-4" />
-                            )}
-                        </Button>
+                        </button>
+                        {/* <CustomButton
+                            label={
+                                conversion?.to?.mime ? (
+                                    conversion.to.mime
+                                ) : (
+                                    <span className="flex items-center justify-center">
+                                        convert To <ChevronDown />
+                                    </span>
+                                )
+                            }
+                            disabled={
+                                conversion?.status !==
+                                UXConversionStatus.Pending
+                            }
+                            variant={conversion?.error ? 'danger' : ''}
+                        /> */}
                     </PopoverTrigger>
                     <PopoverContent>
                         <Selector
@@ -127,9 +154,13 @@ const ProgressController: React.FC<ProgressControllerProps> = ({
             </ProgressStep>
 
             <ProgressStep stepNumber={3}>
-                <Button
-                    color="primary"
-                    className="bg-neutral-900 text-white p-2 rounded-md w-full"
+                <CustomButton
+                    label="Convert"
+                    className={
+                        conversion?.to?.mime && step === CONVERT_STEPS.STEP_2
+                            ? 'bg-primary text-white'
+                            : 'bg-neutral-100'
+                    }
                     onClick={() => validate()}
                     disabled={
                         !conversions.some(
@@ -138,9 +169,7 @@ const ProgressController: React.FC<ProgressControllerProps> = ({
                                 UXConversionStatus.Completed
                         ) || !conversion?.to?.mime
                     }
-                >
-                    Convert
-                </Button>
+                />
             </ProgressStep>
         </div>
     )

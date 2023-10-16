@@ -1,6 +1,6 @@
 'use client'
 
-import { OpenButton } from '@/components/OpenButton'
+import { OpenButton } from '@/components/CustomButton'
 import ProgressComponent from '@/components/progress/ProgressComponent'
 
 interface HeroProps {}

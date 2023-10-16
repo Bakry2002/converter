@@ -40,6 +40,10 @@ module.exports = {
                     from: { backgroundPosition: '1rem 0' },
                     to: { backgroundPosition: '0 0' },
                 },
+                pulse: {
+                    '0%, 100%': { opacity: 1 },
+                    '50%': { opacity: 0.8 },
+                },
             },
             animation: {
                 'accordion-down': 'accordion-down 0.2s ease-out',
