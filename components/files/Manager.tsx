@@ -67,13 +67,6 @@ export const Manager = () => {
                     </ul>
                     <div className="flex justify-center py-4">
                         <>
-                            {console.log(
-                                conversions.some(
-                                    (conversion) =>
-                                        conversion.status ===
-                                        UXConversionStatus.Completed
-                                )
-                            )}
                             <Button
                                 color="primary"
                                 className="bg-neutral-900 text-white p-2 rounded-md"

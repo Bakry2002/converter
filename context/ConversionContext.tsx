@@ -24,7 +24,7 @@ export enum UXConversionStatus {
 export type Conversion = {
     id?: string
     file: File
-    to?: { mime: string } | null
+    to?: { mime: string }
     status: UXConversionStatus
     upload?: number
     error?: any
@@ -113,6 +113,10 @@ export const ConversionProvider = ({ children }: props) => {
     const convert = async () => {
         for (let i = 0; i < conversions.length; i++) {
             const c = conversions[i] // get the conversion at the index i
+
+            // First check if the conversion is not completed
+            if (c.status === UXConversionStatus.Completed) continue // if the conversion is completed, then we will skip it
+
             updateConversion(i, { status: UXConversionStatus.Uploading }) // update the conversion status to PROCESSING
             try {
                 const formData = new FormData()

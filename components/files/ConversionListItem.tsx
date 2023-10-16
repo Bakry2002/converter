@@ -1,7 +1,7 @@
 'use client'
 
 import { byteToSize, mimeToFileExtension } from '@/lib/file'
-import { ChevronDown, Trash2, XIcon } from 'lucide-react'
+import { ChevronDown, Trash2 } from 'lucide-react'
 import Image from 'next/image'
 import { useEffect, useState } from 'react'
 import { Button } from '../ui/button'
@@ -9,7 +9,6 @@ import { Dialog, DialogContent, DialogTrigger } from '../ui/dialog'
 import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover'
 import { Conversion, UXConversionStatus } from '@/context/ConversionContext'
 import useSWr from 'swr'
-import { Combobox } from '../combobox'
 import { ConversionStatus } from '@prisma/client'
 import { DownloadButton } from '../DownloadButton'
 import Badge from '../Badge'
@@ -81,10 +80,7 @@ const ConversionListItem: React.FC<ConversionListItemProps> = ({
             {/* File Name */}
             <div className="flex flex-col md:col-span-1 col-span-3 md:-ml-6">
                 <span className="overflow-hidden text-ellipsis whitespace-nowrap">
-                    <>
-                        {console.log('FILE: ', file?.name)}
-                        {file?.name}
-                    </>
+                    <>{file?.name}</>
                 </span>
                 <span className="text-xs text-neutral-500">
                     {byteToSize(file?.size || 0)}
