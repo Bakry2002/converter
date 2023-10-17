@@ -60,7 +60,7 @@ const MobileNavbar: React.FC<MobileNavbarProps> = React.memo(
         )
 
         return (
-            <div className="flex xl:hidden sm:px-12 px-6 py-4 bg-white h-[68px] z-20 fixed w-full justify-between items-center">
+            <div className="flex xl:hidden container max-w-none sm:px-12 px-6 py-4 bg-white h-[68px] z-20 fixed w-full justify-between items-center">
                 <div className="m-0">
                     <Logo />
                 </div>

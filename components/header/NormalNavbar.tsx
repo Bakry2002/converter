@@ -22,7 +22,7 @@ const NormalNavbar: React.FC<NormalNavbarProps> = ({
 }) => {
     const lowNavbarRef = useRef<HTMLDivElement | null>(null) // Specify the type as HTMLDivElement or null
     const [navStyle, setNavStyle] = useState(
-        ' translate-y-12 rounded-[15px] w-[calc(100%-15%)] animate-in duration-500'
+        ' translate-y-12 rounded-[15px] px-8 sm:w-[calc(100%-6rem)] lg:w-[calc(100%-10rem)] xl:w-[calc(100%-12rem)] 2xl:w-[calc(100%-14rem)] animate-in duration-500'
     )
     const { scrollY } = useScroll()
 
@@ -30,8 +30,8 @@ const NormalNavbar: React.FC<NormalNavbarProps> = ({
         const handleScroll = () => {
             setNavStyle(
                 scrollY.get() > 150
-                    ? 'translate-y-0 rounded-none w-full px-32'
-                    : 'translate-y-12 rounded-[15px] w-[calc(100%-15%)]'
+                    ? 'translate-y-0 rounded-none w-full sm:px-[3rem] lg:px-[5rem] xl:px-[6rem] 2xl:px-[7rem] px-[2rem]'
+                    : 'translate-y-12 px-8 rounded-[15px] sm:w-[calc(100%-6rem)] lg:w-[calc(100%-10rem)] xl:w-[calc(100%-12rem)] 2xl:w-[calc(100%-14rem)]'
             )
         }
 
@@ -89,7 +89,7 @@ const NormalNavbar: React.FC<NormalNavbarProps> = ({
                     className={`hidden xl:flex transition fixed top-0 overflow-hidden bg-white ${navStyle} z-10 border-b duration-100 ease-soft-spring flex-col items-center py-2`}
                 >
                     {/* High NAVBAR */}
-                    <div className="py mx-auto p-6 w-full h-[60px] flex flex-row items-center justify-between">
+                    <div className="m-0 w-full h-[60px] flex flex-row items-center justify-between">
                         {/* Website Part */}
                         {/* LOGO */}
                         <div className="">

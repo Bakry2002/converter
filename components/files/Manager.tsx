@@ -36,55 +36,57 @@ export const Manager = () => {
         convert()
     }
     return (
-        <AnimatePresence>
-            {conversions.length > 0 && (
-                <motion.div
-                    // there is an action of type  function called convert exported from its own file.ts
-                    className="bg-white/80 backdrop-blur-md rounded-lg m-2 container mx-auto"
-                    initial={{ opacity: 0, transform: 'translateY(50px)' }}
-                    animate={{
-                        opacity: 1,
-                        transform: 'translateY(0px)',
-                        transition: { duration: 0.3 },
-                    }}
-                    exit={{ opacity: 0, transform: 'translateY(50px)' }}
-                >
-                    <h2 className="mb-8 text-lg font-medium text-neutral-900">
-                        Files to convert
-                    </h2>
-                    <ul className="bg-white/80 backdrop-blur-lg flex flex-col justify-center gap-y-4">
-                        {conversions.map((conversion, key) => (
-                            <ConversionListItem
-                                key={key}
-                                conversion={conversion}
-                                onRemove={() => removeConversion(key)}
-                                onUpdate={(c) => updateConversion(key, c)}
-                                onConvertTo={(to) => {
-                                    updateConversion(key, { to })
-                                }}
-                            />
-                        ))}
-                    </ul>
-                    <div className="flex justify-center py-4">
-                        <>
-                            <Button
-                                color="primary"
-                                className="bg-neutral-900 text-white p-2 rounded-md"
-                                onClick={() => validate()}
-                                disabled={
-                                    !conversions.some(
-                                        (conversion) =>
-                                            conversion.status !==
-                                            UXConversionStatus.Completed
-                                    )
-                                }
-                            >
-                                Convert
-                            </Button>
-                        </>
-                    </div>
-                </motion.div>
-            )}
-        </AnimatePresence>
+        <>
+            <h2 className="m-0 container mb-8 text-3xl font-medium text-neutral-900">
+                Files to <span className="font-bold text-primary">Convert</span>
+            </h2>
+            <AnimatePresence>
+                {conversions.length > 0 && (
+                    <motion.div
+                        // there is an action of type  function called convert exported from its own file.ts
+                        className="bg-red-200/80 backdrop-blur-md rounded-lg m-2 mt-10 container mx-auto"
+                        initial={{ opacity: 0, transform: 'translateY(50px)' }}
+                        animate={{
+                            opacity: 1,
+                            transform: 'translateY(0px)',
+                            transition: { duration: 0.3 },
+                        }}
+                        exit={{ opacity: 0, transform: 'translateY(50px)' }}
+                    >
+                        <ul className="bg-white/80 backdrop-blur-lg flex flex-col justify-center gap-y-4">
+                            {conversions.map((conversion, key) => (
+                                <ConversionListItem
+                                    key={key}
+                                    conversion={conversion}
+                                    onRemove={() => removeConversion(key)}
+                                    onUpdate={(c) => updateConversion(key, c)}
+                                    onConvertTo={(to) => {
+                                        updateConversion(key, { to })
+                                    }}
+                                />
+                            ))}
+                        </ul>
+                        <div className="flex justify-center py-4">
+                            <>
+                                <Button
+                                    color="primary"
+                                    className="bg-neutral-900 text-white p-2 rounded-md"
+                                    onClick={() => validate()}
+                                    disabled={
+                                        !conversions.some(
+                                            (conversion) =>
+                                                conversion.status !==
+                                                UXConversionStatus.Completed
+                                        )
+                                    }
+                                >
+                                    Convert
+                                </Button>
+                            </>
+                        </div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
+        </>
     )
 }
