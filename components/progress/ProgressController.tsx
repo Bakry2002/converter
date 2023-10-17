@@ -1,7 +1,7 @@
 'use client'
 
 import { mimeToFileExtension } from '@/lib/file'
-import { ChevronDown, ShieldCheck, Upload } from 'lucide-react'
+import { CheckCheck, ChevronDown, ShieldCheck, Upload } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { Button } from '../ui/button'
 
@@ -90,13 +90,20 @@ const ProgressController: React.FC<ProgressControllerProps> = ({
     }
 
     return (
-        <div className="grid xmd:grid-cols-3 xmd:grid-rows-1 grid-rows-3 xmd:w-auto  w-full xmd:gap-8 gap-10">
+        <div className="grid xmd:grid-cols-3 xmd:grid-rows-1 grid-rows-3 xmd:w-auto  w-full xmd:gap-8 gap-8">
             {/* STEP 1, 2, 3  */}
             <ProgressStep stepNumber={1}>
                 <div className="flex items-center flex-col justify-center">
-                    <p className="mb-4 xmd:hidden text-center text-lg font-light text-white">
-                        First, Select a file(s) to convert
-                    </p>
+                    <span
+                        className={`mb-2 xmd:hidden text-center text-lg items-center flex-row gap-4 flex justify-center font-light text-white transition-opacity`}
+                    >
+                        First, Select a file(s) to convert{' '}
+                        <CheckCheck
+                            className={
+                                conversion?.file ? 'opacity-100' : 'opacity-0'
+                            }
+                        />
+                    </span>
                     <CustomButton
                         label="Choose file"
                         className={` text-white ${
@@ -107,21 +114,24 @@ const ProgressController: React.FC<ProgressControllerProps> = ({
                         onClick={open}
                         icon={Upload}
                     />
-                    <Link
-                        href=""
-                        className="flex items-center xmd:order-1 order-2 mt-2 justify-center text-center underline text-white font-medium"
-                    >
-                        <ShieldCheck className="w-5 h-5 mr-2" />
-                        How are my files protected?
-                    </Link>
                 </div>
             </ProgressStep>
 
             <ProgressStep stepNumber={2}>
+                <span
+                    className={`mb-2 xmd:hidden text-center text-lg items-center flex-row gap-4 flex justify-center font-light text-white transition-opacity`}
+                >
+                    Second, Select a format to convert to{' '}
+                    <CheckCheck
+                        className={
+                            conversion?.to?.mime ? 'opacity-100' : 'opacity-0'
+                        }
+                    />
+                </span>
                 <Popover>
                     <PopoverTrigger asChild>
                         <button
-                            className={`flex flex-row xmd:h-12 h-14 items-center uppercase justify-center gap-x-2 tracking-wide text-xl font-medium rounded-md hover:opacity-90 text-neutral-900 focus:bg-neutral-200 focus:outline-none w-full transition-all duration-250 ${
+                            className={`flex flex-row h-14 items-center uppercase justify-center gap-x-2 tracking-wide text-xl font-medium rounded-md hover:opacity-90 text-neutral-900 focus:bg-neutral-200 focus:outline-none w-full transition-all duration-250 ${
                                 step === CONVERT_STEPS.STEP_2 &&
                                 !conversion?.to?.mime
                                     ? 'bg-primary text-white'
@@ -136,7 +146,7 @@ const ProgressController: React.FC<ProgressControllerProps> = ({
                                 mimeToFileExtension(conversion.to.mime)
                             ) : (
                                 <span className="capitalize flex items-center justify-center">
-                                    convert To <ChevronDown />
+                                    convert To <ChevronDown className=" ml-2" />
                                 </span>
                             )}
                         </button>
@@ -167,6 +177,11 @@ const ProgressController: React.FC<ProgressControllerProps> = ({
             </ProgressStep>
 
             <ProgressStep stepNumber={3}>
+                <span
+                    className={`mb-2 xmd:hidden text-center text-lg items-center flex-row gap-4 flex justify-center font-light text-white transition-opacity`}
+                >
+                    Finally, Start converting{' '}
+                </span>
                 <CustomButton
                     label="Convert"
                     className={

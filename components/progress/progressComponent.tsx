@@ -1,11 +1,8 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { CustomButton } from '../CustomButton'
 import ProgressController, { CONVERT_STEPS } from './ProgressController'
-import { Conversion } from '@prisma/client'
 import { UXConversionStatus, useConversion } from '@/context/ConversionContext'
-import z from 'zod'
 
 type progressComponentProps = {}
 
@@ -36,14 +33,21 @@ const ProgressComponent: React.FC<progressComponentProps> = ({}) => {
                 behavior: 'smooth',
             })
         }
+        // scroll more in mobile view
+        if (window.innerWidth < 768) {
+            window.scrollTo({
+                top: window.scrollY + 480,
+                behavior: 'smooth',
+            })
+        }
     }, [conversions[0]?.status, step])
     return (
         // progress container
         <div className="max-w-[950px] mb-8 w-full h-auto flex justify-center">
             {/* Progress box */}
-            <div className="mx-auto p-8 bg-white/40 w-full relative flex flex-col items-center justify-center">
+            <div className="mx-auto xmd:p-12 xmd:pb-6 pt-10 px-8 bg-white/20 w-full relative flex flex-col items-center justify-center">
                 {/* progress bar container */}
-                <div className="absolute left-[calc(16%+(44px/2))] w-[calc(56%+(66px/2))] text-center mx-auto h-[60px] mb-[5rem] rounded">
+                <div className="hidden xmd:block absolute left-[calc(16%+(44px/2))] w-[calc(56%+(66px/2))] text-center mx-auto h-[60px] mb-[5rem] rounded">
                     {/* progress bar */}
                     <div className="bg-slate-500 h-4 w-full flex overflow-hidden text-sm rounded">
                         {/* progress bar completion */}
