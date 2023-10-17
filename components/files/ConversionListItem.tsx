@@ -52,7 +52,7 @@ const ConversionListItem: React.FC<ConversionListItemProps> = ({
     const fileMime: any = lookup(conversion.file?.name)
     return (
         <li
-            className={`grid md:grid-cols-[40px_1fr_80px_120px_48px] grid-cols-[40px_1fr_0px_0px_100px]  md:grid-rows-1 grid-rows-[1fr_0.5fr] md:gap-8 gap-2 last-of-type:border-none border-b border-b-neutral-200 pb-4 md:gap-y-0 gap-y-6`}
+            className={`grid md:grid-cols-[40px_1fr_80px_48px] grid-cols-[40px_1fr_80px_100px]  md:grid-rows-1 md:gap-8 gap-2 last-of-type:border-none border-b border-b-neutral-200 p-4 md:gap-y-0 gap-y-6`}
         >
             {/* File Icon */}
             <div className="flex items-center md:justify-center justify-normal">
@@ -88,35 +88,35 @@ const ConversionListItem: React.FC<ConversionListItemProps> = ({
             </div>
 
             {/* File Status */}
-            <div className="md:col-start-3 md:row-start-1 md:col-span-1 col-span-2 col-start-1 row-start-2 flex items-center md:justify-center justify-normal w-full h-full">
+            <div className="md:col-start-3 md:row-start-1 md:col-span-1 col-span-2 col-start-1 col-end-6 row-start-2 flex items-center md:justify-center justify-normal w-full h-full">
                 {conversion.status === UXConversionStatus.Pending && (
-                    <div className="self-center">
+                    <div className="self-center w-full">
                         <Badge className="text-gray-500">Pending</Badge>
                     </div>
                 )}
                 {conversion.status === UXConversionStatus.Uploading && (
-                    <div className="self-center">
+                    <div className="self-center w-full">
                         <Badge className="text-sky-500 border-sky-500">
                             {((conversion.upload || 0) * 100).toFixed(0)}%
                         </Badge>
                     </div>
                 )}
                 {conversion.status === UXConversionStatus.Processing && (
-                    <div className="self-center">
+                    <div className="self-center w-full">
                         <Badge className="text-sky-500 border-sky-500">
                             Converting
                         </Badge>
                     </div>
                 )}
                 {conversion.status === UXConversionStatus.Error && (
-                    <div className="self-center">
+                    <div className="self-center w-full">
                         <Badge className="text-red-500 border-red-500">
                             Error
                         </Badge>
                     </div>
                 )}
                 {conversion.status === UXConversionStatus.Completed && (
-                    <div className="self-center">
+                    <div className="self-center w-full">
                         <Badge className="text-green-500 border-green-500">
                             Done
                         </Badge>
@@ -124,7 +124,7 @@ const ConversionListItem: React.FC<ConversionListItemProps> = ({
                 )}
             </div>
 
-            {/* Convert to Popover */}
+            {/* Convert to Popover
             {conversion.status != UXConversionStatus.Completed && (
                 <div className="md:col-start-4 col-start-4 md:col-span-1 col-span-2 md:row-start-1 row-start-2 justify-self-end md:justify-normal md:w-full">
                     <div className="hidden md:flex justify-center">
@@ -193,7 +193,7 @@ const ConversionListItem: React.FC<ConversionListItemProps> = ({
                         </Dialog>
                     </div>
                 </div>
-            )}
+            )} */}
 
             {/* Cancel & Download Button */}
             <div
@@ -209,10 +209,10 @@ const ConversionListItem: React.FC<ConversionListItemProps> = ({
                         <Button
                             variant="destructive"
                             onClick={onRemove}
-                            className="w-8 h-8 px-0 rounded-full"
+                            className="w-10 h-10 px-0 rounded-full"
                         >
                             {/* <XIcon className="w-4 h-4" /> */}
-                            <Trash2 className="w-4 h-4" />
+                            <Trash2 className="w-6 h-6" />
                         </Button>
                     ) : (
                         <div className="flex justify-center col-span-2">

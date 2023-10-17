@@ -36,15 +36,18 @@ export const Manager = () => {
         convert()
     }
     return (
-        <>
-            <h2 className="m-0 container mb-8 text-3xl font-medium text-neutral-900">
-                Files to <span className="font-bold text-primary">Convert</span>
-            </h2>
+        <div className="container mx-auto">
+            {conversions.length > 0 && (
+                <h2 className=" my-8 text-3xl font-medium text-neutral-900">
+                    Files to{' '}
+                    <span className="font-bold text-primary">Convert</span>
+                </h2>
+            )}
             <AnimatePresence>
                 {conversions.length > 0 && (
                     <motion.div
                         // there is an action of type  function called convert exported from its own file.ts
-                        className="bg-red-200/80 backdrop-blur-md rounded-lg m-2 mt-10 container mx-auto"
+                        className=" backdrop-blur-md rounded shadow-sm"
                         initial={{ opacity: 0, transform: 'translateY(50px)' }}
                         animate={{
                             opacity: 1,
@@ -66,7 +69,7 @@ export const Manager = () => {
                                 />
                             ))}
                         </ul>
-                        <div className="flex justify-center py-4">
+                        {/* <div className="flex justify-center py-4">
                             <>
                                 <Button
                                     color="primary"
@@ -83,10 +86,10 @@ export const Manager = () => {
                                     Convert
                                 </Button>
                             </>
-                        </div>
+                        </div> */}
                     </motion.div>
                 )}
             </AnimatePresence>
-        </>
+        </div>
     )
 }
