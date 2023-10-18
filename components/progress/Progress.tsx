@@ -62,7 +62,7 @@ const ProgressComponent: React.FC<progressComponentProps> = ({}) => {
                 {/* progress bar container */}
                 <div className="hidden xmd:block absolute left-[calc(16%+(44px/2))] w-[calc(56%+(66px/2))] text-center mx-auto h-[60px] mb-[5rem] rounded">
                     {/* progress bar */}
-                    <div className="bg-slate-500 h-4 w-full flex overflow-hidden text-sm rounded">
+                    <div className="bg-neutral-300 h-4 w-full flex overflow-hidden text-sm rounded">
                         {/* progress bar completion */}
                         <div
                             className="bg-primary rounded flex flex-col justify-center text-center text-white transition-all duration-700 ease-in whitespace-nowrap overflow-hidden progress-bar-stripes"

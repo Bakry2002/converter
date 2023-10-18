@@ -1,6 +1,6 @@
 'use client'
 
-import ProgressComponent from '@/components/progress/ProgressComponent'
+import Progress from '@/components/progress/Progress'
 
 interface HeroProps {}
 
@@ -19,7 +19,7 @@ const Hero: React.FC<HeroProps> = ({}) => {
                     </span>
                 </h1>
 
-                <ProgressComponent />
+                <Progress />
             </div>
         </section>
     )
