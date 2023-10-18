@@ -108,7 +108,7 @@ const ProgressController: React.FC<ProgressControllerProps> = ({
                         />
                     </span>
                     <CustomButton
-                        label="Choose file"
+                        label="Choose files"
                         className={` text-white ${
                             step === CONVERT_STEPS.STEP_1
                                 ? 'bg-primary'
@@ -137,51 +137,53 @@ const ProgressController: React.FC<ProgressControllerProps> = ({
                         }
                     />
                 </span>
-                <Popover>
-                    <PopoverTrigger asChild>
-                        <button
-                            className={`flex flex-row h-14 items-center uppercase justify-center gap-x-2 tracking-wide text-xl font-medium rounded-md hover:opacity-90 text-neutral-900 focus:bg-neutral-200 focus:outline-none w-full transition-all duration-250 ${
-                                step === CONVERT_STEPS.STEP_2
-                                    ? 'bg-primary text-white'
-                                    : 'bg-neutral-100'
-                            }`}
-                            disabled={
-                                conversion?.status !==
-                                UXConversionStatus.Pending
-                            }
-                        >
-                            {conversion?.to?.mime ? (
-                                mimeToFileExtension(conversion.to.mime)
-                            ) : (
-                                <span className="capitalize flex items-center justify-center">
-                                    convert To <ChevronDown className=" ml-2" />
-                                </span>
-                            )}
-                        </button>
-                        {/* <CustomButton
-                            label={
-                                conversion?.to?.mime ? (
-                                    conversion.to.mime
+                {conversions.length > 1 ? (
+                    <button
+                        className={`flex flex-row h-14 items-center uppercase justify-center gap-x-2 tracking-wide text-xl font-medium rounded-md hover:opacity-90 text-neutral-900 focus:bg-neutral-200 focus:outline-none w-full transition-all duration-250 ${
+                            step === CONVERT_STEPS.STEP_2
+                                ? 'bg-primary text-white'
+                                : 'bg-neutral-100'
+                        }`}
+                        disabled={
+                            conversion?.status !== UXConversionStatus.Pending
+                        }
+                    >
+                        {`${
+                            conversions.filter((cnv) => cnv.to).length
+                        } formats selected`}
+                    </button>
+                ) : (
+                    <Popover>
+                        <PopoverTrigger asChild>
+                            <button
+                                className={`flex flex-row h-14 items-center uppercase justify-center gap-x-2 tracking-wide text-xl font-medium rounded-md hover:opacity-90 text-neutral-900 focus:bg-neutral-200 focus:outline-none w-full transition-all duration-250 ${
+                                    step === CONVERT_STEPS.STEP_2
+                                        ? 'bg-primary text-white'
+                                        : 'bg-neutral-100'
+                                }`}
+                                disabled={
+                                    conversion?.status !==
+                                    UXConversionStatus.Pending
+                                }
+                            >
+                                {conversion?.to?.mime ? (
+                                    mimeToFileExtension(conversion.to.mime)
                                 ) : (
-                                    <span className="flex items-center justify-center">
-                                        convert To <ChevronDown />
+                                    <span className="capitalize flex items-center justify-center">
+                                        convert To{' '}
+                                        <ChevronDown className=" ml-2" />
                                     </span>
-                                )
-                            }
-                            disabled={
-                                conversion?.status !==
-                                UXConversionStatus.Pending
-                            }
-                            variant={conversion?.error ? 'danger' : ''}
-                        /> */}
-                    </PopoverTrigger>
-                    <PopoverContent>
-                        <Selector
-                            value={conversion?.to?.mime || ''}
-                            setValue={onConvertTo}
-                        />
-                    </PopoverContent>
-                </Popover>
+                                )}
+                            </button>
+                        </PopoverTrigger>
+                        <PopoverContent>
+                            <Selector
+                                value={conversion?.to?.mime || ''}
+                                setValue={onConvertTo}
+                            />
+                        </PopoverContent>
+                    </Popover>
+                )}
             </ProgressStep>
 
             <ProgressStep

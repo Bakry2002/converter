@@ -7,7 +7,11 @@ import { useEffect, useState } from 'react'
 import { Button } from '../ui/button'
 import { Dialog, DialogContent, DialogTrigger } from '../ui/dialog'
 import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover'
-import { Conversion, UXConversionStatus } from '@/context/ConversionContext'
+import {
+    Conversion,
+    UXConversionStatus,
+    useConversion,
+} from '@/context/ConversionContext'
 import useSWr from 'swr'
 import { ConversionStatus } from '@prisma/client'
 import { DownloadButton } from '../DownloadButton'
@@ -50,9 +54,10 @@ const ConversionListItem: React.FC<ConversionListItemProps> = ({
     const [open, setOpen] = useState(false)
     const { file, to } = conversion
     const fileMime: any = lookup(conversion.file?.name)
+    const { conversions } = useConversion()
     return (
         <li
-            className={`grid md:grid-cols-[40px_1fr_80px_48px] grid-cols-[40px_1fr_80px_100px]  md:grid-rows-1 md:gap-8 gap-2 last-of-type:border-none border-b border-b-neutral-200 p-4 md:gap-y-0 gap-y-6`}
+            className={`grid md:grid-cols-[40px_1fr_80px_130px_48px] grid-cols-[40px_1fr_80px_130px_100px]  md:grid-rows-1 grid-rows-2 md:gap-8 gap-2 last-of-type:border-none border-b border-b-neutral-200 p-4 md:gap-y-0 gap-y-6`}
         >
             {/* File Icon */}
             <div className="flex items-center md:justify-center justify-normal">
@@ -78,7 +83,7 @@ const ConversionListItem: React.FC<ConversionListItemProps> = ({
             </div>
 
             {/* File Name */}
-            <div className="flex flex-col md:col-span-1 col-span-3 md:-ml-6">
+            <div className="flex flex-col md:col-span-1 col-span-2 md:-ml-6">
                 <span className="overflow-hidden text-ellipsis whitespace-nowrap">
                     <>{file?.name}</>
                 </span>
@@ -88,7 +93,7 @@ const ConversionListItem: React.FC<ConversionListItemProps> = ({
             </div>
 
             {/* File Status */}
-            <div className="md:col-start-3 md:row-start-1 md:col-span-1 col-span-2 col-start-1 col-end-6 row-start-2 flex items-center md:justify-center justify-normal w-full h-full">
+            <div className="md:col-start-3 md:row-start-1 md:col-span-1 col-span-2 col-start-1 col-end-5 row-start-2 flex items-center md:justify-center justify-normal w-full h-full">
                 {conversion.status === UXConversionStatus.Pending && (
                     <div className="self-center w-full">
                         <Badge className="text-gray-500">Pending</Badge>
@@ -124,80 +129,81 @@ const ConversionListItem: React.FC<ConversionListItemProps> = ({
                 )}
             </div>
 
-            {/* Convert to Popover
-            {conversion.status != UXConversionStatus.Completed && (
-                <div className="md:col-start-4 col-start-4 md:col-span-1 col-span-2 md:row-start-1 row-start-2 justify-self-end md:justify-normal md:w-full">
-                    <div className="hidden md:flex justify-center">
-                        <>
-                            <Popover>
-                                <PopoverTrigger asChild>
-                                    <Button
-                                        disabled={
-                                            conversion.status !==
-                                            UXConversionStatus.Pending
-                                        }
-                                        className="px-2 w-full flex gap-2 items-center flex-row uppercase"
-                                        variant={
-                                            conversion.error
-                                                ? 'destructive'
-                                                : 'secondary'
-                                        }
-                                    >
-                                        {conversion.to?.mime ? (
-                                            mimeToFileExtension(
-                                                conversion.to.mime
-                                            )
-                                        ) : (
-                                            <span className="capitalize">
-                                                Convert To
-                                            </span>
-                                        )}
-                                        {!conversion.to?.mime && (
-                                            <ChevronDown className="w-4 h-4" />
-                                        )}
+            {/* Convert to Popover */}
+            {conversions.length > 1 &&
+                conversion.status != UXConversionStatus.Completed && (
+                    <div className="md:col-start-4 col-start-4 md:col-span-1 col-span-2 md:row-start-1 row-start-1 justify-self-end md:justify-normal md:w-full">
+                        <div className="hidden md:flex justify-center">
+                            <>
+                                <Popover>
+                                    <PopoverTrigger asChild>
+                                        <Button
+                                            disabled={
+                                                conversion.status !==
+                                                UXConversionStatus.Pending
+                                            }
+                                            className="px-2 w-full flex gap-2 items-center flex-row uppercase"
+                                            variant={
+                                                conversion.error
+                                                    ? 'destructive'
+                                                    : 'secondary'
+                                            }
+                                        >
+                                            {conversion.to?.mime ? (
+                                                mimeToFileExtension(
+                                                    conversion.to.mime
+                                                )
+                                            ) : (
+                                                <span className="capitalize">
+                                                    Convert To
+                                                </span>
+                                            )}
+                                            {!conversion.to?.mime && (
+                                                <ChevronDown className="w-4 h-4" />
+                                            )}
+                                        </Button>
+                                    </PopoverTrigger>
+                                    <PopoverContent>
+                                        <Selector
+                                            value={conversion.to?.mime || ''}
+                                            setValue={onConvertTo}
+                                        />
+                                    </PopoverContent>
+                                </Popover>
+                            </>
+                        </div>
+
+                        <div className="md:hidden">
+                            <Dialog open={open} onOpenChange={setOpen}>
+                                <DialogTrigger asChild>
+                                    <Button className="" variant="secondary">
+                                        {conversion.to?.mime
+                                            ? mimeToFileExtension(
+                                                  conversion.to.mime
+                                              )
+                                            : 'Convert To'}
                                     </Button>
-                                </PopoverTrigger>
-                                <PopoverContent>
+                                </DialogTrigger>
+                                <DialogContent className="w-[calc(100%-2rem)]">
+                                    <div className="font-semibold text-lg">
+                                        Convert To
+                                    </div>
                                     <Selector
                                         value={conversion.to?.mime || ''}
-                                        setValue={onConvertTo}
+                                        setValue={(v) => {
+                                            onConvertTo(v)
+                                            setOpen(false)
+                                        }}
                                     />
-                                </PopoverContent>
-                            </Popover>
-                        </>
+                                </DialogContent>
+                            </Dialog>
+                        </div>
                     </div>
-
-                    <div className="md:hidden">
-                        <Dialog open={open} onOpenChange={setOpen}>
-                            <DialogTrigger asChild>
-                                <Button className="" variant="secondary">
-                                    {conversion.to?.mime
-                                        ? mimeToFileExtension(
-                                              conversion.to.mime
-                                          )
-                                        : 'Convert To'}
-                                </Button>
-                            </DialogTrigger>
-                            <DialogContent className="w-[calc(100%-2rem)]">
-                                <div className="font-semibold text-lg">
-                                    Convert To
-                                </div>
-                                <Selector
-                                    value={conversion.to?.mime || ''}
-                                    setValue={(v) => {
-                                        onConvertTo(v)
-                                        setOpen(false)
-                                    }}
-                                />
-                            </DialogContent>
-                        </Dialog>
-                    </div>
-                </div>
-            )} */}
+                )}
 
             {/* Cancel & Download Button */}
             <div
-                className={`col-start-5 md:row-start-1 ${
+                className={`col-start-5 md:row-start-1 row-start-2 ${
                     conversion.status === UXConversionStatus.Completed
                         ? ''
                         : 'justify-self-end'
