@@ -10,6 +10,8 @@ const ProgressComponent: React.FC<progressComponentProps> = ({}) => {
     const { conversions, updateConversion } = useConversion()
     const [step, setStep] = useState<CONVERT_STEPS>(CONVERT_STEPS.STEP_1)
     const [progressWidth, setProgressWidth] = useState('0%')
+    const [hasScrolled, setHasScrolled] = useState(false)
+    const [hasScrolledMobile, setHasScrolledMobile] = useState(false)
 
     useEffect(() => {
         const currentConversion = conversions[0]
@@ -19,28 +21,39 @@ const ProgressComponent: React.FC<progressComponentProps> = ({}) => {
             setProgressWidth('50%')
             console.log('STEP: ', step)
         }
-        if (currentConversion?.status === UXConversionStatus.Completed) {
+
+        if (currentConversion?.to?.mime) {
             setStep(CONVERT_STEPS.STEP_3)
             setProgressWidth('100%')
             console.log('STEP: ', step)
             // handle conversion completion like download, etc...
         }
 
-        if (currentConversion?.status === UXConversionStatus.Pending) {
+        if (currentConversion?.file && !hasScrolled) {
             // Scroll down by 30 pixels with smooth animation
             window.scrollTo({
-                top: window.scrollY + 200,
+                top: window.scrollY + 220,
                 behavior: 'smooth',
             })
+            setHasScrolled(true)
         }
         // scroll more in mobile view
-        if (window.innerWidth < 768) {
+        if (window.innerWidth < 768 && hasScrolledMobile) {
             window.scrollTo({
                 top: window.scrollY + 480,
                 behavior: 'smooth',
             })
+            setHasScrolledMobile(true)
         }
-    }, [conversions[0]?.status, step])
+
+        // when deleting a conversion, reset the progress bar
+        if (conversions.length === 0) {
+            setProgressWidth('0%')
+            setStep(CONVERT_STEPS.STEP_1)
+            setHasScrolled(false)
+            setHasScrolledMobile(false)
+        }
+    }, [step, conversions[0], hasScrolled, hasScrolledMobile])
     return (
         // progress container
         <div className="max-w-[950px] mb-8 w-full h-auto flex justify-center">

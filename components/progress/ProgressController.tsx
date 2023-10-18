@@ -52,7 +52,7 @@ const ProgressController: React.FC<ProgressControllerProps> = ({
     onConvertTo,
     onUpdate,
     progressWidth,
-    step,
+    step = CONVERT_STEPS.STEP_1,
 }) => {
     const { conversions, updateConversion, convert } = useConversion()
     const { open } = useDropzone()
@@ -92,7 +92,10 @@ const ProgressController: React.FC<ProgressControllerProps> = ({
     return (
         <div className="grid xmd:grid-cols-3 xmd:grid-rows-1 grid-rows-3 xmd:w-auto  w-full xmd:gap-8 gap-8">
             {/* STEP 1, 2, 3  */}
-            <ProgressStep stepNumber={1}>
+            <ProgressStep
+                stepNumber={1}
+                isStepFinished={step !== CONVERT_STEPS.STEP_1}
+            >
                 <div className="flex items-center flex-col justify-center">
                     <span
                         className={`mb-2 xmd:hidden text-center text-lg items-center flex-row gap-4 flex justify-center font-light text-white transition-opacity`}
@@ -107,9 +110,9 @@ const ProgressController: React.FC<ProgressControllerProps> = ({
                     <CustomButton
                         label="Choose file"
                         className={` text-white ${
-                            conversion?.file
-                                ? 'bg-neutral-100 text-black'
-                                : 'bg-primary'
+                            step === CONVERT_STEPS.STEP_1
+                                ? 'bg-primary'
+                                : 'bg-neutral-100 text-black'
                         }`}
                         onClick={open}
                         icon={Upload}
@@ -117,7 +120,13 @@ const ProgressController: React.FC<ProgressControllerProps> = ({
                 </div>
             </ProgressStep>
 
-            <ProgressStep stepNumber={2}>
+            <ProgressStep
+                stepNumber={2}
+                isStepFinished={
+                    step !== CONVERT_STEPS.STEP_2 &&
+                    step !== CONVERT_STEPS.STEP_1
+                }
+            >
                 <span
                     className={`mb-2 xmd:hidden text-center text-lg items-center flex-row gap-4 flex justify-center font-light text-white transition-opacity`}
                 >
@@ -132,8 +141,7 @@ const ProgressController: React.FC<ProgressControllerProps> = ({
                     <PopoverTrigger asChild>
                         <button
                             className={`flex flex-row h-14 items-center uppercase justify-center gap-x-2 tracking-wide text-xl font-medium rounded-md hover:opacity-90 text-neutral-900 focus:bg-neutral-200 focus:outline-none w-full transition-all duration-250 ${
-                                step === CONVERT_STEPS.STEP_2 &&
-                                !conversion?.to?.mime
+                                step === CONVERT_STEPS.STEP_2
                                     ? 'bg-primary text-white'
                                     : 'bg-neutral-100'
                             }`}
@@ -176,7 +184,12 @@ const ProgressController: React.FC<ProgressControllerProps> = ({
                 </Popover>
             </ProgressStep>
 
-            <ProgressStep stepNumber={3}>
+            <ProgressStep
+                stepNumber={3}
+                isStepFinished={
+                    conversion?.status === UXConversionStatus.Completed
+                }
+            >
                 <span
                     className={`mb-2 xmd:hidden text-center text-lg items-center flex-row gap-4 flex justify-center font-light text-white transition-opacity`}
                 >
@@ -185,7 +198,8 @@ const ProgressController: React.FC<ProgressControllerProps> = ({
                 <CustomButton
                     label="Convert"
                     className={
-                        conversion?.to?.mime && step === CONVERT_STEPS.STEP_2
+                        step === CONVERT_STEPS.STEP_3 &&
+                        conversion?.status !== UXConversionStatus.Completed
                             ? 'bg-primary text-white'
                             : 'bg-neutral-100'
                     }
