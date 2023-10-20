@@ -111,7 +111,7 @@ const ProgressController: React.FC<ProgressControllerProps> = ({
                         label="Choose files"
                         className={` text-white ${
                             step === CONVERT_STEPS.STEP_1
-                                ? 'bg-primary'
+                                ? 'bg-primary animate-button-shadow'
                                 : 'bg-neutral-100 text-black'
                         }`}
                         onClick={open}
@@ -141,7 +141,7 @@ const ProgressController: React.FC<ProgressControllerProps> = ({
                     <button
                         className={`flex flex-row h-14 items-center uppercase justify-center gap-x-2 tracking-wide text-xl font-medium rounded-md hover:opacity-90 text-neutral-900 focus:bg-neutral-200 focus:outline-none w-full transition-all duration-250 ${
                             step === CONVERT_STEPS.STEP_2
-                                ? 'bg-primary text-white'
+                                ? 'bg-primary text-white animate-button-shadow'
                                 : 'bg-neutral-100'
                         }`}
                         disabled={
@@ -156,9 +156,9 @@ const ProgressController: React.FC<ProgressControllerProps> = ({
                     <Popover>
                         <PopoverTrigger asChild>
                             <button
-                                className={`flex flex-row h-14 items-center uppercase justify-center gap-x-2 tracking-wide text-xl font-medium rounded-md hover:opacity-90 text-neutral-900 focus:bg-neutral-200 focus:outline-none w-full transition-all duration-250 ${
+                                className={`flex flex-row h-14 items-center uppercase justify-center gap-x-2 tracking-wide text-xl font-medium rounded-md hover:opacity-90 text-neutral-900 w-full transition-all duration-250 ${
                                     step === CONVERT_STEPS.STEP_2
-                                        ? 'bg-primary text-white'
+                                        ? 'bg-primary text-white animate-button-shadow'
                                         : 'bg-neutral-100'
                                 }`}
                                 disabled={
@@ -202,7 +202,7 @@ const ProgressController: React.FC<ProgressControllerProps> = ({
                     className={
                         step === CONVERT_STEPS.STEP_3 &&
                         conversion?.status !== UXConversionStatus.Completed
-                            ? 'bg-primary text-white'
+                            ? 'bg-primary text-white animate-button-shadow'
                             : 'bg-neutral-100'
                     }
                     onClick={() => validate()}

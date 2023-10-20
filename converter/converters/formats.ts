@@ -8,12 +8,37 @@ import { nodes as OCRNodes } from './OCR/nodes'
 import { nodes as PresentationNodes } from './presentation/nodes'
 
 export const formats = [
-    ...ImageNodes,
-    ...AudioNodes,
-    ...DocsNodes,
-    ...VideoNodes,
-    ...ArchiveNodes,
-    ...EbookNodes,
-    ...OCRNodes,
-    ...PresentationNodes,
+    {
+        image: ImageNodes,
+    },
+    {
+        audio: AudioNodes,
+    },
+    {
+        docs: DocsNodes,
+    },
+    {
+        video: VideoNodes,
+    },
+    {
+        archive: ArchiveNodes,
+    },
+    {
+        ebook: EbookNodes,
+    },
+    {
+        OCR: OCRNodes,
+    },
+    {
+        presentation: PresentationNodes,
+    },
+
+    //     ...ImageNodes,
+    //     ...AudioNodes,
+    //     ...DocsNodes,
+    //     ...VideoNodes,
+    //     ...ArchiveNodes,
+    //     ...EbookNodes,
+    //     ...OCRNodes,
+    //     ...PresentationNodes,
 ]

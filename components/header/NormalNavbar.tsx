@@ -6,10 +6,11 @@ import { Logo } from '../Logo'
 import { cn } from '@/lib/utils'
 import { ChevronDown, Languages } from 'lucide-react'
 import { Separator } from '../ui/separator'
-import { Switch } from '../ui/switch'
+
 import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { DropDownNavbar } from './DropDownNavbar'
 import { useScroll } from 'framer-motion'
+import ModeSwitch from '../ui/switch'
 
 type NormalNavbarProps = {
     selectedLink: number | null
@@ -178,7 +179,8 @@ const NormalNavbar: React.FC<NormalNavbarProps> = ({
                                 />
                                 {/* // TODO: ADD the change mode   */}
                                 <div className="flex items-center space-x-2">
-                                    <Switch id="airplane-mode" />
+                                    {/* <Switch id="airplane-mode" /> */}
+                                    <ModeSwitch />
                                 </div>
                             </div>
                         </div>
