@@ -23,27 +23,17 @@ const ProgressComponent: React.FC<progressComponentProps> = ({}) => {
         if (currentConversion?.file) {
             setStep(CONVERT_STEPS.STEP_2)
             setProgressWidth('50%')
-            console.log('STEP: ', step)
         }
-
-        // if (currentConversion?.to?.mime) {
-        //     setStep(CONVERT_STEPS.STEP_3)
-        //     setProgressWidth('100%')
-        //     console.log('STEP: ', step)
-        //     // handle conversion completion like download, etc...
-        // }
         if (
             conversions.length > 1 &&
             conversions.every((cnv) => cnv.to && cnv?.to?.mime)
         ) {
             setStep(CONVERT_STEPS.STEP_3)
             setProgressWidth('100%')
-            console.log('STEP: ', CONVERT_STEPS.STEP_3)
             // Handle conversion completion like download, etc...
         } else if (conversions.length === 1 && currentConversion?.to?.mime) {
             setStep(CONVERT_STEPS.STEP_3)
             setProgressWidth('100%')
-            console.log('STEP: ', CONVERT_STEPS.STEP_3)
             // Handle conversion completion like download, etc...
         }
 

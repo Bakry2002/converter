@@ -63,4 +63,9 @@ const AUDIO_AAC: MimeNode = {
 }
 nodes.push(AUDIO_AAC)
 
-export { nodes }
+//  main node to check with the file extension
+const mainNode: MimeNode[] = nodes.filter((node) =>
+    node.mime.startsWith('video')
+)
+
+export { nodes, mainNode }

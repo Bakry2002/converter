@@ -14,6 +14,7 @@ import { Converter, MimeNode } from '../../types'
 import { mimeToFileExtension } from '../../../lib/file'
 import { join } from 'path'
 import { nodes } from './nodes'
+import { OCR } from '../OCR'
 const exec = promisify(execAsync) // promisify exec which mean we can use await on it
 
 const _converters: Array<Converter> = []
@@ -173,6 +174,11 @@ for (const from of nodes) {
     for (const to of nodes) {
         if (from.mime === 'application/pdf') {
             // if the from is pdf, skip
+            continue
+        }
+        if (from.mime.startsWith('image/') && to.mime === 'text/plain') {
+            // only iif the from is image and the to is text
+            _converters.push(new OCR(from, to)) // push the converter to the converters array
             continue
         }
         _converters.push(new ImageConverter(from, to)) // push the converter to the converters array

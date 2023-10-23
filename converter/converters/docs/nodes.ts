@@ -46,4 +46,9 @@ const AUDIO_WAV: MimeNode = {
 }
 nodes.push(AUDIO_WAV)
 
-export { nodes }
+//  main node to check with the file extension
+const mainNode: MimeNode[] = nodes.filter((node) =>
+    node.mime.startsWith('application' || 'text')
+)
+
+export { nodes, mainNode }

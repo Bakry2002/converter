@@ -2,17 +2,22 @@ import { MimeNode } from '@/converter/types'
 
 const nodes: MimeNode[] = []
 
+//  main node to check with the file extension
+const mainNode: MimeNode[] = []
+
 // EPUB
 const ARCHIVE_EPUB: MimeNode = {
     mime: 'application/epub+zip',
 }
 nodes.push(ARCHIVE_EPUB)
+mainNode.push(ARCHIVE_EPUB)
 
 // MOBI
 const ARCHIVE_MOBI: MimeNode = {
     mime: 'application/x-mobipocket-ebook',
 }
 nodes.push(ARCHIVE_MOBI)
+mainNode.push(ARCHIVE_MOBI)
 
 // // FictionBook
 // const ARCHIVE_FB2: MimeNode = {
@@ -25,24 +30,28 @@ const ARCHIVE_AZW3: MimeNode = {
     mime: 'application/vnd.amazon.ebook',
 }
 nodes.push(ARCHIVE_AZW3)
+mainNode.push(ARCHIVE_AZW3)
 
 // LIT (Microsoft Reader)
 const ARCHIVE_LIT: MimeNode = {
     mime: 'application/x-ms-reader',
 }
 nodes.push(ARCHIVE_LIT)
+mainNode.push(ARCHIVE_LIT)
 
 // TCR
 const ARCHIVE_TCR: MimeNode = {
     mime: 'application/octet-stream',
 }
 nodes.push(ARCHIVE_TCR)
+mainNode.push(ARCHIVE_TCR)
 
 // SNB (Shanda Bambook)
 const ARCHIVE_SNB: MimeNode = {
     mime: 'application/x-shanda-bambook',
 }
 nodes.push(ARCHIVE_SNB)
+mainNode.push(ARCHIVE_SNB)
 
 // PDF
 const ARCHIVE_PDF: MimeNode = {
@@ -62,4 +71,4 @@ const ARCHIVE_PLAINTEXT: MimeNode = {
 }
 nodes.push(ARCHIVE_PLAINTEXT)
 
-export { nodes }
+export { nodes, mainNode }

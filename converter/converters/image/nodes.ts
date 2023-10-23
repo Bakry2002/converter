@@ -100,4 +100,15 @@ const APPLICATION_PDF: MimeNode = {
 }
 nodes.push(APPLICATION_PDF)
 
-export { nodes }
+// TEXT
+const TEXT_PLAIN: MimeNode = {
+    mime: 'text/plain',
+}
+nodes.push(TEXT_PLAIN)
+
+//  main node to check with the file extension
+const mainNode: MimeNode[] = nodes.filter((node) =>
+    node.mime.startsWith('image')
+)
+
+export { nodes, mainNode }

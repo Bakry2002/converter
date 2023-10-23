@@ -20,6 +20,11 @@ import z from 'zod'
 import ProgressStep from './ProgressStep'
 import { DownloadButton } from '../DownloadButton'
 import Link from 'next/link'
+import {
+    checkValidFormatsToConvertTo,
+    iconHandler,
+} from '../files/ConversionListItem'
+import { lookup } from 'mime-types'
 
 export enum CONVERT_STEPS {
     STEP_1 = 'Upload',
@@ -88,6 +93,10 @@ const ProgressController: React.FC<ProgressControllerProps> = ({
         // after the validation being successful, we can convert the files
         convert()
     }
+    const validFormats = checkValidFormatsToConvertTo(
+        conversion?.file,
+        lookup(conversion?.file.name) || ''
+    )
 
     return (
         <div className="grid xmd:grid-cols-3 xmd:grid-rows-1 grid-rows-3 xmd:w-auto  w-full xmd:gap-8 gap-8">
@@ -148,9 +157,9 @@ const ProgressController: React.FC<ProgressControllerProps> = ({
                             conversion?.status !== UXConversionStatus.Pending
                         }
                     >
-                        {`${
-                            conversions.filter((cnv) => cnv.to).length
-                        } formats selected`}
+                        {`${conversions.filter((cnv) => cnv.to).length} / ${
+                            conversions.length
+                        } selected`}
                     </button>
                 ) : (
                     <Popover>
@@ -178,6 +187,7 @@ const ProgressController: React.FC<ProgressControllerProps> = ({
                         </PopoverTrigger>
                         <PopoverContent>
                             <Selector
+                                formats={validFormats}
                                 value={conversion?.to?.mime || ''}
                                 setValue={onConvertTo}
                             />

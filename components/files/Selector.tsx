@@ -1,7 +1,7 @@
 import { cn } from '@/lib/utils'
 import TextField from '../TextField'
 import { Button } from '@nextui-org/react'
-import { useState } from 'react'
+import React, { useState } from 'react'
 
 import { mimeToFileExtension } from '@/lib/file'
 import { MimeNode } from '@/converter/types'
@@ -11,12 +11,32 @@ import { nodes as videoNodes } from '@/converter/converters/video/nodes'
 import { nodes as audioNodes } from '@/converter/converters/audio/nodes'
 import { nodes as ebookNodes } from '@/converter/converters/ebook/nodes'
 import { nodes as documentNodes } from '@/converter/converters/docs/nodes'
-import { useConversion } from '@/context/ConversionContext'
-import { Search } from 'lucide-react'
+import {
+    Book,
+    BookIcon,
+    BookX,
+    FileArchive,
+    FileAudio,
+    FileBox,
+    FileImage,
+    FileLineChart,
+    FilePieChart,
+    FileText,
+    FileVideo,
+    Frown,
+    LucideIcon,
+    Search,
+} from 'lucide-react'
+import { mainNode as archiveMainNode } from '@/converter/converters/archive/nodes'
+import { mainNode as presentationMainNode } from '@/converter/converters/presentation/nodes'
+import { mainNode as ebookMainNode } from '@/converter/converters/ebook/nodes'
+import Link from 'next/link'
 
 type SelectorProps = {
     value: string
+    // icon: React.ReactNode
     setValue: (node: MimeNode) => void
+    formats: MimeNode[]
 }
 
 const categoryNodes = [
@@ -42,30 +62,17 @@ const categoryNodes = [
     },
 ]
 
-const categorizedNodes = {
-    Image: imageNodes,
-    Video: videoNodes,
-    Audio: audioNodes,
-    Ebook: ebookNodes,
-    Document: documentNodes,
-}
-
-export const Selector = ({ value, setValue }: SelectorProps) => {
+export const Selector = ({
+    value,
+    setValue,
+    formats,
+}: // icon: Icon,
+SelectorProps) => {
     const [search, setSearch] = useState('')
     const [hoveredCategory, setHoveredCategory] = useState<any>(
         categoryNodes[0]
     )
-    const { conversions } = useConversion()
-    function getValidFormats(selectedFileType: string | undefined) {
-        const validFormats: string[] = []
-        if (selectedFileType) {
-            if (selectedFileType === conversions[0]?.to?.mime) {
-                validFormats.push(/* Add valid format here */)
-            }
-        }
-    }
 
-    console.log('FORMATS: ', formats)
     const uniqueMimeValues = new Set<string>()
 
     // Collect unique MIME types
@@ -75,53 +82,105 @@ export const Selector = ({ value, setValue }: SelectorProps) => {
         })
     })
 
-    // Convert Set back to an array
-    const uniqueMimeTypes = Array.from(uniqueMimeValues)
-    console.log('Unique: ', uniqueMimeTypes)
-
     return (
         <div className="flex flex-col justify-center gap-4">
-            <div className="flex flex-row items-center relative">
-                <span className="absolute pb-1">
+            <div className="flex flex-col items-center relative  overflow-hidden">
+                <span className="absolute left-0 top-0 pb-1">
                     <Search />
                 </span>
                 <TextField
                     placeholder={`Search`}
                     value={search}
                     onChange={(e: any) => setSearch(e.target.value)}
-                    className="border-b pb-1 pl-8 text-lg"
+                    className="border-b pb-1 pl-16 text-lg"
                 />
-            </div>
-            {/* <div>
-                    {formats.map((format) => {
-                        if (
-                            !uniqueMimeValues.has(format.mime) &&
-                            format.mime.includes(search)
-                        ) {
-                            uniqueMimeValues.add(format.mime)
 
+                {formats.length > 0 ? (
+                    <div className="grid grid-cols-3 w-full gap-4 mt-4">
+                        {formats.map((format) => {
                             return (
                                 <li key={format.mime} className="list-none">
                                     <Button
-                                        className={`rounded-3xl w-14 h-10 uppercase ${cn(
+                                        className={`bg-neutral-200 rounded-3xl w-full h-10 uppercase tracking-[0.5px] ${cn(
                                             {
-                                                'bg-emerald-500':
+                                                'bg-emerald-500 text-white':
                                                     value === format.mime,
                                             }
                                         )}`}
                                         size="sm"
                                         onPress={() => setValue(format)}
                                     >
-                                        {mimeToFileExtension(format.mime)}
+                                        <div className="flex items-center justify-center gap-1 font-bold">
+                                            <span>
+                                                {format?.mime.startsWith(
+                                                    'image'
+                                                ) ? (
+                                                    <FileImage className="text-primary/60" />
+                                                ) : format?.mime.startsWith(
+                                                      'video'
+                                                  ) ? (
+                                                    <FileVideo className="text-primary/60" />
+                                                ) : format?.mime.startsWith(
+                                                      'audio'
+                                                  ) ? (
+                                                    <FileAudio className="text-primary/60" />
+                                                ) : archiveMainNode.find(
+                                                      (node) =>
+                                                          node.mime ===
+                                                          format?.mime
+                                                  ) ? (
+                                                    <FileArchive className="text-primary/60" />
+                                                ) : presentationMainNode.find(
+                                                      (node) =>
+                                                          node.mime ===
+                                                          format?.mime
+                                                  ) ? (
+                                                    <FileLineChart className="text-primary/60" />
+                                                ) : ebookMainNode.find(
+                                                      (node) =>
+                                                          node.mime ===
+                                                          format?.mime
+                                                  ) ? (
+                                                    <Book className="text-primary/60" />
+                                                ) : (
+                                                    <FileText className="text-primary/60" />
+                                                )}
+                                            </span>
+                                            {mimeToFileExtension(format.mime)}{' '}
+                                        </div>
                                     </Button>
                                 </li>
                             )
-                        }
+                        })}
+                    </div>
+                ) : (
+                    <div className="flex items-center flex-col gap-1 p-4 ">
+                        <div>
+                            <Frown
+                                color="#F11A7B"
+                                strokeWidth={0.5}
+                                className="w-48 h-48"
+                            />
+                        </div>
+                        <div className="flex items-center justify-center flex-col gap-4">
+                            <span className="font-medium text-3xl">
+                                No format found!.{' '}
+                            </span>
+                            <div className="flex items-center gap-1">
+                                Check the
+                                <Link
+                                    href=""
+                                    className="underline hover:text-blue-800"
+                                >
+                                    Upcoming formats
+                                </Link>
+                            </div>
+                        </div>
+                    </div>
+                )}
+            </div>
 
-                        return null // Skip rendering for duplicates or formats that don't match the search
-                    })}
-                </div> */}
-            <div className="">
+            {/* <div className="">
                 <div className="flex flex-col gap-4 transition-all duration-200">
                     <div className="grid grid-cols-[0.5fr,1fr] gap-4 ">
                         <div className="col-span-1 overflow-y-auto">
@@ -177,7 +236,7 @@ export const Selector = ({ value, setValue }: SelectorProps) => {
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> */}
         </div>
     )
 }

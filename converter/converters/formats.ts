@@ -9,28 +9,14 @@ import { nodes as PresentationNodes } from './presentation/nodes'
 
 export const formats = [
     {
-        image: ImageNodes,
-    },
-    {
-        audio: AudioNodes,
-    },
-    {
-        docs: DocsNodes,
-    },
-    {
-        video: VideoNodes,
-    },
-    {
-        archive: ArchiveNodes,
-    },
-    {
-        ebook: EbookNodes,
-    },
-    {
-        OCR: OCRNodes,
-    },
-    {
-        presentation: PresentationNodes,
+        ImageNodes,
+        AudioNodes,
+        DocsNodes,
+        ArchiveNodes,
+        VideoNodes,
+        EbookNodes,
+        OCRNodes,
+        PresentationNodes,
     },
 
     //     ...ImageNodes,
