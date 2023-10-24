@@ -33,24 +33,26 @@ const Usage: React.FC<UsageProps> = ({}) => {
             </div>
 
             {/* Box steps */}
-            <div className="grid grid-cols-3">
+            <div className="grid grid-cols-1 xl:grid-cols-3">
                 {/* Step item */}
                 {steps.map((step) => (
                     <div
                         key={step.step}
-                        className="pl-[140px] pr-[50px] relative min-h-[1px]
-                        before:absolute before:w-[1px] before:right-[33px] before:top-1/2 before:-mt-[38px] before:h-[100px] before:bg-[#85858580]
-                        after:opacity-100 after:right-0 after:w-[18px] after:h-[18px] after:top-1/2 after:-translate-x-1/2 after:mr-[15px] after:bg-white after:border-t-1 after:border-r-1 after:absolute after:rotate-45 after:-ml-[21px] after:transition-all after:duration-150 after:border-[#85858580]
+                        className="pl-[100px] xl:pl-[130px] pr-4 pb-6 xl:pb-0 relative min-h-[1px] mb-12 xl:m-0
+                        before:absolute before:w-full xl:before:w-[1px] before:right-0 before:top-auto before:bottom-0 before:-mt-[38px] before:h-[1px] xl:before:h-full before:bg-[#85858580]
+                        after:opacity-100 after:right-1/2 xl:after:right-[-33px] after:w-[18px] after:h-[18px] after:top-auto after:-bottom-[9px] xl:after:bottom-auto xl:after:top-1/2 xl:after:-translate-x-1/2 xl:after:-translate-y-1/2 after:mr-0 xl:after:mr-[15px] after:bg-white after:border-b-1 xl:after:border-b-0 xl:after:border-t-1 after:border-r-1 after:absolute after:rotate-45 after:-ml-[21px] after:transition-all after:duration-150 after:border-[#85858580]
                         last-of-type:before:hidden last-of-type:after:hidden
                     "
                     >
-                        {/* Step number */}
-                        <span className="shadow-step opacity-100 w-[70px] h-[70px] bg-white text-primary flex items-center justify-center rounded-full text-center text-4xl font-bold absolute left-[42px]">
-                            {step.step}
-                        </span>
-                        <h3 className="mt-1 mb-5 text-2xl font-bold text-neutral-800">
-                            {step.title}
-                        </h3>
+                        <div className="xl:flex xl:justify-center xl:items-baseline flex-col">
+                            {/* Step number */}
+                            <span className="shadow-step opacity-100 w-[70px] h-[70px] bg-white text-primary flex items-center justify-center rounded-full text-center text-4xl font-bold absolute left-0 xl:left-[42px]">
+                                {step.step}
+                            </span>
+                            <h3 className="mt-1 mb-5 text-2xl font-bold text-neutral-800">
+                                {step.title}
+                            </h3>
+                        </div>
                         <p className="font-light text-lg">{step.description}</p>
                     </div>
                 ))}
