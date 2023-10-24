@@ -5,6 +5,9 @@ import { AnimatePresence, motion } from 'framer-motion'
 import ConversionListItem from './ConversionListItem'
 import { z } from 'zod'
 import { Button } from '../ui/button'
+import { Trash2 } from 'lucide-react'
+import { key } from '@/lib/s3'
+import { useCallback } from 'react'
 
 // the schema is a zod schema that takes an array of objects that have a property to that is an object that has a property mime that is a string and a property ext that is a string
 const schema = z.array(
@@ -35,19 +38,44 @@ export const Manager = () => {
         // after the validation being successful, we can convert the files
         convert()
     }
+
+    const ClearAllBtnHandler = useCallback(() => {
+        const pendingIndexes: number[] = []
+
+        // Find the indexes of all pending conversions
+        conversions.forEach((conversion, key) => {
+            if (conversion.status === UXConversionStatus.Pending) {
+                pendingIndexes.push(key)
+            }
+        })
+
+        // Remove all pending conversions in reverse order to avoid index shifting
+        pendingIndexes.reverse().forEach((index) => {
+            removeConversion(index)
+        })
+    }, [conversions, removeConversion])
+
     return (
         <div className="container mx-auto">
             {conversions.length > 0 && (
-                <h2 className=" my-8 text-3xl font-medium text-neutral-900">
-                    Files to{' '}
-                    <span className="font-bold text-primary">Convert</span>
-                </h2>
+                <div className="flex  justify-between mt-8">
+                    <h2 className="text-3xl w-fit font-medium text-neutral-900 bg-[#ededed] rounded-tr-3xl rounded-tl-3xl py-2  px-4">
+                        Files to{' '}
+                        <span className="font-bold text-primary">Convert</span>
+                    </h2>
+                    <button
+                        className="bg-[#ededed] flex items-center gap-2 justify-center text-xl w-fit font-bold text-primary p-4 rounded-tr-3xl rounded-tl-3xl"
+                        onClick={ClearAllBtnHandler}
+                    >
+                        <Trash2 className="w-6 h-6 text-primary" />
+                        Clear All
+                    </button>
+                </div>
             )}
             <AnimatePresence>
                 {conversions.length > 0 && (
                     <motion.div
-                        // there is an action of type  function called convert exported from its own file.ts
-                        className=" backdrop-blur-md rounded shadow-sm"
+                        className="shadow-sm"
                         initial={{ opacity: 0, transform: 'translateY(50px)' }}
                         animate={{
                             opacity: 1,
@@ -56,7 +84,7 @@ export const Manager = () => {
                         }}
                         exit={{ opacity: 0, transform: 'translateY(50px)' }}
                     >
-                        <ul className="bg-white/80 backdrop-blur-lg flex flex-col justify-center gap-y-4">
+                        <ul className="bg-[#ededed] flex flex-col justify-center gap-y-4 rounded-br-3xl rounded-bl-3xl ">
                             {conversions.map((conversion, key) => (
                                 <ConversionListItem
                                     key={key}

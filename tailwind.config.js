@@ -78,6 +78,7 @@ module.exports = {
             },
             boxShadow: {
                 basic: '-1px 17px 31px -29px',
+                step: '0 0 15px rgba(244,26,123,.20)',
             },
         },
         backgroundImage: {

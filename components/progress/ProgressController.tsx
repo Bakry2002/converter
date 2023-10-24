@@ -117,8 +117,8 @@ const ProgressController: React.FC<ProgressControllerProps> = ({
                         />
                     </span>
                     <CustomButton
-                        label="Choose files"
-                        className={` text-white ${
+                        label="Choose File(s)"
+                        className={`text-white ${
                             step === CONVERT_STEPS.STEP_1
                                 ? 'bg-primary animate-button-shadow'
                                 : 'bg-neutral-100 text-black'

@@ -266,7 +266,11 @@ const ConversionListItem: React.FC<ConversionListItemProps> = ({
                                                     conversion.status !==
                                                     UXConversionStatus.Pending
                                                 }
-                                                className="px-2 w-full flex gap-2 items-center flex-row uppercase"
+                                                className={`px-2 w-full text-base flex gap-2 items-center flex-row uppercase ${
+                                                    conversion?.to?.mime
+                                                        ? 'text-neutral-100 bg-primary hover:bg-primary'
+                                                        : 'text-neutral-900 '
+                                                }`}
                                                 variant={
                                                     conversion.error
                                                         ? 'destructive'
@@ -294,7 +298,6 @@ const ConversionListItem: React.FC<ConversionListItemProps> = ({
                                                     conversion.to?.mime || ''
                                                 }
                                                 setValue={onConvertTo}
-                                                // icon={iconHandler(validFormats)}
                                             />
                                         </PopoverContent>
                                     </Popover>
