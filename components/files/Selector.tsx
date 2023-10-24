@@ -31,6 +31,12 @@ import { mainNode as archiveMainNode } from '@/converter/converters/archive/node
 import { mainNode as presentationMainNode } from '@/converter/converters/presentation/nodes'
 import { mainNode as ebookMainNode } from '@/converter/converters/ebook/nodes'
 import Link from 'next/link'
+import {
+    Tooltip,
+    TooltipContent,
+    TooltipProvider,
+    TooltipTrigger,
+} from '../ui/tooltip'
 
 type SelectorProps = {
     value: string
@@ -100,55 +106,101 @@ SelectorProps) => {
                         {formats.map((format) => {
                             return (
                                 <li key={format.mime} className="list-none">
-                                    <Button
-                                        className={`bg-neutral-200 rounded-3xl w-full h-10 uppercase tracking-[0.5px] ${cn(
-                                            {
-                                                'bg-emerald-500 text-white':
-                                                    value === format.mime,
-                                            }
-                                        )}`}
-                                        size="sm"
-                                        onPress={() => setValue(format)}
-                                    >
-                                        <div className="flex items-center justify-center gap-1 font-bold">
-                                            <span>
+                                    <TooltipProvider delayDuration={100}>
+                                        <Tooltip>
+                                            <TooltipTrigger className="w-full">
+                                                <Button
+                                                    className={`bg-neutral-200 rounded-3xl w-full h-10 uppercase tracking-[0.5px] ${cn(
+                                                        {
+                                                            'bg-emerald-500 text-white':
+                                                                value ===
+                                                                format.mime,
+                                                        }
+                                                    )}`}
+                                                    size="sm"
+                                                    onPress={() =>
+                                                        setValue(format)
+                                                    }
+                                                >
+                                                    <div className="flex items-center justify-center gap-1 font-bold">
+                                                        <span>
+                                                            {format?.mime.startsWith(
+                                                                'image'
+                                                            ) ? (
+                                                                <FileImage className="text-primary/60" />
+                                                            ) : format?.mime.startsWith(
+                                                                  'video'
+                                                              ) ? (
+                                                                <FileVideo className="text-primary/60" />
+                                                            ) : format?.mime.startsWith(
+                                                                  'audio'
+                                                              ) ? (
+                                                                <FileAudio className="text-primary/60" />
+                                                            ) : archiveMainNode.find(
+                                                                  (node) =>
+                                                                      node.mime ===
+                                                                      format?.mime
+                                                              ) ? (
+                                                                <FileArchive className="text-primary/60" />
+                                                            ) : presentationMainNode.find(
+                                                                  (node) =>
+                                                                      node.mime ===
+                                                                      format?.mime
+                                                              ) ? (
+                                                                <FileLineChart className="text-primary/60" />
+                                                            ) : ebookMainNode.find(
+                                                                  (node) =>
+                                                                      node.mime ===
+                                                                      format?.mime
+                                                              ) ? (
+                                                                <Book className="text-primary/60" />
+                                                            ) : (
+                                                                <FileText className="text-primary/60" />
+                                                            )}
+                                                        </span>
+                                                        {mimeToFileExtension(
+                                                            format.mime
+                                                        )}{' '}
+                                                    </div>
+                                                </Button>
+                                            </TooltipTrigger>
+                                            <TooltipContent>
                                                 {format?.mime.startsWith(
                                                     'image'
                                                 ) ? (
-                                                    <FileImage className="text-primary/60" />
+                                                    <p>image format</p>
                                                 ) : format?.mime.startsWith(
                                                       'video'
                                                   ) ? (
-                                                    <FileVideo className="text-primary/60" />
+                                                    <p>Video format</p>
                                                 ) : format?.mime.startsWith(
                                                       'audio'
                                                   ) ? (
-                                                    <FileAudio className="text-primary/60" />
+                                                    <p>Audio format</p>
                                                 ) : archiveMainNode.find(
                                                       (node) =>
                                                           node.mime ===
                                                           format?.mime
                                                   ) ? (
-                                                    <FileArchive className="text-primary/60" />
+                                                    <p>Archive format</p>
                                                 ) : presentationMainNode.find(
                                                       (node) =>
                                                           node.mime ===
                                                           format?.mime
                                                   ) ? (
-                                                    <FileLineChart className="text-primary/60" />
+                                                    <p>Presentation format</p>
                                                 ) : ebookMainNode.find(
                                                       (node) =>
                                                           node.mime ===
                                                           format?.mime
                                                   ) ? (
-                                                    <Book className="text-primary/60" />
+                                                    <p>Ebook format</p>
                                                 ) : (
-                                                    <FileText className="text-primary/60" />
+                                                    <p>Document format</p>
                                                 )}
-                                            </span>
-                                            {mimeToFileExtension(format.mime)}{' '}
-                                        </div>
-                                    </Button>
+                                            </TooltipContent>
+                                        </Tooltip>
+                                    </TooltipProvider>
                                 </li>
                             )
                         })}

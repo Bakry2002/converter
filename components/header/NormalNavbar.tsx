@@ -113,6 +113,7 @@ const NormalNavbar: React.FC<NormalNavbarProps> = ({
                                                     ? 'bg-[#f3f5f9]'
                                                     : ''
                                             )}
+                                            prefetch={false}
                                             // onClick={(event) =>
                                             //     handleLinkClick(event, index)
                                             // }

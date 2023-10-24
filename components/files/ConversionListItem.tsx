@@ -95,23 +95,23 @@ export const checkValidFormatsToConvertTo = (
 
         if (!valid) {
             //! FOR DEBUGGING PURPOSES
-            console.log(
-                `It's not a ${category.toLowerCase()}, or the format is not supported`
-            )
+            // console.log(
+            //     `It's not a ${category.toLowerCase()}, or the format is not supported`
+            // )
             return []
         }
 
         //! FOR DEBUGGING PURPOSES
-        console.log(
-            `IT'S A ${category.toUpperCase()}, with the MIME type of ${lookup(
-                file.name
-            )}`
-        )
+        // console.log(
+        //     `IT'S A ${category.toUpperCase()}, with the MIME type of ${lookup(
+        //         file.name
+        //     )}`
+        // )
         return [...nodes]
     }
 
     //! FOR DEBUGGING PURPOSES
-    console.log(`MIME type not recognized or supported: ${mime}`)
+    // console.log(`MIME type not recognized or supported: ${mime}`)
     return []
 }
 
@@ -134,7 +134,6 @@ export const iconHandler = (validFormats: ValidFormatsProps) => {
 
     validFormats.forEach((format) => {
         const mime = format?.mime
-        console.log('Mimes:', mime)
 
         // Check if the MIME type is recognized and has an associated icon
         if (icons[mime]) {

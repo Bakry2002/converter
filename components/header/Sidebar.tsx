@@ -60,6 +60,7 @@ const Sidebar: React.FC<SidebarProps> = React.memo(
                                 </button>
                             ) : (
                                 <Link
+                                    prefetch={false}
                                     key={index}
                                     href={link.href as string}
                                     className="mt-4 text-xl tracking-normal sm:w-full 2xl:mt-2 rounded bg-white hover:bg-neutral-100 p-2 border-none opacity-80"

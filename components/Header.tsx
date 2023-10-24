@@ -154,6 +154,7 @@ export const LowNavbarLink: React.FC<LinkProps & { Icon?: LucideIcon }> =
     React.memo(({ title, description, Icon, href }) => {
         return (
             <Link
+                prefetch={false}
                 href={href || '/'}
                 className="flex flex-row bg-transparent border-none mb-6 cursor-pointer group hover:bg-neutral-50 w-full p-2 rounded "
             >
