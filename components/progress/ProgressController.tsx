@@ -148,7 +148,7 @@ const ProgressController: React.FC<ProgressControllerProps> = ({
                 </span>
                 {conversions.length > 1 ? (
                     <button
-                        className={`flex flex-row h-14 items-center  justify-center gap-x-2 tracking-wide text-xl font-medium rounded-md hover:opacity-90 text-neutral-900 focus:bg-neutral-200 focus:outline-none w-full transition-all duration-250 ${
+                        className={`flex flex-row h-14 items-center justify-center gap-x-2 tracking-wide text-xl font-medium rounded-md hover:opacity-90 text-neutral-900 focus:outline-none w-full transition-all duration-250 ${
                             step === CONVERT_STEPS.STEP_2
                                 ? 'bg-primary text-white animate-button-shadow'
                                 : 'bg-neutral-100'

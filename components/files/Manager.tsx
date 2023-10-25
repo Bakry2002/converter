@@ -56,15 +56,15 @@ export const Manager = () => {
     }, [conversions, removeConversion])
 
     return (
-        <div className="container mx-auto">
+        <div className="container mx-auto mb-28">
             {conversions.length > 0 && (
-                <div className="flex  justify-between mt-8">
+                <div className="flex justify-between mt-8">
                     <h2 className="text-3xl w-fit font-medium text-neutral-900 bg-[#ededed] rounded-tr-3xl rounded-tl-3xl py-2  px-4">
                         Files to{' '}
                         <span className="font-bold text-primary">Convert</span>
                     </h2>
                     <button
-                        className="bg-[#ededed] flex items-center gap-2 justify-center text-xl w-fit font-bold text-primary p-4 rounded-tr-3xl rounded-tl-3xl"
+                        className="bg-[#ededed] flex items-center gap-2 justify-center text-lg w-fit font-bold text-primary p-4 rounded-tr-3xl rounded-tl-3xl"
                         onClick={ClearAllBtnHandler}
                     >
                         <Trash2 className="w-6 h-6 text-primary" />
@@ -75,7 +75,6 @@ export const Manager = () => {
             <AnimatePresence>
                 {conversions.length > 0 && (
                     <motion.div
-                        className="shadow-sm"
                         initial={{ opacity: 0, transform: 'translateY(50px)' }}
                         animate={{
                             opacity: 1,

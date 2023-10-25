@@ -1,13 +1,14 @@
 import './globals.css'
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
+import { Quicksand } from 'next/font/google'
 import { Providers } from '@/app/providers/NextUIProvider'
 import PingdomRUM from '@/PingdomRUM'
 import SimpleAnalytic from '@/SimpleAnalytic'
 import { Header } from '@/components/Header'
 import { Footer } from '@/components/Footer'
 
-const inter = Inter({ subsets: ['latin'] })
+const quicksand = Quicksand({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
     title: 'Convert it  —  Convert between any formats',
@@ -23,7 +24,7 @@ export default function RootLayout({
 }) {
     return (
         <html lang="en">
-            <body className={inter.className}>
+            <body className={quicksand.className}>
                 <Providers>
                     <Header />
                     {children}

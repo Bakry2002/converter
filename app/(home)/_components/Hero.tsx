@@ -18,7 +18,7 @@ const Hero: React.FC<HeroProps> = ({}) => {
                 priority
                 className="z-[-1]"
             />
-            <div className="flex items-center gap-12 flex-col justify-evenly top-0 left-0 w-full min-h-screen bg-black/30 xl:pt-[calc(75px+150px)] pt-[calc(75px+35px)]">
+            <div className="flex items-center gap-12 flex-col justify-evenly top-0 left-0 w-full min-h-screen bg-black/30 xl:pt-[calc(75px+150px)] pt-[calc(75px+35px)] mb-20">
                 <h1 className="xl:text-7xl sm:text-[3.5rem] text-[3.25rem] font-bold text-white text-center [text-wrap:balance]">
                     Convert any file to any{' '}
                     <span className="text-transparent bg-clip-text bg-hero-gradient-text">
