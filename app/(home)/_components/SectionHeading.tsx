@@ -13,7 +13,7 @@ const SectionHeading: React.FC<SectionHeadingProps> = ({ title }) => {
     return (
         <div
             className={cn(
-                'p-4 pl-0 max-w-[500px] w-[90%] ',
+                'xl:max-w-[500px] max-w-full xl:w-[90%] w-full xl:mb-0 mb-4',
                 montserrat.className
             )}
         >
