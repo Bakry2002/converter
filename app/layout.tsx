@@ -2,14 +2,22 @@ import './globals.css'
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import { Quicksand } from 'next/font/google'
+import { Source_Sans_3 } from 'next/font/google'
+import { Roboto } from 'next/font/google'
 import { Providers } from '@/app/providers/NextUIProvider'
 import PingdomRUM from '@/PingdomRUM'
 import SimpleAnalytic from '@/SimpleAnalytic'
 import { Header } from '@/components/Header'
 import { Footer } from '@/components/Footer'
 
-const quicksand = Quicksand({ subsets: ['latin'] })
-
+// const quicksand = Quicksand({ subsets: ['latin'] })
+// const roboto = Roboto({
+//     subsets: ['latin'],
+//     weight: ['100', '300', '400', '500', '700', '900'],
+// })
+const roboto = Source_Sans_3({
+    subsets: ['latin'],
+})
 export const metadata: Metadata = {
     title: 'Convert it  —  Convert between any formats',
     description: 'Convert between any formats, keep teh quality untouched',
@@ -24,7 +32,7 @@ export default function RootLayout({
 }) {
     return (
         <html lang="en">
-            <body className={quicksand.className}>
+            <body className={roboto.className}>
                 <Providers>
                     <Header />
                     {children}

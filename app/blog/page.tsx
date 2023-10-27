@@ -61,6 +61,7 @@ export default async function () {
     const [header, ...rest] = posts
     return (
         <>
+            <div className="main__decoration"></div>
             <Header />
             <Title />
             <div className="container mx-auto mb-8">
