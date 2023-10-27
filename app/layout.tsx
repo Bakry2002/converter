@@ -15,7 +15,7 @@ import { Footer } from '@/components/Footer'
 //     subsets: ['latin'],
 //     weight: ['100', '300', '400', '500', '700', '900'],
 // })
-const roboto = Source_Sans_3({
+const ss3 = Source_Sans_3({
     subsets: ['latin'],
 })
 export const metadata: Metadata = {
@@ -32,7 +32,7 @@ export default function RootLayout({
 }) {
     return (
         <html lang="en">
-            <body className={roboto.className}>
+            <body className={ss3.className}>
                 <Providers>
                     <Header />
                     {children}
