@@ -12,10 +12,12 @@ import {
     LucideIcon,
 } from 'lucide-react'
 import { UrlObject } from 'url'
-import NormalNavbar from './header/NormalNavbar'
+import HomeNavbar from './header/HomeNavbar'
 import MobileNavbar from './header/MobileNavbar'
 import Sidebar from './header/Sidebar'
 import React, { useEffect, useState } from 'react'
+import { usePathname, useRouter } from 'next/navigation'
+import DefaultNavbar from './header/DefaultNavbar'
 
 interface LinkProps {
     title: string
@@ -107,6 +109,7 @@ export const Header: React.FC = () => {
     const [selectedLink, setSelectedLink] = useState<number | null>(null)
     const [mobileNavOpen, setMobileNavOpen] = useState(false)
     const { scrollY } = useScroll()
+    const pathname = usePathname()
 
     useEffect(() => {
         const handleScroll = () => {
@@ -123,14 +126,23 @@ export const Header: React.FC = () => {
         }
     }, [selectedLink, scrollY])
 
+    const router = useRouter()
+
     return (
         // Big Wrapper -> Navbar + Sidebar
         <>
             {/* ======== Normal Nav ======== */}
-            <NormalNavbar
-                selectedLink={selectedLink}
-                setSelectedLink={setSelectedLink}
-            />
+            {pathname === '/' ? (
+                <HomeNavbar
+                    selectedLink={selectedLink}
+                    setSelectedLink={setSelectedLink}
+                />
+            ) : (
+                <DefaultNavbar
+                    selectedLink={selectedLink}
+                    setSelectedLink={setSelectedLink}
+                />
+            )}
 
             {/* ======== Mobile Nav ========  */}
             <MobileNavbar

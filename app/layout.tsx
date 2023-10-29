@@ -9,6 +9,9 @@ import PingdomRUM from '@/PingdomRUM'
 import SimpleAnalytic from '@/SimpleAnalytic'
 import { Header } from '@/components/Header'
 import { Footer } from '@/components/Footer'
+import { Suspense } from 'react'
+import path from 'path'
+import { headers } from 'next/headers'
 
 // const quicksand = Quicksand({ subsets: ['latin'] })
 // const roboto = Roboto({
@@ -23,8 +26,6 @@ export const metadata: Metadata = {
     description: 'Convert between any formats, keep teh quality untouched',
 }
 
-// 0:32:00
-
 export default function RootLayout({
     children,
 }: {
@@ -34,7 +35,9 @@ export default function RootLayout({
         <html lang="en">
             <body className={ss3.className}>
                 <Providers>
-                    <Header />
+                    <Suspense fallback={null}>
+                        <Header />
+                    </Suspense>
                     {children}
                     <Footer />
                 </Providers>

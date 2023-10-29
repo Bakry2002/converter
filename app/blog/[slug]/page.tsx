@@ -9,8 +9,6 @@ type Props = {
     params: { slug: string }
 }
 
-// ============== 2:10:00 =================
-
 // eslint-disable-next-line import/no-anonymous-default-export
 export default async function ({ params }: Props) {
     // get the MDX content

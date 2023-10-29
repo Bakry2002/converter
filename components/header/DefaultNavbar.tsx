@@ -11,36 +11,42 @@ import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { DropDownNavbar } from './DropDownNavbar'
 import { useScroll } from 'framer-motion'
 import ModeSwitch from '../ui/switch'
+import { usePathname, useRouter } from 'next/navigation'
+import { set } from 'zod'
+import Home from '@/app/(home)/page'
 
 type NormalNavbarProps = {
     selectedLink: number | null
     setSelectedLink: React.Dispatch<React.SetStateAction<number | null>>
 }
 
-const NormalNavbar: React.FC<NormalNavbarProps> = ({
+const DefaultNavbar: React.FC<NormalNavbarProps> = ({
     selectedLink,
     setSelectedLink,
 }) => {
     const lowNavbarRef = useRef<HTMLDivElement | null>(null) // Specify the type as HTMLDivElement or null
-    const [navStyle, setNavStyle] = useState(
-        ' translate-y-12 rounded-[15px] px-8 sm:w-[calc(100%-6rem)] lg:w-[calc(100%-10rem)] xl:w-[calc(100%-12rem)] 2xl:w-[calc(100%-14rem)] animate-in duration-500'
-    )
+    // const [navStyle, setNavStyle] = useState(
+    //     ' translate-y-12 rounded-[15px] px-8 sm:w-[calc(100%-6rem)] lg:w-[calc(100%-10rem)] xl:w-[calc(100%-12rem)] 2xl:w-[calc(100%-14rem)] animate-in duration-500'
+    // )
+    const router = useRouter()
+    const pathname = usePathname()
     const { scrollY } = useScroll()
 
-    useEffect(() => {
-        const handleScroll = () => {
-            setNavStyle(
-                scrollY.get() > 150
-                    ? 'translate-y-0 rounded-none w-full sm:px-[3rem] lg:px-[5rem] xl:px-[6rem] 2xl:px-[7rem] px-[2rem]'
-                    : 'translate-y-12 px-8 rounded-[15px] sm:w-[calc(100%-6rem)] lg:w-[calc(100%-10rem)] xl:w-[calc(100%-12rem)] 2xl:w-[calc(100%-14rem)]'
-            )
-        }
+    // useEffect(() => {
+    //     const handleScroll = () => {
+    //         setNavStyle(
+    //             scrollY.get() > 150
+    //                 ? 'translate-y-0 rounded-none w-full sm:px-[3rem] lg:px-[5rem] xl:px-[6rem] 2xl:px-[7rem] px-[2rem]'
+    //                 : 'translate-y-12 px-8 rounded-[15px] sm:w-[calc(100%-6rem)] lg:w-[calc(100%-10rem)] xl:w-[calc(100%-12rem)] 2xl:w-[calc(100%-14rem)]'
+    //         )
+    //     }
 
-        scrollY.onChange(handleScroll)
-        return () => {
-            scrollY.onChange(handleScroll)
-        }
-    }, [selectedLink, scrollY])
+    //     scrollY.onChange(handleScroll)
+    //     // Clean up the listener when the component unmounts
+    //     return () => {
+    //         scrollY.onChange(handleScroll)
+    //     }
+    // }, [selectedLink, scrollY, pathname, setSelectedLink, router])
 
     // Handle clicks outside the low navbar to close it
     useEffect(() => {
@@ -87,7 +93,7 @@ const NormalNavbar: React.FC<NormalNavbarProps> = ({
             {/* ======== Normal Nav ======== */}
             <div className="w-full flex items-center justify-center">
                 <div
-                    className={`hidden xl:flex transition fixed top-0 overflow-hidden bg-white ${navStyle} z-10 border-b duration-100 ease-soft-spring flex-col items-center py-2`}
+                    className={`hidden xl:flex transition fixed top-0 overflow-hidden bg-white translate-y-0 rounded-none w-full sm:px-[3rem] lg:px-[5rem] xl:px-[6rem] 2xl:px-[7rem] px-[2rem] z-10 border-b duration-100 ease-soft-spring flex-col items-center py-2`}
                 >
                     {/* High NAVBAR */}
                     <div className="m-0 w-full h-[60px] flex flex-row items-center justify-between">
@@ -193,7 +199,7 @@ const NormalNavbar: React.FC<NormalNavbarProps> = ({
                             <DropDownNavbar
                                 lowNavbarRef={lowNavbarRef}
                                 selectedLink={selectedLink}
-                                isNavStyleActivated={!!navStyle}
+                                setSelectedLink={setSelectedLink}
                             />
                         )}
                 </div>
@@ -202,4 +208,4 @@ const NormalNavbar: React.FC<NormalNavbarProps> = ({
     )
 }
 
-export default NormalNavbar
+export default DefaultNavbar

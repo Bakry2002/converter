@@ -117,18 +117,45 @@
 }
 
 .main__decoration {
-    @apply blur-[150px] h-[1140px] overflow-hidden absolute top-[-360px] w-[1140px] z-[-2] rounded-[50%] right-0 after:bg-[conic-gradient(from_45deg_at_50%_50%,var(--conic-1,var(--color-pink)),var(--conic-2,var(--color-yellow)),var(--conic-2,var(--color-yellow)),var(--conic-3,var(--color-blue)),var(--conic-3,var(--color-blue)),var(--conic-4,var(--color-purple)),var(--conic-4,var(--color-purple)),var(--conic-1,var(--color-pink)))] after:content-[""] after:block after:h-[1140px] after:opacity-[var(--conic-opacity,0.7)] after:overflow-hidden after:rotate-[var(--conic-rotate,0deg)] after:w-[1140px] after:will-change-transform after:rounded-[50%];
+    @apply blur-[150px]
+        h-[1140px]
+        overflow-hidden 
+        absolute 
+        top-[-360px] 
+        w-[1140px] 
+        z-[-2] 
+        rounded-[50%] 
+        right-0 
+        after:bg-[conic-gradient(from_45deg_at_50%_50%,var(--conic-1,var(--color-pink)),var(--conic-2,var(--color-yellow)),var(--conic-2,var(--color-yellow)),var(--conic-3,var(--color-blue)),var(--conic-3,var(--color-blue)),var(--conic-4,var(--color-purple)),var(--conic-4,var(--color-purple)),var(--conic-1,var(--color-pink)))] 
+        after:content-[""] 
+        after:block 
+        after:h-[1140px] 
+        after:opacity-[var(--conic-opacity,0.7)] 
+        after:overflow-hidden 
+        after:rotate-[var(--conic-rotate,0deg)] 
+        after:w-[1140px] 
+        after:will-change-transform 
+        after:rounded-[50%];
     -webkit-filter: blur(150px);
 }
 @media (max-width: 900px) {
     .main__decoration {
-        @apply blur-[80px] h-[900px] top-[-300px] w-[900px] after:h-[900px] after:w-[900px];
+        @apply blur-[80px] 
+        h-[900px] 
+        top-[-300px] 
+        w-[900px] 
+        after:h-[900px] 
+        after:w-[900px];
         -webkit-filter: blur(80px);
     }
 }
 @media (max-width: 600px) {
     .main__decoration {
-        @apply h-[600px] top-[-100px] w-[600px] after:h-[600px] after:w-[600px];
+        @apply h-[600px] 
+        top-[-100px] 
+        w-[600px] 
+        after:h-[600px] 
+        after:w-[600px];
     }
 }
 .main__decoration:after {
